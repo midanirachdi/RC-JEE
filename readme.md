@@ -1,2 +1,2 @@
-Projet pi dev : refugees camp
-Equipe : Tech No Logic 
+<strong> Projet pi dev:</strong>  refugees camp <br>
+<strong> Equipe:</strong> Tech No Logic </h1> 
