@@ -1,4 +1,4 @@
-package esprit.tn.services;
+package tn.esprit.services;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
