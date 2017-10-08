@@ -1,9 +1,11 @@
 <strong> Projet pi dev:</strong>  refugees camp <br>
 <strong> Equipe:</strong> Tech No Logic <br>
 <hr><br>
-<strong> Git commit & push </strong><br>
-<p>git commit -m "skeleton commit"</p><br>
-<p>git push -u origin --all</p><br>
+<strong> Git commit  </strong><br>
+<p>git add <file_name></p>
+<p>git status</p>
+<p>git commit -m "skeleton commit"</p>
+<p>git push</p><br>
 <hr><br>
 <strong> Configuration git </strong><br>
 <p>
@@ -28,7 +30,7 @@ and ending with your email<br>
 </p><br>
 <hr><br>
 <strong> References git </strong><br>
-<p>https://docs.gitlab.com/ce/ssh/README.html</p><br>
+<p>https://docs.gitlab.com/ce/ssh/README.html</p>
 <p>https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/</p><br>
 <hr><br>
 <strong> Configuration de datasource wildfly </strong><br>
@@ -41,7 +43,4 @@ and ending with your email<br>
 6) type your database username and password <br>
 7) go to mysqlworkbench or phpmyadmin : create a database named refugeescamp <br>
 8) go to wildfly and test connection </p> 
-
-
-<h4>Test</h4>
 
