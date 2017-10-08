@@ -44,3 +44,5 @@ and ending with your email<br>
 7) go to mysqlworkbench or phpmyadmin : create a database named refugeescamp <br>
 8) go to wildfly and test connection </p> 
 
+<!-- hafsa test  -->
+
