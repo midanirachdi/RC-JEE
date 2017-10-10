@@ -8,9 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.entities.JobOffer;
+import tn.esprit.interfaces.JobOfferInterface;
 
 @Stateless
-public class JobOfferImpl implements JobOfferService {
+public class JobOfferImpl implements JobOfferInterface {
 
 	@PersistenceContext(unitName = "refugeesCamp-ejb")
 	EntityManager em;

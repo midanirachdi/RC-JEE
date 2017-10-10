@@ -1,4 +1,4 @@
-package tn.esprit.services;
+package tn.esprit.interfaces;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.ejb.Remote;
 import tn.esprit.entities.JobOffer;
 
 @Remote
-public interface JobOfferService {
+public interface JobOfferInterface {
 	
 	void add(JobOffer joboffer);
 
