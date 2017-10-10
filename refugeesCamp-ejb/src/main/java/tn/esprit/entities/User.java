@@ -1,11 +1,16 @@
 package tn.esprit.entities;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Transient;
 
-import tn.esprit.services.IdentifiedInterface;
+import tn.esprit.interfaces.IdentifiedInterface;
 
-public abstract class User implements IdentifiedInterface{
+
+public abstract class User implements IdentifiedInterface,Serializable{
 	
+	@Transient public static final long serialVersionUID = 196919661993L;
+
 	public int getId() {
 		return id;
 	}
@@ -14,6 +19,7 @@ public abstract class User implements IdentifiedInterface{
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 
 	public String getFirstName() {
@@ -107,7 +113,7 @@ public abstract class User implements IdentifiedInterface{
 	
 	private String email;
 	
-	
+
 	private Date birthDay;
 	
 	
