@@ -2,14 +2,25 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Transient;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import tn.esprit.interfaces.IdentifiedInterface;
 
-
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role")
 public abstract class User implements IdentifiedInterface,Serializable{
 	
-	@Transient public static final long serialVersionUID = 196919661993L;
+    public static final long serialVersionUID = 196919661993L;
 
 	public int getId() {
 		return id;
@@ -101,7 +112,9 @@ public abstract class User implements IdentifiedInterface,Serializable{
 		this.lastResetQuery = lastResetQuery;
 	}
 
-
+	
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
 	
@@ -114,6 +127,7 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	private String email;
 	
 
+	@Temporal(TemporalType.DATE)
 	private Date birthDay;
 	
 	
