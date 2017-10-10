@@ -1,5 +1,5 @@
 package tn.esprit.entities;
 
-public class CampChef {
+public class CampChef extends User {
 
 }

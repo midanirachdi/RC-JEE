@@ -1,5 +1,5 @@
 package tn.esprit.entities;
 
-public class DistrictChef {
+public class DistrictChef extends User{
 
 }

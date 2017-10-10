@@ -25,8 +25,6 @@ public abstract class User {
 	private String password;
 	
 	
-	private String confirmPassword;
-	
 	
 	private boolean disable;
 	
