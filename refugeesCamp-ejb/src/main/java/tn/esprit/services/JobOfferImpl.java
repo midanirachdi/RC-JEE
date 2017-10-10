@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import tn.esprit.entities.JobOffer;
+import tn.esprit.interfaces.JobOfferService;
 
 @Stateless
 public class JobOfferImpl implements JobOfferService {
