@@ -19,9 +19,19 @@ public abstract class User {
 	private Date birthDay;
 	
 	
-	private String address;
+	private String adress;
 	
 	
+	private String password;
 	
-
+	
+	private String confirmPassword;
+	
+	
+	private boolean disable;
+	
+	
+	private String lastResetQuery;
+	
+		
 }
