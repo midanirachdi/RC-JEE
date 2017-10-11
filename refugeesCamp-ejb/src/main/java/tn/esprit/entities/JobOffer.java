@@ -1,9 +1,16 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Entity implementation class for Entity: JobOffer
@@ -20,20 +27,27 @@ public class JobOffer implements Serializable {
 	private Date begindate;
 	private Date enddate;
 	private int contactnumber;
+//	private DistrictChef districtchef;
+//	private CampChef campchef;
 	private static final long serialVersionUID = 1L;
-	//TODO : link user to this
 
 	public JobOffer() {
 		super();
 	}   
-	/*
-	 * GenerationType.sequence :   sequence table managed by sgbd
-	 * GenerationType.table :   sequence table managed by ORM
-	 * GenerationType.AUTO : depends on ORM
-	 * GenerationType.IDENTITY : doesn't work with oracle
-	 */
+
+
+	public JobOffer(String description, Date begindate, Date enddate, int contactnumber) {
+		super();
+		this.description = description;
+		this.begindate = begindate;
+		this.enddate = enddate;
+		this.contactnumber = contactnumber;
+	}
+
+
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
@@ -48,7 +62,8 @@ public class JobOffer implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}   
-	
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getBegindate() {
 		return this.begindate;
@@ -57,6 +72,7 @@ public class JobOffer implements Serializable {
 	public void setBegindate(Date begindate) {
 		this.begindate = begindate;
 	}   
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEnddate() {
 		return this.enddate;
@@ -71,6 +87,28 @@ public class JobOffer implements Serializable {
 
 	public void setContactnumber(int contactnumber) {
 		this.contactnumber = contactnumber;
+	}
+//	@ManyToOne
+//	public DistrictChef getDistrictchef() {
+//		return districtchef;
+//	}
+//	public void setDistrictchef(DistrictChef districtchef) {
+//		this.districtchef = districtchef;
+//	}
+//	@ManyToOne
+//	public CampChef getCampchef() {
+//		return campchef;
+//	}
+//	public void setCampchef(CampChef campchef) {
+//		this.campchef = campchef;
+//	}
+
+
+
+	@Override
+	public String toString() {
+		return "JobOffer [description=" + description + ", begindate=" + begindate + ", enddate=" + enddate
+				+ ", contactnumber=" + contactnumber + "]";
 	}
    
 }

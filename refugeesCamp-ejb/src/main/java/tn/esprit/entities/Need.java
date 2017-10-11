@@ -3,11 +3,19 @@ package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Need implements Serializable{
 
 	private int id;
 	private String type;
 	private String description;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
