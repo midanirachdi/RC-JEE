@@ -5,25 +5,40 @@ package tn.esprit.entities;
  * 
  */
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class News {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
+public class News implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4360304435449051556L;
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	private String author;
 	private String content;
-	public Date dateOfCreation;
-	private String media;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateOfCreation;
 	
 	
 	
-	public News(int id, String author, String content, Date dateOfCreation, String media) {
+	public News(int id, String author, String content, Date dateOfCreation) {
 		super();
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.dateOfCreation = dateOfCreation;
-		this.media = media;
+	
 	}
 	
 	
@@ -56,12 +71,7 @@ public class News {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public String getMedia() {
-		return media;
-	}
-	public void setMedia(String media) {
-		this.media = media;
-	}
+	
 	
 	
 	
