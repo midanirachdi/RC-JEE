@@ -20,6 +20,8 @@ public class JobOffer implements Serializable {
 	private Date begindate;
 	private Date enddate;
 	private int contactnumber;
+	private DistrictChef districtchef;
+	private CampChef campchef;
 	private static final long serialVersionUID = 1L;
 	//TODO : link user to this
 
@@ -71,6 +73,20 @@ public class JobOffer implements Serializable {
 
 	public void setContactnumber(int contactnumber) {
 		this.contactnumber = contactnumber;
+	}
+	@ManyToOne
+	public DistrictChef getDistrictchef() {
+		return districtchef;
+	}
+	public void setDistrictchef(DistrictChef districtchef) {
+		this.districtchef = districtchef;
+	}
+	@ManyToOne
+	public CampChef getCampchef() {
+		return campchef;
+	}
+	public void setCampchef(CampChef campchef) {
+		this.campchef = campchef;
 	}
    
 }
