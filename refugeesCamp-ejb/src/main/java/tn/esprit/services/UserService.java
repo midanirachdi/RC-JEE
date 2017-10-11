@@ -24,6 +24,13 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 		// TODO Auto-generated method stub
 		return em;
 	}
+	
+	
+	
+	public void registerUser(User u,String type){
+		
+		
+	}
     
     
 
