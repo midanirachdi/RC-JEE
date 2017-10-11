@@ -4,23 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-@Entity
-@Table(name="camp")
 public class Camp implements Serializable{
-	@Id
-	@GeneratedValue
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7242693779822127156L;
+
 	private int id;
-	@Column(name="name")
+
 	private String name;
 	
 	private List<Refugee> refugees;
@@ -28,14 +20,13 @@ public class Camp implements Serializable{
 	private List<DistrictChef> districtchiefs;
 	
 	private CampChef campchief;
-	@Column(name="country")
+	
 	private String country;
-	@Column(name="capacity")
+	
 	private int capacity;
-	@Column(name="created_at")
-	@Temporal(TemporalType.TIMESTAMP)
+
 	private Date createdAt;
-	@Column(name="state")
+	
 	private boolean state;
 	
 	public Camp(){
