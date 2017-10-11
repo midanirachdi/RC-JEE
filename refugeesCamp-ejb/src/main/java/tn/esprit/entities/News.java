@@ -13,17 +13,16 @@ public class News {
 	private String author;
 	private String content;
 	public Date dateOfCreation;
-	private String media;
 	
 	
 	
-	public News(int id, String author, String content, Date dateOfCreation, String media) {
+	public News(int id, String author, String content, Date dateOfCreation) {
 		super();
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.dateOfCreation = dateOfCreation;
-		this.media = media;
+	
 	}
 	
 	
@@ -56,12 +55,7 @@ public class News {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public String getMedia() {
-		return media;
-	}
-	public void setMedia(String media) {
-		this.media = media;
-	}
+	
 	
 	
 	
