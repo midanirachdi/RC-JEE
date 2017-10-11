@@ -13,8 +13,25 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import tn.esprit.interfaces.IdentifiedInterface;
 
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Admin.class, name = "Admin"),
+
+    @JsonSubTypes.Type(value = DistrictChef.class, name = "DistrictChef"),
+    
+    @JsonSubTypes.Type(value= CampChef.class,name="CampChef"),
+    
+    @JsonSubTypes.Type(value= Volunteer.class,name="Volunteer"),
+    }
+	
+	
+)
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role")
