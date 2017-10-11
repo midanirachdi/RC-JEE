@@ -1,11 +1,25 @@
 package tn.esprit.entities;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /*
  * author Salim Ben Hassine
  *
  * 
  */
-public class Media {
-	
+@Entity
+public class Media implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4690724320753206321L;
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	private String title;
 	private String path;
