@@ -1,6 +1,5 @@
 package tn.esprit.resources;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
@@ -61,32 +59,22 @@ public class JobOfferResource {
 		return "L'offre " + jo.getId() + " a été supprimée";
 	}
 
-	// NOT working
 	@PUT
-	@Path("/update/{id}/{description}/{begindate}/{enddate}/{contactnumber}")
-	public String UpdateJobOffer(@PathParam(value = "id") int id, @PathParam(value = "description") String description,
-			@PathParam(value = "begindate") Date begindate, @PathParam(value = "enddate") Date enddate,
-			@PathParam(value = "contactnumber") int contactnumber) {
-		JobOffer jo = joService.findById(id);
-		jo.setDescription(description);
-		jo.setContactnumber(contactnumber);
-		jo.setBegindate(begindate);
-		jo.setEnddate(enddate);
-		jo.setCampchef(null);
-		jo.setDistrictchef(null);
+	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String UpdateJobOffer(JobOffer jo) {
 		joService.update(jo);
-		return "L'offre " + jo.getId() + " a été modifiée";
+		return jo.toString();
 	}
 
-	// NOT working
 	@POST
-	@Path("/add/{d}/{bd}/{ed}/{cn}")
+	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void AddJobOffer(@PathParam(value = "d") String description,
-			@PathParam(value = "bd") Date begindate, @PathParam(value = "ed") Date enddate,
-			@PathParam(value = "cn") int contactnumber) {
-		JobOffer jo = new JobOffer(description, begindate, enddate, contactnumber,null,null);
+	@Produces(MediaType.TEXT_PLAIN)
+	public String AddJobOffer(JobOffer jo) {
 		joService.add(jo);
-	
+		return jo.toString();
+
 	}
 }
