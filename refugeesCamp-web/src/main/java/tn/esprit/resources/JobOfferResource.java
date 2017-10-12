@@ -14,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
@@ -71,19 +72,21 @@ public class JobOfferResource {
 		jo.setContactnumber(contactnumber);
 		jo.setBegindate(begindate);
 		jo.setEnddate(enddate);
+		jo.setCampchef(null);
+		jo.setDistrictchef(null);
 		joService.update(jo);
 		return "L'offre " + jo.getId() + " a été modifiée";
 	}
 
 	// NOT working
 	@POST
-	@Path("/add/{description}/{begindate}/{enddate}/{contactnumber}")
+	@Path("/add/{d}/{bd}/{ed}/{cn}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String AddJobOffer(@PathParam(value = "description") String description,
-			@PathParam(value = "begindate") Date begindate, @PathParam(value = "enddate") Date enddate,
-			@PathParam(value = "contactnumber") int contactnumber) {
-		JobOffer jo = new JobOffer(description, begindate, enddate, contactnumber);
+	public void AddJobOffer(@PathParam(value = "d") String description,
+			@PathParam(value = "bd") Date begindate, @PathParam(value = "ed") Date enddate,
+			@PathParam(value = "cn") int contactnumber) {
+		JobOffer jo = new JobOffer(description, begindate, enddate, contactnumber,null,null);
 		joService.add(jo);
-		return "L'offre : " + jo.getDescription() + " a été ajoutée";
+	
 	}
 }
