@@ -1,6 +1,5 @@
 package tn.esprit.entities;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class Camp implements Serializable{
 	private int id;
 
 	private String name;
-	
-//	private List<Refugee> refugees;
+	@OneToMany(mappedBy="rcamp")
+	private List<Refugee> refugees;
 	
 	
 	@OneToMany(mappedBy="camp")
@@ -47,9 +46,10 @@ public class Camp implements Serializable{
 	private boolean state;
 	
 	public Camp(){
+		super();
 	}
 	
-/*	public Camp(String name,CampChef campchief,String country,int capacity){
+	public Camp(String name,CampChef campchief,String country,int capacity){
 		this();
 		this.name=name;
 		this.campchief=campchief;
@@ -65,7 +65,7 @@ public class Camp implements Serializable{
 		this.districtchiefs=districtchiefs;
 		this.refugees=refugees;
 	}
-	*/
+	
 	public int getId() {
 		return id;
 	}
@@ -78,12 +78,13 @@ public class Camp implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	/*public List<Refugee> getRefugees() {
+	public List<Refugee> getRefugees() {
 		return refugees;
 	}
 	public void setRefugees(List<Refugee> refugees) {
 		this.refugees = refugees;
 	}
+	
 	public List<DistrictChef> getDistrictchiefs() {
 		return districtchiefs;
 	}
@@ -95,7 +96,7 @@ public class Camp implements Serializable{
 	}
 	public void setCampchief(CampChef campchief) {
 		this.campchief = campchief;
-	}*/
+	}
 	public String getCountry() {
 		return country;
 	}
