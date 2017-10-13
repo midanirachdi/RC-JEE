@@ -3,11 +3,23 @@ package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Complaint implements Serializable{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+
+public class Need implements Serializable{
+
+	@Id
+	@GeneratedValue
 	private int id;
 	private String type;
 	private String description;
+	
+	private static final long serialVersionUID = 1L;
+
+	
 	public int getId() {
 		return id;
 	}
@@ -35,12 +47,12 @@ public class Complaint implements Serializable{
 	private Date date;
 	@Override
 	public String toString() {
-		return "Complaint [id=" + id + ", type=" + type + ", description=" + description + ", date=" + date + "]";
+		return "Need [id=" + id + ", type=" + type + ", description=" + description + ", date=" + date + "]";
 	}
-	public Complaint() {
+	public Need() {
 		super();
 	}
-	public Complaint(String type, String description, Date date) {
+	public Need(String type, String description, Date date) {
 		super();
 		this.type = type;
 		this.description = description;
