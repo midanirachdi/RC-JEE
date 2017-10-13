@@ -2,14 +2,26 @@ package tn.esprit.entities;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+@Entity
 public class Refugee {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String firstname;
 	private String lastName;
 	private String sex;
 	private Date dateOfBirth;
 	private String nationality;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="camp_ID")	
+	private Camp rcamp;
 	
 	public Refugee() {
 		super();
@@ -71,6 +83,16 @@ public class Refugee {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+
+	public Camp getRcamp() {
+		return rcamp;
+	}
+
+	public void setRcamp(Camp rcamp) {
+		this.rcamp = rcamp;
+	}
 	
 	
+
+
 }

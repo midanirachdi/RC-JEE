@@ -2,12 +2,12 @@ package tn.esprit.interfaces;
 
 import java.util.List;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
 import tn.esprit.entities.JobOffer;
 
-@Remote
-public interface JobOfferService {
+@Local
+public interface JobOfferLocalInterface {
 	
 	void add(JobOffer joboffer);
 
