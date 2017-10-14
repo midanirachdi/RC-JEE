@@ -1,6 +1,5 @@
 package tn.esprit.resources;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -60,30 +59,22 @@ public class JobOfferResource {
 		return "L'offre " + jo.getId() + " a été supprimée";
 	}
 
-	// NOT working
 	@PUT
-	@Path("/update/{id}/{description}/{begindate}/{enddate}/{contactnumber}")
-	public String UpdateJobOffer(@PathParam(value = "id") int id, @PathParam(value = "description") String description,
-			@PathParam(value = "begindate") Date begindate, @PathParam(value = "enddate") Date enddate,
-			@PathParam(value = "contactnumber") int contactnumber) {
-		JobOffer jo = joService.findById(id);
-		jo.setDescription(description);
-		jo.setContactnumber(contactnumber);
-		jo.setBegindate(begindate);
-		jo.setEnddate(enddate);
+	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String UpdateJobOffer(JobOffer jo) {
 		joService.update(jo);
-		return "L'offre " + jo.getId() + " a été modifiée";
+		return jo.toString();
 	}
 
-	// NOT working
 	@POST
-	@Path("/add/{description}/{begindate}/{enddate}/{contactnumber}")
+	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String AddJobOffer(@PathParam(value = "description") String description,
-			@PathParam(value = "begindate") Date begindate, @PathParam(value = "enddate") Date enddate,
-			@PathParam(value = "contactnumber") int contactnumber) {
-		JobOffer jo = new JobOffer(description, begindate, enddate, contactnumber);
+	@Produces(MediaType.TEXT_PLAIN)
+	public String AddJobOffer(JobOffer jo) {
 		joService.add(jo);
-		return "L'offre : " + jo.getDescription() + " a été ajoutée";
+		return jo.toString();
+
 	}
 }

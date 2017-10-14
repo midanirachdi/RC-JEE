@@ -28,6 +28,9 @@ public class TestJobOfferService {
 			// JobOffer joboffer = proxy.findById(1);
 			// joboffer.setDescription("test update");
 			// proxy.update(joboffer);
+			//-----------------
+			JobOffer jo = new JobOffer("test description", new Date() ,new Date(),12345);
+			proxy.add(jo);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
