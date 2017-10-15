@@ -1,5 +1,6 @@
 package tn.esprit.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,17 @@ public class Camp implements Serializable{
 	
 	public Camp(){
 		super();
+		createdAt=new Date();
+		refugees=new ArrayList<Refugee>();
+		districtchiefs=new ArrayList<>();
+	}
+	
+	public Camp(String name,boolean state,String country,int capacity){
+		this();
+		this.name=name;
+		this.country=country;
+		this.capacity=capacity;
+		this.state=state;
 	}
 	
 	public Camp(String name,CampChef campchief,String country,int capacity){
@@ -121,6 +133,14 @@ public class Camp implements Serializable{
 	public void setState(boolean state) {
 		this.state = state;
 	}
+
+	@Override
+	public String toString() {
+		return "Camp [id=" + id + ", name=" + name + ", country=" + country + ", capacity=" + capacity + ", createdAt="
+				+ createdAt + ", state=" + state + "]";
+	}
+	
+	
 	
 	
 	

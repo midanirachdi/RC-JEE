@@ -7,36 +7,36 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
-
 import tn.esprit.entities.Camp;
+import tn.esprit.interfaces.CampRemoteInterface;
 
 @Stateless
 @LocalBean
-public class CampService {
+public class CampService implements CampRemoteInterface{
 	
 	
     @PersistenceContext
     private EntityManager em;
     
     
-	public Camp create(Camp entity){
-		em.persist(entity);
-		return entity;
+	public void addCamp(Camp c){
+		em.persist(c);
+		em.flush();
 	}
 	
 	
-	public void update(Camp entity){
-		em.merge(entity);
+	public void updateCamp(Camp c){
+		em.merge(c);
 	}
 	
 	
 	
-	public void remove(Camp entity){
-	em.remove(em.merge(entity));
+	public void deleteCamp(Camp c){
+		em.remove(c);
 	}
 	
 	
-	public Camp find(int id){
+	public Camp findCamp(int id){
 		return em.find(Camp.class, id);
 	}
 	
