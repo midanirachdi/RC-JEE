@@ -1,5 +1,6 @@
 package tn.esprit.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,6 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
@@ -40,33 +43,43 @@ public class RefugeeRessouces {
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Refugee> GetAllRefugees() {
-		return refugeeS.findAll();
+	public Response GetAllRefugees() {
+		List<Refugee> l = new ArrayList<Refugee>();
+		l= refugeeS.findAll();
+		if (l != null)
+			return Response.status(200).entity(l).build();
+		else return Response.status(404).build();
 	}
 	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Refugee GetRefugeeById(@PathParam(value = "id") int id) {
-		return refugeeS.findById(id);
+	public Response GetRefugeeById(@PathParam(value = "id") int id) {
+		Refugee r = refugeeS.findById(id);
+		if (r != null)
+			return Response.status(200).entity(r).build();
+		else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
 	}
 	
+	// to test with response 
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String DeleteRefugee(@PathParam(value = "id") int id) {
+	public Response DeleteRefugee(@PathParam(value = "id") int id) {
 		Refugee re = refugeeS.findById(id);
-		refugeeS.delete(re);
-		return "Le refugee " + re.getId() + " a été supprimée";
+		if (re != null) {
+			refugeeS.delete(re);
+			return Response.ok("Refugee deleted successfuly").build();
+		} else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
 	}
 	
 	@POST
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String AddRefugee(Refugee r)
+	public Response AddRefugee(Refugee r)
 	{
 		refugeeS.add(r);
-		return "ajout effectué !!";
+		return Response.status(Status.CREATED).build();
 	}
 	
 	@PUT
