@@ -9,14 +9,14 @@ import tn.esprit.entities.JobOffer;
 @Remote
 public interface JobOfferRemoteInterface {
 	
-	void add(JobOffer joboffer);
+	boolean add(JobOffer joboffer);
 
-	void update(JobOffer joboffer);
+	boolean update(JobOffer joboffer);
 
 	List<JobOffer> findAll();
 
 	JobOffer findById(int id);
 
-	void delete(JobOffer joboffer);
+	boolean delete(JobOffer joboffer);
 
 }
