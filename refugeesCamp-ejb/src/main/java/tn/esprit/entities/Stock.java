@@ -1,11 +1,14 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /*
 * author: Salim Ben Hassine
@@ -17,14 +20,15 @@ public class Stock implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1085949622344665790L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	
 	private int id;
 	private String stockType;
 	private int qteTotal;
 	private int qteInStock;
 	private double stockValue;
 	private String notes;
+	
+	List<Product> produits=new ArrayList<Product>();
 	
 	public Stock() {
 		super();
@@ -39,7 +43,8 @@ public class Stock implements Serializable {
 		this.stockValue = stockValue;
 		this.notes = notes;
 	}
-
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -87,8 +92,7 @@ public class Stock implements Serializable {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	
-	
+
 	
 
 }

@@ -18,8 +18,6 @@ public class Media implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4690724320753206321L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	private String title;
 	private String path;
@@ -34,7 +32,8 @@ public class Media implements Serializable {
 	public Media() {
 		super();
 	}
-
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}

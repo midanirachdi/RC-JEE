@@ -23,11 +23,9 @@ public class Donation implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5222348366362129628L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	
 	private int id;
 	private double amount;
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAndTime;
 	private boolean anonymous;
 	private String donorName;
@@ -46,7 +44,8 @@ public class Donation implements Serializable {
 	public Donation() {
 		super();
 	}
-
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -62,7 +61,7 @@ public class Donation implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateAndTime() {
 		return dateAndTime;
 	}

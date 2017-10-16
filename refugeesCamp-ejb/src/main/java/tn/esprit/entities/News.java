@@ -22,12 +22,9 @@ public class News implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4360304435449051556L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	private String author;
 	private String content;
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfCreation;
 	
 	
@@ -46,7 +43,8 @@ public class News implements Serializable {
 		super();
 	}
 
-
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -65,6 +63,8 @@ public class News implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfCreation() {
 		return dateOfCreation;
 	}
