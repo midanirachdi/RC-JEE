@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import tn.esprit.entities.Camp;
 import tn.esprit.services.CampService;
@@ -29,8 +30,11 @@ public class CampRessource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Camp> listall(){
-		return cs.findAll();
+	public  Response listall(){
+		List<Camp> ls= cs.findAll();
+		if (!ls.isEmpty())
+			return Response.status(Status.FOUND).entity(ls).build();
+		return Response.serverError().build();
 	}
 	
 	@POST
@@ -57,8 +61,12 @@ public class CampRessource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Camp getCamp(@PathParam("id")int id){
-		return cs.findById(id);
+	public Response getCamp(@PathParam("id")int id){
+		Camp c= cs.findById(id);
+		if (c!=null) {
+			 return Response.status(Status.FOUND).entity(c).build();
+		}
+		return Response.serverError().build();
 	}
 	
 	
