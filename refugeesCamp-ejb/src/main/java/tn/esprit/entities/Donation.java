@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,6 +31,7 @@ public class Donation implements Serializable {
 	private boolean anonymous;
 	private String donorName;
 	private String message;
+	private User userDonor;
 	
 	public Donation(int id, double amount, Date dateAndTime, boolean anonymous, String donorName, String message) {
 		super();
@@ -92,6 +94,15 @@ public class Donation implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	@ManyToOne
+	public User getUserDonor() {
+		return userDonor;
+	}
+
+	public void setUserDonor(User userDonor) {
+		this.userDonor = userDonor;
 	}
 
 

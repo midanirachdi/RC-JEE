@@ -1,11 +1,15 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import tn.esprit.entities.News;
 
 /*
  * author Salim Ben Hassine
@@ -21,6 +25,7 @@ public class Media implements Serializable {
 	private int id;
 	private String title;
 	private String path;
+	private List<News> news;
 	
 	public Media(int id, String title, String path) {
 		super();
@@ -56,6 +61,15 @@ public class Media implements Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	@ManyToMany
+	public List<News> getNews() {
+		return news;
+	}
+
+	public void setNews(List<News> news) {
+		this.news = news;
 	}
 	
 	

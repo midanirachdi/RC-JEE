@@ -7,11 +7,14 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,7 +30,8 @@ public class News implements Serializable {
 	private String content;
 	private Date dateOfCreation;
 	
-	
+	private Admin newsCreator;
+	private List<Media> medias;
 	
 	public News(int id, String author, String content, Date dateOfCreation) {
 		super();
@@ -70,6 +74,26 @@ public class News implements Serializable {
 	}
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
+	}
+
+	@ManyToOne
+	public Admin getNewsCreator() {
+		return newsCreator;
+	}
+
+
+	public void setNewsCreator(Admin newsCreator) {
+		this.newsCreator = newsCreator;
+	}
+
+	@ManyToMany(mappedBy="news")
+	public List<Media> getMedias() {
+		return medias;
+	}
+
+
+	public void setMedias(List<Media> medias) {
+		this.medias = medias;
 	}
 	
 	

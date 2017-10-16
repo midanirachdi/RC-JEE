@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /*
 * author: Salim Ben Hassine
@@ -91,6 +91,15 @@ public class Stock implements Serializable {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	
+	@OneToMany
+	public List<Product> getProduits() {
+		return produits;
+	}
+
+	public void setProduits(List<Product> produits) {
+		this.produits = produits;
 	}
 
 	
