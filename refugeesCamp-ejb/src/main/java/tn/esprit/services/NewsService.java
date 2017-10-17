@@ -30,7 +30,7 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 
 	@Override
 	public List<News> findAll() {
-		String requete = "SELECT n FROM news n";
+		String requete = "SELECT n FROM News n";
 		return em.createQuery(requete, News.class).getResultList();
 	}
 

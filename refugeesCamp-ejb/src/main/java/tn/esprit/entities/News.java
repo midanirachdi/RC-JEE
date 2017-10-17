@@ -10,13 +10,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class News implements Serializable {
@@ -30,7 +33,8 @@ public class News implements Serializable {
 	private String content;
 	private Date dateOfCreation;
 	
-	private Admin newsCreator;
+	//private Admin newsCreator;
+	
 	private List<Media> medias;
 	
 	public News(int id, String author, String content, Date dateOfCreation) {
@@ -67,7 +71,7 @@ public class News implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfCreation() {
 		return dateOfCreation;
@@ -75,7 +79,7 @@ public class News implements Serializable {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-
+/*
 	@ManyToOne
 	public Admin getNewsCreator() {
 		return newsCreator;
@@ -85,8 +89,9 @@ public class News implements Serializable {
 	public void setNewsCreator(Admin newsCreator) {
 		this.newsCreator = newsCreator;
 	}
-
-	@ManyToMany(mappedBy="news")
+*/
+	
+	@ManyToMany(mappedBy="news",fetch=FetchType.EAGER)
 	public List<Media> getMedias() {
 		return medias;
 	}
