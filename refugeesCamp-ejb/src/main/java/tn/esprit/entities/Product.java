@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /*
 * author: Salim Ben Hassine
@@ -17,14 +18,14 @@ public class Product implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 3652474096808383171L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+
 	private int id;
 	private String productName;
 	private String type;
 	private String description;
 	private String provider;
 	private double unitPrice;
+	private Stock stock;
 	
 	public Product() {
 		super();
@@ -39,7 +40,9 @@ public class Product implements Serializable {
 		this.provider = provider;
 		this.unitPrice = unitPrice;
 	}
-
+	
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -86,6 +89,14 @@ public class Product implements Serializable {
 
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
+	}
+	@ManyToOne
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 	
 	

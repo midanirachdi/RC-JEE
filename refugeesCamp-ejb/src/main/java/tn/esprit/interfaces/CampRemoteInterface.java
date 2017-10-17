@@ -8,13 +8,15 @@ import tn.esprit.entities.Camp;
 
 @Remote
 public interface CampRemoteInterface {
-	public void addCamp(Camp i);
 	
-	public void deleteCamp(Camp i);
-	
-	public Camp findCamp(int id);
-	
-	public void updateCamp(Camp i);
-	
-	public List<Camp> findAll();
+	void add(Camp c);
+
+	void update(Camp c);
+
+	List<Camp> findAll();
+
+	Camp findById(int id);
+
+	void delete(Camp c);
+
 }

@@ -1,5 +1,7 @@
 package tn.esprit.test;
 
+import java.util.Date;
+
 import javax.ejb.EJBException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,12 +15,13 @@ public class CampServiceTest {
 		try {
 			Context ctx = new InitialContext();
 			CampRemoteInterface proxy=(CampRemoteInterface)ctx.lookup("/refugeesCamp-ear/refugeesCamp-ejb/CampService!tn.esprit.interfaces.CampRemoteInterface");
-//			proxy.addCamp(new Camp("campNow",true,"TN",500));
-//			proxy.addCamp(new Camp("campY",false,"FR",100));
-//			proxy.addCamp(new Camp("campX",true,"AN",200));
+//			proxy.add(new Camp("campNow",true,"TN",500,new Date()));
+//			proxy.add(new Camp("campY",false,"FR",100,new Date()));
+//			proxy.add(new Camp("campX",true,"AN",200,new Date()));
 //			System.out.println(proxy.findAll());
-//			Camp found =proxy.findCamp(1);
-//			proxy.deleteCamp(found);
+//			Camp found =proxy.findById(6);
+//			System.out.println(found);
+//			proxy.delete(found);
 //			System.out.println("Success");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
