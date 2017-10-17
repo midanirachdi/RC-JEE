@@ -61,7 +61,7 @@ public class RefugeeRessouces {
 		else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
 	}
 	
-	// to test with response 
+	 
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -85,9 +85,20 @@ public class RefugeeRessouces {
 	@PUT
 	@Path("/update/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String UpdateRefugee(@PathParam(value = "id") int id,Refugee r){
-		r.setId(id); // we have to add the setId or the hibernate will add a new record in DataBase
-		refugeeS.update(r);
-		return "update with seccess";
+	public Response UpdateRefugee(@PathParam(value = "id") int id,Refugee r){
+		Refugee re = refugeeS.findById(id);
+		if (re != null) {
+			r.setId(id); // we have to add the setId or the hibernate will add a new record in DataBase
+			refugeeS.update(r);
+			return Response.ok("Refugee updated successfuly").build();
+		} else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
+	}
+	
+	@GET
+	@Path("/sex/{sex}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetRefugeeBySex(@PathParam(value="sex") String sex) {
+		int f = refugeeS.countRefugeePerSex(sex);
+			return Response.status(200).entity(f).build();
 	}
 }

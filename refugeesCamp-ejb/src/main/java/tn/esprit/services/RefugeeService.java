@@ -62,4 +62,19 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 		return rl; 
 	}
 
+	@Override
+	public int countRefugeePerSex(String sex) {
+//		TypedQuery<int> query =(int) em.createQuery("SELECT COUNT(r) FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
+//		int c = query.getSingleResult();
+		List<Refugee> rl =new ArrayList<Refugee>();
+		rl = em.createQuery("Select r from Refugee r where r.sex =:p").setParameter("p",sex).getResultList();
+		return rl.size();
+	}
+//
+//	@Override
+//	public int countRefugeePerAge(int a, int b) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+
 }
