@@ -21,5 +21,6 @@ public interface StockRemoteInterface {
 	Stock findById(int id);
 
 	boolean delete(Stock stock);
+	
 }
 
