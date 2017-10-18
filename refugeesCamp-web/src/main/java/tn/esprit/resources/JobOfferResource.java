@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
 
