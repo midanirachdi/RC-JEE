@@ -20,27 +20,41 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 	public EntityManager em;
 	
 	@Override
-	public void add(Refugee refugee) {
+	public boolean add(Refugee refugee) {
+		try {
 		em.persist(refugee); // refugee est gérée par entity manager 
 		// em.flush(); // forcer l'instruction
 		System.out.println("Refugee added successfuly");
-		
+		return true;
+		} catch (Exception e){
+			System.out.println("Refugee not added ");
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Refugee refugee) {
-//		int result = em.createQuery("update Refugee r set r.dateOfBirth =: p0 , r.firstname =: p1 , r.lastName =: p2 , r.nationality =: p3 , r.sex =: p4 where r.id =:p5")
-//			.setParameter(0,refugee.getDateOfBirth()).setParameter(1,refugee.getFirstname()).setParameter(2,refugee.getLastName())
-//			.setParameter(3,refugee.getNationality()).setParameter(4,refugee.getSex()).setParameter(5,id).executeUpdate();
+	public boolean update(Refugee refugee) {
+		try {
 		Refugee r = em.merge(refugee); // merge renvoie l'objet géré et le MAJ 
 		System.out.println("Refugee updated successfuly");
+		return true;
+		}catch (Exception e){
+			System.out.println("Refugee not updated ");
+			return false;
+			}
+		}
 		
-	}
 
 	@Override
-	public void delete(Refugee refugee) {
+	public boolean delete(Refugee refugee) {
+		try {
 		em.remove(em.merge(refugee));
 		System.out.println("Refugee deleted successfuly");
+		return true;
+		}catch (Exception e) {
+			System.out.println("Refugee not deleted ");
+			return false;
+		}
 		
 	}
 
@@ -63,9 +77,10 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 	}
 
 	@Override
-	public int countRefugeePerSex(String sex) {
-//		TypedQuery<int> query =(int) em.createQuery("SELECT COUNT(r) FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
+	public int countRefugeePerGender(String sex) {
+//		TypedQuery<Re> query =(int) em.createQuery("SELECT COUNT(r) FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
 //		int c = query.getSingleResult();
+//		return c;
 		List<Refugee> rl =new ArrayList<Refugee>();
 		rl = em.createQuery("Select r from Refugee r where r.sex =:p").setParameter("p",sex).getResultList();
 		return rl.size();

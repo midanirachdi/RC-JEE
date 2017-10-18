@@ -68,9 +68,10 @@ public class RefugeeRessouces {
 	public Response DeleteRefugee(@PathParam(value = "id") int id) {
 		Refugee re = refugeeS.findById(id);
 		if (re != null) {
-			refugeeS.delete(re);
-			return Response.ok("Refugee deleted successfuly").build();
-		} else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
+			if (refugeeS.delete(re)){
+			return Response.ok("Refugee deleted successfuly").build();}
+			else return Response.status(500).build(); // 500 internal server error
+		} else return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : "+ id + " not found !").build();
 	}
 	
 	@POST
@@ -78,8 +79,10 @@ public class RefugeeRessouces {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response AddRefugee(Refugee r)
 	{
-		refugeeS.add(r);
-		return Response.status(Status.CREATED).build();
+		if (refugeeS.add(r)) {
+		return Response.status(Status.CREATED).build();	
+		}
+		else return Response.status(400).build(); // 400 Bad request
 	}
 	
 	@PUT
@@ -89,16 +92,19 @@ public class RefugeeRessouces {
 		Refugee re = refugeeS.findById(id);
 		if (re != null) {
 			r.setId(id); // we have to add the setId or the hibernate will add a new record in DataBase
-			refugeeS.update(r);
+			if (refugeeS.update(r)) {
 			return Response.ok("Refugee updated successfuly").build();
+			}else return Response.status(304).build(); // 304 Not modified
 		} else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
 	}
 	
 	@GET
-	@Path("/sex/{sex}")
+	@Path("/gender/{sex}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetRefugeeBySex(@PathParam(value="sex") String sex) {
-		int f = refugeeS.countRefugeePerSex(sex);
-			return Response.status(200).entity(f).build();
+	public Response GetRefugeeByGender(@PathParam(value="sex") String sex) {
+		int f = refugeeS.countRefugeePerGender(sex);
+		int f1 = refugeeS.findAll().size();
+		double f2 = (f*100)/f1;
+			return Response.status(200).entity(f2).build();
 	}
 }
