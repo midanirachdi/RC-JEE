@@ -139,7 +139,39 @@ public class StockResources {
 		return Response.status(404).build();
 	}
 	
-	
+	@PUT
+	@Path("/manageneeds/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response acceptOrdeclineNeedDemand(@PathParam(value = "id") int id,Need need) {
+		Need needwithid = stockService.findNeedById(id);
+		
+		if(need.getQuantity()!=0&&need.getType()!=null&&need.getId()==needwithid.getId()&&need.getQuantity()==needwithid.getQuantity()) {
+			if(need.getStatus()==1&&needwithid.getStatus()==0) {
+				
+				if(stockService.AcceptNeedDemand(need))
+					return Response.status(Status.OK).build();
+				else return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
+			
+			if(need.getStatus()==-1&&needwithid.getStatus()==0) {
+				if(stockService.RefuseNeedDemand(need))
+					return Response.status(Status.OK).build();
+				else return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
+			
+			if(need.getStatus()==0&&needwithid.getStatus()==-1) {
+				if(stockService.BackToPendingNeedDemand(need))
+					return Response.status(Status.OK).build();
+					else return Response.status(Status.NOT_ACCEPTABLE).build();
+			}
+
+			
+		}
+		
+		
+		return Response.status(Status.BAD_REQUEST).build();
+	}
 
 }
 

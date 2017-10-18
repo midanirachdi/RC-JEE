@@ -24,10 +24,26 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 
 	@Override
 	public boolean add(Stock stock) {
-		if (stock != null) {
-			em.persist(stock);
+		String req="Select s from Stock s where s.stockType=:p";
+		List<Stock> stockTest=em.createQuery(req,Stock.class).setParameter("p",stock.getStockType()).getResultList();
+		if(stockTest.size()==0) {
+			if (stock != null) {
+				em.persist(stock);
+				return true;
+			}
+		}else if(stockTest.size()==1) {
+			if (stock != null) {
+			Stock stockAux=new Stock();
+			stockAux=stockTest.get(0);
+			stock.setId(stockAux.getId());
+			stock.setStockValue(stockAux.getStockValue()+stock.getStockValue());
+			stock.setQteTotal(stockAux.getQteInStock()+stock.getQteTotal());
+			stock.setQteInStock(stock.getQteTotal());
+			em.merge(stock);
 			return true;
 		}
+		}
+		
 		return false;
 
 	}
@@ -75,13 +91,15 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 		int status=0;
 		if(need.getStatus()==1) {
 			
-			String req="Select s from stock s where s.stockType=:p";
+			String req="Select s from Stock s where s.stockType=:p";
 			stock=em.createQuery(req,Stock.class).setParameter("p",need.getType()).getSingleResult();
 		
 			/* * check Status **/ 
 			if(stock.getQteInStock()>=need.getQuantity()) {
 				/* status modification */
 				status=1;
+				double initValue=stock.getStockValue();
+				stock.setStockValue(stock.getStockValue()-((initValue/stock.getQteInStock())*need.getQuantity()));
 				stock.setQteInStock(stock.getQteInStock()-need.getQuantity());
 				need.setStatus(status);
 				/* persist */
@@ -98,25 +116,29 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 	}
 	
 	public boolean RefuseNeedDemand(Need need) {
-		Stock stock=new Stock();
 		int status=0;
 		if(need.getStatus()==-1) {
 			
-			String req="Select s from stock s where s.stockType=:p";
-			stock=em.createQuery(req,Stock.class).setParameter("p",need.getType()).getSingleResult();
-		
-			/* * check Status **/ 
-			if(stock.getQteInStock()>=need.getQuantity()) {
-				/* status modification */
 				status=-1;
 				need.setStatus(status);
 				/* persist */
 				if (need != null) {
 					em.merge(need);}
-				return true;
-			}
+				return true;	
+		}
 		
-		
+		return false;
+	}
+	
+	public boolean BackToPendingNeedDemand(Need need) {
+		int status=0;
+		if(need.getStatus()==0) {
+			status=0;
+			need.setStatus(status);
+			/* persist */
+			if (need != null) {
+					em.merge(need);}
+			return true;
 		}
 		
 		return false;

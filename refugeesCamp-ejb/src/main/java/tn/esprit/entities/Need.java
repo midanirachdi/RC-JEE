@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 //<<<<<<< HEAD
 //import javax.persistence.Id;
 //=======
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 //@Entity
@@ -26,6 +25,7 @@ public class Need implements Serializable{
 	private int id;
 	private String description;
 	/* ******************* Added */
+	@Enumerated(EnumType.STRING)/* added */ 
 	private Stock.stockNeedsEnum type;
 	private int quantity;
 	private int status=0; /* status=-1 refused, status=1 Accepted, status=0 pending */
@@ -49,7 +49,7 @@ public class Need implements Serializable{
 		this.id = id;
 	}
 	
-	@Enumerated(EnumType.STRING)/* added */ 
+	
 	public Stock.stockNeedsEnum getType() {
 		return type;
 	}
