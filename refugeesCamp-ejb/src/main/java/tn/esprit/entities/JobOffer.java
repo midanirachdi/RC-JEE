@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,8 +28,8 @@ public class JobOffer implements Serializable {
 	private Date begindate;
 	private Date enddate;
 	private int contactnumber;
-//	private DistrictChef districtchef;
-//	private CampChef campchef;
+	private DistrictChef districtchef;
+	private CampChef campchef;
 	private static final long serialVersionUID = 1L;
 
 	public JobOffer() {
@@ -44,6 +45,17 @@ public class JobOffer implements Serializable {
 		this.contactnumber = contactnumber;
 	}
 
+
+	public JobOffer(String description, Date begindate, Date enddate, int contactnumber, DistrictChef districtchef,
+			CampChef campchef) {
+		super();
+		this.description = description;
+		this.begindate = begindate;
+		this.enddate = enddate;
+		this.contactnumber = contactnumber;
+		this.districtchef = districtchef;
+		this.campchef = campchef;
+	}
 
 
 	@Id
@@ -88,20 +100,20 @@ public class JobOffer implements Serializable {
 	public void setContactnumber(int contactnumber) {
 		this.contactnumber = contactnumber;
 	}
-//	@ManyToOne
-//	public DistrictChef getDistrictchef() {
-//		return districtchef;
-//	}
-//	public void setDistrictchef(DistrictChef districtchef) {
-//		this.districtchef = districtchef;
-//	}
-//	@ManyToOne
-//	public CampChef getCampchef() {
-//		return campchef;
-//	}
-//	public void setCampchef(CampChef campchef) {
-//		this.campchef = campchef;
-//	}
+	@ManyToOne
+	public DistrictChef getDistrictchef() {
+		return districtchef;
+	}
+	public void setDistrictchef(DistrictChef districtchef) {
+		this.districtchef = districtchef;
+	}
+	@ManyToOne
+	public CampChef getCampchef() {
+		return campchef;
+	}
+	public void setCampchef(CampChef campchef) {
+		this.campchef = campchef;
+	}
 
 
 
