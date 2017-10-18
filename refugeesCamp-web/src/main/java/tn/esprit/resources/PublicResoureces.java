@@ -1,15 +1,20 @@
 package tn.esprit.resources;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,7 +41,7 @@ public class PublicResoureces {
 		User itemWithOwner=null;
 		try {
 			itemWithOwner = new ObjectMapper().readValue(req, User.class);
-			us.create(itemWithOwner);
+			us.registerUser(itemWithOwner);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -45,4 +50,29 @@ public class PublicResoureces {
 		
 		return itemWithOwner.getClass().getName();
 	}
+	
+	@GET
+	@Path("/login")
+	public Response addUser(@HeaderParam("Athorization") String userNameAndPassword) {
+
+		String decodedString="";
+		byte[] decoded = Base64.getDecoder().decode(userNameAndPassword);
+		try {
+		decodedString=(new String(decoded, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return Response.status(200)
+			.entity("userName and password is  : " + decodedString)
+			.build();
+
+	}
+	
+	
+	
+	
+
 }

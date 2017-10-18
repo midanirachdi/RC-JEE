@@ -38,6 +38,8 @@ public abstract class AbstractFacade <T extends IdentifiedInterface>{
 		return getEntityManager().find(entityClass, id);
 	}
 	
+
+	
 	public List<T> findAll(){
 		CriteriaQuery cq= getEntityManager().getCriteriaBuilder().createQuery();
 		cq.select(cq.from(entityClass));
@@ -60,6 +62,5 @@ public abstract class AbstractFacade <T extends IdentifiedInterface>{
 		Query q= getEntityManager().createQuery(cq);
 		return ((Long) q.getSingleResult()).intValue();
 	}
-	
 	
 }

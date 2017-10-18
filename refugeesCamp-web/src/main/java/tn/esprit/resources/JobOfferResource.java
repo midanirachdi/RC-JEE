@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
 
@@ -43,6 +44,7 @@ public class JobOfferResource {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
+	//@AllowTo(roles={"Admin"})
 	public Response AddJobOffer(JobOffer jo) {
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
