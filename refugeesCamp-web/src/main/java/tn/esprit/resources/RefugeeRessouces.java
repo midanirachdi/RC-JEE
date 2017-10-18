@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
 import tn.esprit.services.RefugeeService;
@@ -73,10 +74,10 @@ public class RefugeeRessouces {
 			else return Response.status(500).build(); // 500 internal server error
 		} else return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : "+ id + " not found !").build();
 	}
-	
+	// @AllowTo(roles={"Admin"})
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON) 
 	public Response AddRefugee(Refugee r)
 	{
 		if (refugeeS.add(r)) {
