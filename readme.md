@@ -45,4 +45,22 @@ and ending with your email<br>
 8) go to wildfly and test connection </p> 
 
 <!-- hafsa test  -->
+<hr>
+<h1> To secure Web services</h1>
+<ul>
+ <li>First you need to add @AllowTo before your webService Methode</li>
+ <li> the @AllowTO annotation must take a parameter of type String table " String[]"</li>
+ <li> Role allowed are "Admin", "CampChef","DistrictChef" and "Volunteer"</li>
+</ul>
 
+<h3>Exemple :</h3>
+
+@GET <br>
+@Produces("*****")<br>
+@AllowTo({"Admin","DistrictChef"})<br>
+public Response doSomething()<br>
+{<br>
+	/*toDo<br>
+}<br>
+
+in this exemple only users with the role Admin or DistrictChef will be allowed to use this methode
