@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
@@ -20,6 +21,7 @@ public class DistrictChef extends User{
 	
 	  @ManyToOne(fetch=FetchType.LAZY)
 	  @JoinColumn(name="camp_ID")	
+	  @JsonBackReference
 	  private Camp camp;
 	  
 	  @OneToMany(mappedBy="districtchef")

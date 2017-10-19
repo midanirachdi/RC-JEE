@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Refugee {
 	@Id
@@ -22,7 +24,7 @@ public class Refugee {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="camp_ID")	
 	private Camp rcamp;
-	
+
 	public Refugee() {
 		super();
 	}
@@ -83,7 +85,9 @@ public class Refugee {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="camp_ID")	
+	@JsonBackReference
 	public Camp getRcamp() {
 		return rcamp;
 	}
@@ -91,8 +95,8 @@ public class Refugee {
 	public void setRcamp(Camp rcamp) {
 		this.rcamp = rcamp;
 	}
-	
-	
+
+
 
 
 }
