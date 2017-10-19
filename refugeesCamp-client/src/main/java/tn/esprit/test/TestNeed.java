@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import tn.esprit.entities.Need;
+import tn.esprit.entities.Stock;
 import tn.esprit.interfaces.NeedService;
 import tn.esprit.services.NeedImpl;
 
@@ -21,7 +22,7 @@ public class TestNeed {
 	
 		Need projet=new Need();
 		
-		projet.setType("habit");
+		projet.setType(Stock.stockNeedsEnum.Clothes);
 		projet.setDescription("manquant");
 		
 

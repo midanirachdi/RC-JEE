@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 //<<<<<<< HEAD
 //import javax.persistence.Id;
 //=======
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 //@Entity
@@ -22,8 +23,16 @@ public class Need implements Serializable{
 	@Id
 	@GeneratedValue
 	private int id;
-	private String type;
 	private String description;
+	/* ******************* Added */
+	@Enumerated(EnumType.STRING)/* added */ 
+	private Stock.stockNeedsEnum type;
+	private int quantity;
+	private int status=0; /* status=-1 refused, status=1 Accepted, status=0 pending */
+	
+	/* ******************** */
+	
+	
 //<<<<<<< HEAD
 	
 	private static final long serialVersionUID = 1L;
@@ -39,10 +48,12 @@ public class Need implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getType() {
+	
+	
+	public Stock.stockNeedsEnum getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Stock.stockNeedsEnum type) {
 		this.type = type;
 	}
 	public String getDescription() {
@@ -65,12 +76,26 @@ public class Need implements Serializable{
 	public Need() {
 		super();
 	}
-	public Need(String type, String description, Date date) {
+	public Need(Stock.stockNeedsEnum type, String description, Date date) {
 		super();
 		this.type = type;
 		this.description = description;
 		this.date = date;
 	}
 	
+	/* **************Added */
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	/* *******************/
 	
 }

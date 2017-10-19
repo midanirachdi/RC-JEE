@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*
 * author: Salim Ben Hassine
 */
@@ -91,6 +93,7 @@ public class Product implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 	@ManyToOne
+	@JsonIgnore
 	public Stock getStock() {
 		return stock;
 	}
