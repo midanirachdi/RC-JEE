@@ -21,6 +21,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import tn.esprit.activator.RestActivator;
 import tn.esprit.authorization.AllowTo;
 
@@ -45,13 +46,21 @@ public class CostumFilter implements ContainerRequestFilter {
 		
 		if ((auth!=null)&& auth.startsWith(AUTH_PREFIX)) {
 			String[] authTab = auth.split(" ");
+			Jws<Claims> jws=null;
+			try{
+			  jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64))
+						.parseClaimsJws(authTab[1]);
 
-			Jws<Claims> jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64))
-					.parseClaimsJws(authTab[1]);
-
-			String tokenRole = jws.getBody().get("role").toString();
-			if (!hasRole(tokenRole))
+				String tokenRole = jws.getBody().get("role").toString();
+				if (!hasRole(tokenRole))
+					ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			}
+			catch(SignatureException e)
+			{
 				ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			}
+
+
 		}
 
 		else
