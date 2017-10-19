@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,15 +24,14 @@ public class Donation implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5222348366362129628L;
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	
 	private int id;
 	private double amount;
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAndTime;
 	private boolean anonymous;
 	private String donorName;
 	private String message;
+	private User userDonor;
 	
 	public Donation(int id, double amount, Date dateAndTime, boolean anonymous, String donorName, String message) {
 		super();
@@ -46,7 +46,8 @@ public class Donation implements Serializable {
 	public Donation() {
 		super();
 	}
-
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -62,7 +63,7 @@ public class Donation implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateAndTime() {
 		return dateAndTime;
 	}
@@ -93,6 +94,15 @@ public class Donation implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	@ManyToOne
+	public User getUserDonor() {
+		return userDonor;
+	}
+
+	public void setUserDonor(User userDonor) {
+		this.userDonor = userDonor;
 	}
 
 
