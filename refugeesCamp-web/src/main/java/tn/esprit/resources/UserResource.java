@@ -53,6 +53,7 @@ public class UserResource {
 	@AllowTo(roles={"Admin"})
 	public Response doList()
 	{
+		System.out.println("method");
 		return Response.status(Response.Status.ACCEPTED).entity(us.findAll()).build();
 	}
 	
