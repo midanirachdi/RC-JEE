@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,18 +18,23 @@ import javax.persistence.OneToMany;
 */
 @Entity
 public class Stock implements Serializable {
-	
-	/**
-	 * 
-	 */
+	public static enum stockNeedsEnum{
+		Clothes,
+		Food,
+		Tents,
+		Water,
+		Medicines,
+		Covers
+	}
 	private static final long serialVersionUID = -1085949622344665790L;
 	
 	private int id;
-	private String stockType;
+	private stockNeedsEnum stockType;
 	private int qteTotal;
 	private int qteInStock;
 	private double stockValue;
 	private String notes;
+	
 	
 	List<Product> produits=new ArrayList<Product>();
 	
@@ -34,7 +42,7 @@ public class Stock implements Serializable {
 		super();
 	}
 
-	public Stock(int id, String stockType, int qteTotal, int qteInStock, double stockValue, String notes) {
+	public Stock(int id, stockNeedsEnum stockType, int qteTotal, int qteInStock, double stockValue, String notes) {
 		super();
 		this.id = id;
 		this.stockType = stockType;
@@ -52,12 +60,13 @@ public class Stock implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getStockType() {
+	
+	@Enumerated(EnumType.STRING)
+	public stockNeedsEnum getStockType() {
 		return stockType;
 	}
 
-	public void setStockType(String stockType) {
+	public void setStockType(stockNeedsEnum stockType) {
 		this.stockType = stockType;
 	}
 
@@ -93,7 +102,7 @@ public class Stock implements Serializable {
 		this.notes = notes;
 	}
 	
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER,mappedBy="stock")
 	public List<Product> getProduits() {
 		return produits;
 	}
