@@ -108,4 +108,12 @@ public class RefugeeRessouces {
 		double f2 = (f*100)/f1;
 			return Response.status(200).entity(f2).build();
 	}
+	
+	@GET
+	@Path("/AgeCategory")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response CountRefugeePerAge() {
+		List<Integer> liste = refugeeS.countRefugeePerAge();
+		return Response.status(200).entity(liste).build();
+	}
 }

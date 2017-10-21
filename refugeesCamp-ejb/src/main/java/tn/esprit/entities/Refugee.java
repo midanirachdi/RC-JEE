@@ -22,7 +22,6 @@ public class Refugee {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="camp_ID")	
 	private Camp rcamp;
-	
 	public Refugee() {
 		super();
 	}
@@ -92,7 +91,4 @@ public class Refugee {
 		this.rcamp = rcamp;
 	}
 	
-	
-
-
 }

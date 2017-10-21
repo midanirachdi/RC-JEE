@@ -22,8 +22,8 @@ public interface RefugeeInterfaceLocal {
 		List<Refugee> findByName(String name);
 		
 		int countRefugeePerGender(String sex);
-//		
-//		int countRefugeePerAge(int a, int b);
+		
+		List<Integer> countRefugeePerAge();
 		
 }
 

@@ -8,6 +8,7 @@ import tn.esprit.entities.Refugee;
 
 @Remote
 public interface RefugeeInterfaceRemote {
+	
 	boolean add(Refugee refugee);
 
 	boolean update(Refugee refugee);
@@ -21,6 +22,6 @@ public interface RefugeeInterfaceRemote {
 	List<Refugee> findByName(String name);
 	
 	int countRefugeePerGender(String sex);
-//	
-//	int countRefugeePerAge(int a, int b);
+	
+	List<Integer> countRefugeePerAge();
 }

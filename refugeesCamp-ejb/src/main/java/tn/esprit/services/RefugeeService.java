@@ -1,6 +1,8 @@
 package tn.esprit.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -23,7 +25,7 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 	public boolean add(Refugee refugee) {
 		try {
 		em.persist(refugee); // refugee est gérée par entity manager 
-		// em.flush(); // forcer l'instruction
+		em.flush(); // forcer l'instruction
 		System.out.println("Refugee added successfuly");
 		return true;
 		} catch (Exception e){
@@ -78,18 +80,46 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 
 	@Override
 	public int countRefugeePerGender(String sex) {
-//		TypedQuery<Re> query =(int) em.createQuery("SELECT COUNT(r) FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
+//		TypedQuery<int> query = em.createQuery("SELECT COUNT(r) in c FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
 //		int c = query.getSingleResult();
 //		return c;
 		List<Refugee> rl =new ArrayList<Refugee>();
 		rl = em.createQuery("Select r from Refugee r where r.sex =:p").setParameter("p",sex).getResultList();
 		return rl.size();
 	}
-//
-//	@Override
-//	public int countRefugeePerAge(int a, int b) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 
+	@Override
+	public List<Integer> countRefugeePerAge() {
+		List<Integer> statAge = new ArrayList<Integer>();
+		int bebe = 0,enfant =0,ado =0,adulte =0,agee =0;
+		List<Refugee> l = new ArrayList<Refugee>();
+		l=findAll();
+		for (Refugee r : l) {
+			if (r.getDateOfBirth() != null) {
+				
+				if (getAge(r.getDateOfBirth()) >=0 && getAge(r.getDateOfBirth()) <=2 ) {
+					bebe++;
+				}else if (getAge(r.getDateOfBirth())>2 && getAge(r.getDateOfBirth()) <= 12) {
+					enfant++;
+				}else if (getAge(r.getDateOfBirth())>12 && getAge(r.getDateOfBirth()) <= 18) {
+					ado++;
+				}else if (getAge(r.getDateOfBirth())>18 && getAge(r.getDateOfBirth())<=70) {
+					adulte++;
+				}else {
+					agee++;
+				}
+		    }   
+		}
+			statAge.add(bebe);
+			statAge.add(enfant);
+			statAge.add(ado);
+			statAge.add(adulte);
+			statAge.add(agee);
+	return statAge;
+	}
+	
+	public int getAge(Date d) {
+	int age =  (Calendar.getInstance().get(Calendar.YEAR))-(d.getYear()+1900);
+	return age;
+    }
 }
