@@ -115,7 +115,7 @@ public class JobOffer implements Serializable {
 	public void setContactnumber(int contactnumber) {
 		this.contactnumber = contactnumber;
 	}
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="districtchef_ID",referencedColumnName="id",insertable=true,updatable=true)
 	public DistrictChef getDistrictchef() {
 		return districtchef;
@@ -123,7 +123,7 @@ public class JobOffer implements Serializable {
 	public void setDistrictchef(DistrictChef districtchef) {
 		this.districtchef = districtchef;
 	}
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="campchef_ID",referencedColumnName="id",insertable=true,updatable=true)
 	public CampChef getCampchef() {
 		return campchef;
