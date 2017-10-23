@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -101,6 +102,7 @@ public class JobOffer implements Serializable {
 		this.contactnumber = contactnumber;
 	}
 	@ManyToOne
+	@JoinColumn(name="idDistrictchef",referencedColumnName="id",insertable=false,updatable=false)
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}
@@ -108,6 +110,7 @@ public class JobOffer implements Serializable {
 		this.districtchef = districtchef;
 	}
 	@ManyToOne
+	@JoinColumn(name="idCampchef",referencedColumnName="id",insertable=false,updatable=false)
 	public CampChef getCampchef() {
 		return campchef;
 	}

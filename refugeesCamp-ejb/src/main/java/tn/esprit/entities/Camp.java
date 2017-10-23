@@ -1,13 +1,19 @@
 package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -23,6 +29,9 @@ public class Camp implements Serializable{
 
 	private String name;
 	
+	private List<Refugee> refugees;
+	
+	private List<DistrictChef> districtchiefs;
 	
 	private CampChef campchief;
 	
@@ -100,6 +109,27 @@ public class Camp implements Serializable{
 	}
 	public void setState(boolean state) {
 		this.state = state;
+	}
+	
+	
+	
+	@OneToMany(mappedBy="rcamp",fetch=FetchType.EAGER)
+	@JsonManagedReference
+	public List<Refugee> getRefugees() {
+		return refugees;
+	}
+
+	public void setRefugees(List<Refugee> refugees) {
+		this.refugees = refugees;
+	}
+	@OneToMany(mappedBy="camp",fetch=FetchType.EAGER)
+	@JsonManagedReference
+	public List<DistrictChef> getDistrictchiefs() {
+		return districtchiefs;
+	}
+
+	public void setDistrictchiefs(List<DistrictChef> districtchiefs) {
+		this.districtchiefs = districtchiefs;
 	}
 
 	@Override

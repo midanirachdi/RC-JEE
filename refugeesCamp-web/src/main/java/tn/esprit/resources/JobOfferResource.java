@@ -44,6 +44,7 @@ public class JobOfferResource {
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
+	//@AllowTo(roles={"Admin"})
 	public Response AddJobOffer(JobOffer jo) {
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();

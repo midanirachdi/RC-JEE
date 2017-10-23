@@ -9,11 +9,11 @@ import tn.esprit.entities.Refugee;
 @Local
 public interface RefugeeInterfaceLocal {
 
-		void add(Refugee refugee);
+		boolean add(Refugee refugee);
 
-		void update(Refugee refugee);
+		boolean update(Refugee refugee);
 		
-		void delete(Refugee refugee);
+		boolean delete(Refugee refugee);
 
 		List<Refugee> findAll();
 
@@ -21,9 +21,9 @@ public interface RefugeeInterfaceLocal {
 
 		List<Refugee> findByName(String name);
 		
-		int countRefugeePerSex(String sex);
-//		
-//		int countRefugeePerAge(int a, int b);
+		int countRefugeePerGender(String sex);
+		
+		List<Integer> countRefugeePerAge();
 		
 }
 
