@@ -42,6 +42,7 @@ public class UserResource {
 			us.registerUser(user);
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 			return Response.status(Response.Status.FORBIDDEN).build();
 		}
 		
