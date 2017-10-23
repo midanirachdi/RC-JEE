@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
 
 @Remote
@@ -21,6 +22,10 @@ public interface RefugeeInterfaceRemote {
 	List<Refugee> findByName(String name);
 	
 	int countRefugeePerGender(String sex);
-//	
-//	int countRefugeePerAge(int a, int b);
+	
+	List<Refugee> findBestCandidates(String fieldOfWork);//-midani
+	
+	boolean sendMail(String jobOfferTitle , String refugeeEmail, int id_jobOffer, int id_refugee);	
+
+	//	int countRefugeePerAge(int a, int b);
 }

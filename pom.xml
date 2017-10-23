@@ -60,6 +60,30 @@
 				<version>${primefaces.version}</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext</artifactId>
+				<version>2.1.7</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.bouncycastle</groupId>
+				<artifactId>bctsp-jdk14</artifactId>
+				<version>1.38</version>
+			</dependency>
+			<dependency>
+				<groupId>bouncycastle</groupId>
+				<artifactId>bcmail-jdk14</artifactId>
+				<version>138</version>
+			</dependency>
+			<dependency>
+				<groupId>bouncycastle</groupId>
+				<artifactId>bcprov-jdk14</artifactId>
+				<version>138</version>
+			</dependency>
+
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -96,22 +120,5 @@
 		<module>refugeesCamp-client</module>
 	</modules>
 	<dependencies>
-	<!-- jackson-databind,annotations & core are used for date & datetime formating 
-		-midani -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.9.1</version>
-		</dependency>
 	</dependencies>
 </project>

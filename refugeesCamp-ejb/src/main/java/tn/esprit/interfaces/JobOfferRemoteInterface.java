@@ -16,6 +16,8 @@ public interface JobOfferRemoteInterface {
 	List<JobOffer> findAll();
 
 	JobOffer findById(int id);
+	
+	List<JobOffer> findByDistrictChief(int id);
 
 	boolean delete(JobOffer joboffer);
 

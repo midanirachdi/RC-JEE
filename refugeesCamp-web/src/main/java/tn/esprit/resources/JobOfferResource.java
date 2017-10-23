@@ -20,14 +20,19 @@ import javax.ws.rs.core.Response.Status;
 import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
+import tn.esprit.services.RefugeeService;
 
+
+@Path("/joboffers")
 @RequestScoped
-@Path("/joboffer")
 public class JobOfferResource {
 
 	@EJB
 	JobOfferImpl joService;
 
+	@EJB
+	RefugeeService rs;
+	
 	public JobOfferResource() {
 		super();
 	}
@@ -63,6 +68,7 @@ public class JobOfferResource {
 		return Response.status(Status.NOT_FOUND).build();
 	}
 
+
 	@GET
 	@Path("/list/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,6 +79,19 @@ public class JobOfferResource {
 		return Response.status(404).build();
 	}
 
+	@GET
+	@Path("/list/dc/{dc_id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
+		
+		List<JobOffer> jolist = new ArrayList<JobOffer>();
+		jolist = joService.findByDistrictChief(dc_id);
+
+		if (!jolist.isEmpty())
+			return Response.status(Status.CREATED).entity(jolist).build();
+		return Response.status(Status.NOT_FOUND).build();
+	}
+	
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
