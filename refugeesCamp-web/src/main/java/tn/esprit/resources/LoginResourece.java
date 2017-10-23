@@ -94,7 +94,7 @@ public class LoginResourece {
 			return Response.status(Status.NOT_FOUND).build();
 		
 		try {
-			   Date exp = new Date(System.currentTimeMillis() + 300);
+			   Date exp = new Date(System.currentTimeMillis() + 300000);
 			   String jwtString = Jwts.builder()
 					   .claim("id",u.getId())
 					   .claim("role","Reset")
@@ -102,9 +102,9 @@ public class LoginResourece {
 					   .signWith(SignatureAlgorithm.HS512, KEY_B64).compact();
 			   URI baseUri = uri.getBaseUri();
 			   URL baseUrl= baseUri.toURL();
-			   URL composeUrl=new URL(baseUrl.getProtocol(), baseUrl.getHost(), baseUrl.getPort(), baseUrl.getFile() + "/home/credentials?taccess="+jwtString, null);
+			   URL composeUrl=new URL(baseUrl.getProtocol(), baseUrl.getHost(), baseUrl.getPort(), baseUrl.getFile() + "home/credentials?taccess="+jwtString, null);
 			   String subject="reset mail";
-			   String content="To reset your password please click the link below <br>"+composeUrl+"<br> this link is valid only for 5 mn";
+			   String content="To reset your password please click the link below \n"+composeUrl+"\n this link is valid only for 5 mn";
 			   ms.send(u.getEmail(),subject,content);
 			   
 		} catch (Exception e) {
@@ -121,6 +121,22 @@ public class LoginResourece {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response changePasswd(@QueryParam("taccess") String taccess){
+		Jws<Claims> jws = null;
+	   String newPass;
+		try {
+			jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(taccess);
+
+			int id = Integer.parseInt(jws.getBody().get("id").toString());
+			 newPass=us.generatePassword(id);
+			 User u=us.find(id);
+			   String subject="reset mail";
+			   String content="You'r new password is : "+newPass;
+			   ms.send(u.getEmail(),subject,content);
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		return Response.status(200).build();
 	}

@@ -12,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -50,7 +51,6 @@ public class UserResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"Admin"})
 	public Response doList()
 	{
 		System.out.println("method");
@@ -76,7 +76,7 @@ public class UserResource {
 		User user=null;
 		try {
 			user = new ObjectMapper().readValue(req, User.class);
-			us.update(user);
+			us.updateUserNoPassword(user);
 			
 		} catch (IOException e) {
 			return Response.status(Response.Status.NOT_MODIFIED).build();
@@ -97,6 +97,38 @@ public class UserResource {
 	}
 	
 	
+	
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/search")
+	public Response advancedSearch(
+			@QueryParam("id") String id,
+			@QueryParam("fName") String fName,
+			@QueryParam("lName") String lName,
+			@QueryParam("email") String email)
+	{
+
+		
+		return  Response.status(Response.Status.ACCEPTED).entity(us.searchParams(id, lName, fName, email)).build();
+	}
+	
+	
+	
+	@GET
+	@Path("/paginator")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)	
+	public Response paginatorQuery(
+			@QueryParam("page") int page,
+			@QueryParam("rowNumber") int rowNumber
+		)
+	{
+
+		
+		return  Response.status(Response.Status.ACCEPTED).header("nbr", us.count()).entity(us.findRange(page, rowNumber)).build();
+	}
 	
 	
 	
