@@ -42,6 +42,18 @@ public class DonationRessource {
 	}
 	
 	@GET
+	@Path("/avg/{campId}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getCampAvg(@PathParam("campId") Integer id){
+		Camp camp = new Camp();
+		camp.setId(id);
+		return Response.ok(donationservice.getCampAvgTotalDonation(camp)).build();
+	}
+	
+		
+	
+	
+	@GET
 	@Path("/{total}/{currency}")
 	public Response generateDonation(@PathParam("total")double total,@PathParam("currency")String currency){
 		String clientId = "AcG08W3mBVODYQMJFzB_ojA3ylNxL4ot9ptCY92akURy9WOFxi426XEvqYlZZG38APEqsJLzxwb0NmH-";

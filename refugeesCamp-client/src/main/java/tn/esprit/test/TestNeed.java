@@ -1,5 +1,7 @@
 package tn.esprit.test;
 
+import java.util.Date;
+
 //import java.sql.Date;
 //import java.util.ArrayList;
 //import java.util.List;
@@ -19,15 +21,17 @@ public class TestNeed {
 		
 		InitialContext ctx = new InitialContext();
 		NeedService proxy1=(NeedService)ctx.lookup("refugeesCamp-ear/refugeesCamp-ejb/NeedImpl!tn.esprit.interfaces.NeedService");
-	
+	//////// add/////////////
 		Need projet=new Need();
-		
-		projet.setType(Stock.stockNeedsEnum.Clothes);
+		Date date=new Date();
+		projet.setDate(date);
+		projet.setType(Stock.stockNeedsEnum.Covers);
+		projet.setQuantity(3);
 		projet.setDescription("manquant");
 		
-
 	    proxy1.addNeed(projet);
 	    System.out.println("l'ajout a été effectué lhmd");
+	    ///////////// 
 
 	
 	}

@@ -8,18 +8,23 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-
 public class Need implements Serializable{
 
 	@Id
 	@GeneratedValue
 	private int id;
-	private String description;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
+	private String description;
+	
 	/* ******************* Added */
 	@Enumerated(EnumType.STRING)/* added */ 
 	private Stock.stockNeedsEnum type;
@@ -27,9 +32,7 @@ public class Need implements Serializable{
 	private int status=0; /* status=-1 refused, status=1 Accepted, status=0 pending */
 	
 	/* ******************** */
-	
-	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	
@@ -60,7 +63,6 @@ public class Need implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	private Date date;
 	@Override
 	public String toString() {
 		return "Need [id=" + id + ", type=" + type + ", description=" + description + ", date=" + date + "]";
