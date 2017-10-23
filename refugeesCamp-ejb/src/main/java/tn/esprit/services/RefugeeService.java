@@ -120,6 +120,8 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 	
 	public int getAge(Date d) {
 	int age =  (Calendar.getInstance().get(Calendar.YEAR))-(d.getYear()+1900);
+	System.out.println(d.getYear());
+	System.out.println(d.getYear()+1900);
 	return age;
     }
 }
