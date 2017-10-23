@@ -80,9 +80,6 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 
 	@Override
 	public int countRefugeePerGender(String sex) {
-//		TypedQuery<int> query = em.createQuery("SELECT COUNT(r) in c FROM Refugee r WHERE r.sex =:p").setParameter(0,sex);
-//		int c = query.getSingleResult();
-//		return c;
 		List<Refugee> rl =new ArrayList<Refugee>();
 		rl = em.createQuery("Select r from Refugee r where r.sex =:p").setParameter("p",sex).getResultList();
 		return rl.size();
@@ -120,8 +117,6 @@ public class RefugeeService implements RefugeeInterfaceRemote,RefugeeInterfaceLo
 	
 	public int getAge(Date d) {
 	int age =  (Calendar.getInstance().get(Calendar.YEAR))-(d.getYear()+1900);
-	System.out.println(d.getYear());
-	System.out.println(d.getYear()+1900);
 	return age;
     }
 }
