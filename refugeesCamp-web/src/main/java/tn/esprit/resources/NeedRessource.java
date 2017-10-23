@@ -1,5 +1,7 @@
 package tn.esprit.resources;
 
+import java.io.IOException;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -23,6 +25,7 @@ import tn.esprit.services.NeedImpl;
 public class NeedRessource {
 	@EJB
 	NeedImpl metier;
+	
 	
 	@GET
 	@Path("/test")
@@ -50,6 +53,11 @@ public class NeedRessource {
 		return Response.ok(metier.listAll()).build();
 		
 	}
+	
+
+	
+	
+	
 	/*
 	@PUT
 	@Path("/update")

@@ -9,6 +9,7 @@ import tn.esprit.entities.Refugee;
 
 @Remote
 public interface RefugeeInterfaceRemote {
+	
 	boolean add(Refugee refugee);
 
 	boolean update(Refugee refugee);
@@ -27,5 +28,6 @@ public interface RefugeeInterfaceRemote {
 	
 	boolean sendMail(String jobOfferTitle , String refugeeEmail, int id_jobOffer, int id_refugee);	
 
-	//	int countRefugeePerAge(int a, int b);
+	List<Integer> countRefugeePerAge();
+
 }

@@ -4,108 +4,116 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/*
- * author Salim Ben Hassine
- *
- * 
- */
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Donation implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5222348366362129628L;
-	
-	private int id;
+
+	private static final long serialVersionUID = 1L;
+	private String id;
 	private double amount;
-	private Date dateAndTime;
-	private boolean anonymous;
-	private String donorName;
-	private String message;
-	private User userDonor;
+	private Date createdAt;
+	private Date validatedAt;
+	private String currency;
+	private String state;
+	private Camp to_camp;
 	
-	public Donation(int id, double amount, Date dateAndTime, boolean anonymous, String donorName, String message) {
+	
+	
+	public Donation(){
+	}
+
+	public Donation(String id,double amount, Date createdAt, String currency, Camp to_camp) {
 		super();
-		this.id = id;
+		this.id=id;
 		this.amount = amount;
-		this.dateAndTime = dateAndTime;
-		this.anonymous = anonymous;
-		this.donorName = donorName;
-		this.message = message;
+		this.createdAt = createdAt;
+		this.currency = currency;
+		this.to_camp = to_camp;
+		this.state="pending";
 	}
-
-	public Donation() {
+	public Donation(String id,double amount, Date createdAt, String currency) {
 		super();
-	}
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.id=id;
+		this.amount = amount;
+		this.createdAt = createdAt;
+		this.currency = currency;
+		this.state="pending";
 	}
 
 	public double getAmount() {
 		return amount;
 	}
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getValidatedAt() {
+		return validatedAt;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public String getState() {
+		return state;
+	}
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="camp_ID")	
+	@JsonBackReference
+	public Camp getTo_camp() {
+		return to_camp;
+	}
+
 
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getDateAndTime() {
-		return dateAndTime;
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
+	public void setValidatedAt(Date validatedAt) {
+		this.validatedAt = validatedAt;
 	}
 
-	public boolean isAnonymous() {
-		return anonymous;
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
-	public void setAnonymous(boolean anonymous) {
-		this.anonymous = anonymous;
+	public void setState(String state) {
+		this.state = state;
 	}
 
-	public String getDonorName() {
-		return donorName;
+	public void setTo_camp(Camp to_camp) {
+		this.to_camp = to_camp;
 	}
-
-	public void setDonorName(String donorName) {
-		this.donorName = donorName;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	@ManyToOne
-	public User getUserDonor() {
-		return userDonor;
-	}
-
-	public void setUserDonor(User userDonor) {
-		this.userDonor = userDonor;
-	}
-
-
 	
 	
+	@Id
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Donation [id=" + id + ", amount=" + amount + ", createdAt=" + createdAt + ", validatedAt=" + validatedAt
+				+ ", currency=" + currency + ", state=" + state + ", to_camp=" + to_camp + "]";
+	}
 }

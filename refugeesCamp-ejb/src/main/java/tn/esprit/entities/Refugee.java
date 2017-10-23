@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -34,12 +36,15 @@ public class Refugee implements Serializable {
 	private String firstname;
 	private String lastName;
 	private String sex;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfBirth;
 	private String nationality;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "camp_ID")//jsonback ref here
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="camp_ID")
+	@JsonBackReference
 	private Camp rcamp;
 
 	@Enumerated(EnumType.STRING)
@@ -105,6 +110,9 @@ public class Refugee implements Serializable {
 	public void setFieldOfWork(String fieldOfWork) {
 		this.fieldOfWork = fieldOfWork;
 	}
+
+
+
 
 	public Refugee() {
 		super();
@@ -199,6 +207,7 @@ public class Refugee implements Serializable {
 	public void setRcamp(Camp rcamp) {
 		this.rcamp = rcamp;
 	}
+
 
 	public String getEmail() {
 		return email;

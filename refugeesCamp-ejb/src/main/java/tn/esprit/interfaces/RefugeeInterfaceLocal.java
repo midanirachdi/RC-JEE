@@ -28,7 +28,8 @@ public interface RefugeeInterfaceLocal {
 		
 		boolean sendMail(String jobOfferTitle , String refugeeEmail, int id_jobOffer, int id_refugee);
 
-//		int countRefugeePerAge(int a, int b);
+		List<Integer> countRefugeePerAge();
+
 		
 }
 

@@ -122,6 +122,7 @@ public class RefugeeRessouces {
 		return Response.status(200).entity(f2).build();
 	}
 
+
 	@GET
 	@Path("/all/sorted/{id_jobOffer}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -147,6 +148,16 @@ public class RefugeeRessouces {
 		GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
 		g.topdf(jo,r);
 		return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .").build();
+	}
+
+
+	
+	@GET
+	@Path("/AgeCategory")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response CountRefugeePerAge() {
+		List<Integer> liste = refugeeS.countRefugeePerAge();
+		return Response.status(200).entity(liste).build();
 	}
 
 }
