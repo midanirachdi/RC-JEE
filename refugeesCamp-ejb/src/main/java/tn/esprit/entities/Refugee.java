@@ -1,8 +1,11 @@
 package tn.esprit.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,24 +15,105 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
-public class Refugee {
+public class Refugee implements Serializable {
+
+	public enum LanguageLevelEnum {
+		A, B, C
+	}
+
+	public enum HighestDegreeEnum {
+		BAC, BACplus3, BACplus5, BACplus8
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String firstname;
 	private String lastName;
 	private String sex;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern= "dd-MM-yyyy hh:mm:ss")
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfBirth;
 	private String nationality;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="camp_ID")
 	@JsonBackReference
 	private Camp rcamp;
+
+	@Enumerated(EnumType.STRING)
+	private LanguageLevelEnum frenchlanguageLevel;
+	@Enumerated(EnumType.STRING)
+	private LanguageLevelEnum englishlanguageLevel;
+
+	@Enumerated(EnumType.STRING)
+	private HighestDegreeEnum highestDegree;
+
+	private int yearsOfExperience;
+	private String email;
+	private String fieldOfWork;
+	private String adress;
+	private int phoneNumber;
+	
+
+	
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public LanguageLevelEnum getFrenchlanguageLevel() {
+		return frenchlanguageLevel;
+	}
+
+	public void setFrenchlanguageLevel(LanguageLevelEnum frenchlanguageLevel) {
+		this.frenchlanguageLevel = frenchlanguageLevel;
+	}
+
+	public LanguageLevelEnum getEnglishlanguageLevel() {
+		return englishlanguageLevel;
+	}
+
+	public void setEnglishlanguageLevel(LanguageLevelEnum englishlanguageLevel) {
+		this.englishlanguageLevel = englishlanguageLevel;
+	}
+
+	public HighestDegreeEnum getHighestDegree() {
+		return highestDegree;
+	}
+
+	public void setHighestDegree(HighestDegreeEnum highestDegree) {
+		this.highestDegree = highestDegree;
+	}
+
+	public int getYearsOfExperience() {
+		return yearsOfExperience;
+	}
+
+	public void setYearsOfExperience(int yearsOfExperience) {
+		this.yearsOfExperience = yearsOfExperience;
+	}
+
+	public String getFieldOfWork() {
+		return fieldOfWork;
+	}
+
+	public void setFieldOfWork(String fieldOfWork) {
+		this.fieldOfWork = fieldOfWork;
+	}
+
+
+
+
 	public Refugee() {
 		super();
 	}
@@ -45,6 +129,31 @@ public class Refugee {
 
 	public int getId() {
 		return id;
+	}
+
+
+
+	
+
+	public Refugee(String firstname, String lastName, String sex, Date dateOfBirth, String nationality, Camp rcamp,
+			LanguageLevelEnum frenchlanguageLevel, LanguageLevelEnum englishlanguageLevel,
+			HighestDegreeEnum highestDegree, int yearsOfExperience, String email, String fieldOfWork, String adress,
+			int phoneNumber) {
+		super();
+		this.firstname = firstname;
+		this.lastName = lastName;
+		this.sex = sex;
+		this.dateOfBirth = dateOfBirth;
+		this.nationality = nationality;
+		this.rcamp = rcamp;
+		this.frenchlanguageLevel = frenchlanguageLevel;
+		this.englishlanguageLevel = englishlanguageLevel;
+		this.highestDegree = highestDegree;
+		this.yearsOfExperience = yearsOfExperience;
+		this.email = email;
+		this.fieldOfWork = fieldOfWork;
+		this.adress = adress;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public void setId(int id) {
@@ -97,6 +206,23 @@ public class Refugee {
 
 	public void setRcamp(Camp rcamp) {
 		this.rcamp = rcamp;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
+	public void setAdress(String adress) {
+		this.adress = adress;
 	}
 
 }

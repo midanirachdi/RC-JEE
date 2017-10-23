@@ -30,7 +30,7 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 
 	@Override
 	public List<JobOffer> findAll() {
-		String requete = "SELECT jo FROM JobOffer jo";
+		String requete = "SELECT jo FROM JobOffer jo ORDER BY jo.begindate DESC";
 		return em.createQuery(requete, JobOffer.class).getResultList();
 	}
 
@@ -59,6 +59,15 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 			return true;
 		}
 		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<JobOffer> findByDistrictChief(int dc_id) {
+
+		String requete = "SELECT jo FROM JobOffer jo JOIN jo.districtchef d WHERE d.id= ?1 ORDER BY jo.begindate DESC";
+		return em.createQuery(requete).setParameter(1, dc_id).getResultList();		
+
 	}
 
 }

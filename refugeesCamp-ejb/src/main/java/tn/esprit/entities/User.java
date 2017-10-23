@@ -128,8 +128,18 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	public void setLastResetQuery(String lastResetQuery) {
 		this.lastResetQuery = lastResetQuery;
 	}
+	
 
 	
+	@Override
+	public String toString() {
+		return " User {\nfirstName=" + firstName + ",\nlastName=" + lastName + ",\nemail=" + email + ",\nbirthDay=" + birthDay
+				+ ",\nadress=" + adress + ",\npassword=" + password + ",\ndisable=" + disable + ",\nlastResetQuery="
+				+ lastResetQuery + ",";
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
