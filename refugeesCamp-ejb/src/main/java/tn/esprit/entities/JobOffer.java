@@ -120,7 +120,7 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idDistrictchef",referencedColumnName="id",insertable=false,updatable=false)
-	@JsonBackReference
+	@JsonBackReference(value="aaa")
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}
