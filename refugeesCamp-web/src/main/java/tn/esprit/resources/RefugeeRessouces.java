@@ -17,10 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
+import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.RefugeeService;
+import tn.esprit.utils.GenerateCoverLetterPdf;
 
 @RequestScoped
 @Path("/Refugee")
@@ -28,30 +29,33 @@ public class RefugeeRessouces {
 
 	@EJB
 	RefugeeService refugeeS;
+	@EJB
+	JobOfferImpl joService;
 
 	public RefugeeRessouces() {
 		super();
 	}
-	
-	public RefugeeService getRefugeeS(){
+
+	public RefugeeService getRefugeeS() {
 		return refugeeS;
 	}
-	
-	public void setRefugeeService(RefugeeService refugeeS){
+
+	public void setRefugeeService(RefugeeService refugeeS) {
 		this.refugeeS = refugeeS;
 	}
-	
+
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllRefugees() {
 		List<Refugee> l = new ArrayList<Refugee>();
-		l= refugeeS.findAll();
+		l = refugeeS.findAll();
 		if (l != null)
 			return Response.status(200).entity(l).build();
-		else return Response.status(404).build();
+		else
+			return Response.status(404).build();
 	}
-	
+
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -59,55 +63,94 @@ public class RefugeeRessouces {
 		Refugee r = refugeeS.findById(id);
 		if (r != null)
 			return Response.status(200).entity(r).build();
-		else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
+		else
+			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + id + " not found !")
+					.build();
 	}
-	
-	 
+
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response DeleteRefugee(@PathParam(value = "id") int id) {
 		Refugee re = refugeeS.findById(id);
 		if (re != null) {
-			if (refugeeS.delete(re)){
-			return Response.ok("Refugee deleted successfuly").build();}
-			else return Response.status(500).build(); // 500 internal server error
-		} else return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : "+ id + " not found !").build();
+			if (refugeeS.delete(re)) {
+				return Response.ok("Refugee deleted successfuly").build();
+			} else
+				return Response.status(500).build(); // 500 internal server
+														// error
+		} else
+			return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : " + id + " not found !")
+					.build();
 	}
+
 	// @AllowTo(roles={"Admin"})
 	@POST
 	@Path("/add")
-	@Consumes(MediaType.APPLICATION_JSON) 
-	public Response AddRefugee(Refugee r)
-	{
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response AddRefugee(Refugee r) {
 		if (refugeeS.add(r)) {
-		return Response.status(Status.CREATED).build();	
-		}
-		else return Response.status(400).build(); // 400 Bad request
+			return Response.status(Status.CREATED).build();
+		} else
+			return Response.status(400).build(); // 400 Bad request
 	}
-	
+
 	@PUT
 	@Path("/update/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response UpdateRefugee(@PathParam(value = "id") int id,Refugee r){
+	public Response UpdateRefugee(@PathParam(value = "id") int id, Refugee r) {
 		Refugee re = refugeeS.findById(id);
 		if (re != null) {
-			r.setId(id); // we have to add the setId or the hibernate will add a new record in DataBase
+			r.setId(id); // we have to add the setId or the hibernate will add a
+							// new record in DataBase
 			if (refugeeS.update(r)) {
-			return Response.ok("Refugee updated successfuly").build();
-			}else return Response.status(304).build(); // 304 Not modified
-		} else return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : "+ id + " not found !").build();
+				return Response.ok("Refugee updated successfuly").build();
+			} else
+				return Response.status(304).build(); // 304 Not modified
+		} else
+			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + id + " not found !")
+					.build();
 	}
-	
+
 	@GET
 	@Path("/gender/{sex}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetRefugeeByGender(@PathParam(value="sex") String sex) {
+	public Response GetRefugeeByGender(@PathParam(value = "sex") String sex) {
 		int f = refugeeS.countRefugeePerGender(sex);
 		int f1 = refugeeS.findAll().size();
-		double f2 = (f*100)/f1;
-			return Response.status(200).entity(f2).build();
+		double f2 = (f * 100) / f1;
+		return Response.status(200).entity(f2).build();
 	}
+
+
+	@GET
+	@Path("/all/sorted/{id_jobOffer}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
+		JobOffer jo = joService.findById(id_jobOffer);
+
+		List<Refugee> bestCandidates = new ArrayList<>();
+		bestCandidates = refugeeS.findBestCandidates(jo.getFieldOfWork());
+		for (Refugee r : bestCandidates) {
+			refugeeS.sendMail(jo.getTitle(), r.getEmail(),jo.getId(),r.getId());
+		}
+
+		return Response.status(200).entity(bestCandidates).build();
+	}
+
+	@GET
+	@Path("/pdf/{id_jobOffer}/{id_refugee}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response thepdf(@PathParam(value="id_jobOffer") int id_jobOffer,@PathParam(value="id_refugee") int id_refugee) {
+		JobOffer jo = joService.findById(id_jobOffer);
+		Refugee r = refugeeS.findById(id_refugee);
+		
+		GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
+		g.topdf(jo,r);
+		return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .").build();
+	}
+
+
 	
 	@GET
 	@Path("/AgeCategory")
@@ -116,4 +159,5 @@ public class RefugeeRessouces {
 		List<Integer> liste = refugeeS.countRefugeePerAge();
 		return Response.status(200).entity(liste).build();
 	}
+
 }

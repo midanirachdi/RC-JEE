@@ -18,16 +18,26 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import tn.esprit.authorization.AllowTo;
+import tn.esprit.entities.CampChef;
+import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.services.JobOfferImpl;
+import tn.esprit.services.RefugeeService;
+import tn.esprit.services.UserService;
 
+
+@Path("/joboffers")
 @RequestScoped
-@Path("/joboffer")
 public class JobOfferResource {
 
 	@EJB
 	JobOfferImpl joService;
 
+	@EJB
+	RefugeeService rs;
+	@EJB
+	UserService us;
+	
 	public JobOfferResource() {
 		super();
 	}
@@ -41,11 +51,16 @@ public class JobOfferResource {
 	}
 
 	@POST
-	@Path("/add")
+	@Path("/add/{id_dc}/{id_cc}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	//@AllowTo(roles={"Admin"})
-	public Response AddJobOffer(JobOffer jo) {
+	public Response AddJobOffer(
+			JobOffer jo,
+			@PathParam(value = "id_dc") int id_dc,
+			@PathParam(value = "id_cc") int id_cc) {
+		jo.setDistrictchef((DistrictChef) us.find(id_dc));
+		jo.setCampchef((CampChef) us.find(id_cc));
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
 		return Response.status(Status.NOT_FOUND).build();
@@ -63,6 +78,7 @@ public class JobOfferResource {
 		return Response.status(Status.NOT_FOUND).build();
 	}
 
+
 	@GET
 	@Path("/list/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -73,6 +89,19 @@ public class JobOfferResource {
 		return Response.status(404).build();
 	}
 
+	@GET
+	@Path("/list/dc/{dc_id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
+		
+		List<JobOffer> jolist = new ArrayList<JobOffer>();
+		jolist = joService.findByDistrictChief(dc_id);
+
+		if (!jolist.isEmpty())
+			return Response.status(Status.CREATED).entity(jolist).build();
+		return Response.status(Status.NOT_FOUND).build();
+	}
+	
 	@DELETE
 	@Path("/delete/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)

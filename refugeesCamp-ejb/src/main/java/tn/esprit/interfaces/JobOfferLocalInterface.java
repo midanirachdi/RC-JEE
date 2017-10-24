@@ -8,7 +8,7 @@ import tn.esprit.entities.JobOffer;
 
 @Local
 public interface JobOfferLocalInterface {
-	
+
 	boolean add(JobOffer joboffer);
 
 	boolean update(JobOffer joboffer);
@@ -16,6 +16,8 @@ public interface JobOfferLocalInterface {
 	List<JobOffer> findAll();
 
 	JobOffer findById(int id);
+
+	List<JobOffer> findByDistrictChief(int id);
 
 	boolean delete(JobOffer joboffer);
 

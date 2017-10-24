@@ -20,6 +20,7 @@
 			<artifactId>refugeesCamp-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

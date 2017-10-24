@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Camp;
 import tn.esprit.services.CampService;
 @Path("/camp")
@@ -30,6 +31,7 @@ public class CampRessource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"Admin"})
 	public  Response listall(){
 		List<Camp> ls= cs.findAll();
 		if (!ls.isEmpty())
@@ -39,6 +41,7 @@ public class CampRessource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"Admin"})
 	public Response addCamp(Camp c){
 		cs.add(c);
 		return Response.ok().build();
@@ -46,6 +49,7 @@ public class CampRessource {
 	
 	@DELETE
 	@Path("/{id}")
+	@AllowTo(roles={"Admin"})
 	public Response deleteCamp(@PathParam("id")int id){
 		Camp c =cs.findById(id);
 		cs.delete(c);
@@ -54,6 +58,7 @@ public class CampRessource {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"Admin"})
 	public Response updateCamp(Camp c){
 		cs.update(c);
 		return Response.ok().build();
@@ -61,6 +66,7 @@ public class CampRessource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"Admin"})
 	public Response getCamp(@PathParam("id")int id){
 		Camp c= cs.findById(id);
 		if (c!=null) {
