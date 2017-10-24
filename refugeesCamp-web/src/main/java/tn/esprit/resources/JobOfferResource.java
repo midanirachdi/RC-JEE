@@ -51,23 +51,17 @@ public class JobOfferResource {
 	}
 
 	@POST
-	@Path("/add/{id_dc}/{id_cc}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	//@AllowTo(roles={"Admin"})
 	public Response AddJobOffer(
-			JobOffer jo,
-			@PathParam(value = "id_dc") int id_dc,
-			@PathParam(value = "id_cc") int id_cc) {
-		jo.setDistrictchef((DistrictChef) us.find(id_dc));
-		jo.setCampchef((CampChef) us.find(id_cc));
+			JobOffer jo) {
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
 		return Response.status(Status.NOT_FOUND).build();
 	}
 
 	@GET
-	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllJobOffers() {
 		List<JobOffer> jolist = new ArrayList<JobOffer>();
@@ -80,7 +74,7 @@ public class JobOfferResource {
 
 
 	@GET
-	@Path("/list/{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetJobOfferById(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
@@ -90,7 +84,7 @@ public class JobOfferResource {
 	}
 
 	@GET
-	@Path("/list/dc/{dc_id}")
+	@Path("/DistrictChef/{dc_id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
 		
@@ -103,7 +97,7 @@ public class JobOfferResource {
 	}
 	
 	@DELETE
-	@Path("/delete/{id}")
+	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response DeleteJobOffer(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
@@ -113,7 +107,6 @@ public class JobOfferResource {
 	}
 
 	@PUT
-	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response UpdateJobOffer(JobOffer jo) {
