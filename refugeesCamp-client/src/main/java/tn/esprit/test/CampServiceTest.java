@@ -15,9 +15,9 @@ public class CampServiceTest {
 		try {
 			Context ctx = new InitialContext();
 			CampRemoteInterface proxy=(CampRemoteInterface)ctx.lookup("/refugeesCamp-ear/refugeesCamp-ejb/CampService!tn.esprit.interfaces.CampRemoteInterface");
-//			proxy.add(new Camp("campNow",true,"TN",500,new Date()));
-//			proxy.add(new Camp("campY",false,"FR",100,new Date()));
-//			proxy.add(new Camp("campX",true,"AN",200,new Date()));
+			proxy.add(new Camp("campNow",true,"TN",500,new Date()));
+			proxy.add(new Camp("campY",false,"FR",100,new Date()));
+			proxy.add(new Camp("campX",true,"AN",200,new Date()));
 //			System.out.println(proxy.findAll());
 //			Camp found =proxy.findById(6);
 //			System.out.println(found);
