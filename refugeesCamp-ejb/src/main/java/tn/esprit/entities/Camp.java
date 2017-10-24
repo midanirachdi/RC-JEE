@@ -114,7 +114,7 @@ public class Camp implements Serializable{
 	
 	
 	@OneToMany(mappedBy="rcamp",fetch=FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value="forraffa")
 	public List<Refugee> getRefugees() {
 		return refugees;
 	}
