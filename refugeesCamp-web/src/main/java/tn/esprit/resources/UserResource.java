@@ -56,7 +56,7 @@ public class UserResource {
 			Jws<Claims> jws = null;
 			jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
 			role=jws.getBody().get("role").toString();
-			
+			System.out.println(role+" ****");
 			
 			if(((user instanceof CampChef)||(user instanceof DistrictChef)||(user instanceof Admin))&& !role.equals("Admin"))
 			{return  Response.status(Response.Status.UNAUTHORIZED).build();}}
