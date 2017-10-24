@@ -61,10 +61,11 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 	
 	private boolean verifyUser(String userName,String pswd){
 		
-		User u= findByUserName(userName);
 		boolean ok=false;
 		
 		try {
+			User u= findByUserName(userName);
+			
 			ok= EncrypterClass.Password.match(pswd, u.getPassword());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

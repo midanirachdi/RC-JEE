@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
@@ -101,16 +103,18 @@ public class JobOffer implements Serializable {
 	public void setContactnumber(int contactnumber) {
 		this.contactnumber = contactnumber;
 	}
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idDistrictchef",referencedColumnName="id",insertable=false,updatable=false)
+	@JsonBackReference
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}
 	public void setDistrictchef(DistrictChef districtchef) {
 		this.districtchef = districtchef;
 	}
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idCampchef",referencedColumnName="id",insertable=false,updatable=false)
+	@JsonBackReference
 	public CampChef getCampchef() {
 		return campchef;
 	}
