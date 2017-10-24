@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -27,9 +29,10 @@ public class Need implements Serializable{
 	private Date date;
 
 	private String description;
-	@ManyToOne
-	@JoinColumn(name="idcampchef")
-	private CampChef campchef ;
+	@ManyToOne(fetch=FetchType.EAGER)	
+	@JoinColumn(name="iddcchef")
+	@JsonBackReference(value="districtNeeds")
+	private DistrictChef dischef ;
 	
 	/* ******************* Added */
 	@Enumerated(EnumType.STRING)/* added */ 
@@ -72,18 +75,19 @@ public class Need implements Serializable{
 	
 	
 	
-	public CampChef getCampchef() {
-		return campchef;
-	}
-	public void setCampchef(CampChef campchef) {
-		this.campchef = campchef;
-	}
 	
+	
+	public DistrictChef getDischef() {
+		return dischef;
+	}
+	public void setDischef(DistrictChef dischef) {
+		this.dischef = dischef;
+	}
 	
 	@Override
 	public String toString() {
-		return "Need [id=" + id + ", date=" + date + ", description=" + description + ", campchef=" + campchef
-				+ ", type=" + type + ", quantity=" + quantity + ", status=" + status + "]";
+		return "Need [id=" + id + ", date=" + date + ", description=" + description + ", dischef=" + dischef + ", type="
+				+ type + ", quantity=" + quantity + ", status=" + status + "]";
 	}
 	public Need() {
 		super();

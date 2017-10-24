@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.Need;
 
 @Remote
@@ -15,5 +16,7 @@ public interface NeedService {
 	public Need  findNeedById(int id);
 	public List<Need> listAll();
 	public List<Need> getNeedByType(String n);
+	public List<Need> getNeedByDis(DistrictChef d);
+
 
 }

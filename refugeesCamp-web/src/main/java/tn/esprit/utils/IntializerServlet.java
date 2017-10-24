@@ -1,4 +1,4 @@
-package utile;
+package tn.esprit.utils;
 
 
 import javax.ejb.EJB;

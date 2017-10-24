@@ -27,25 +27,25 @@ public class TestNeed {
 		Need projet=new Need();
 		Date date=new Date();
 		projet.setDate(date);
-		projet.setType(Stock.stockNeedsEnum.Food);
+		projet.setType(Stock.stockNeedsEnum.Covers);
 		projet.setQuantity(3);
 		projet.setDescription("na9es");
 		
 	    proxy1.addNeed(projet);
 	    System.out.println("l'ajout a été effectué lhmd");
 	    ///////////// liste
-	    System.out.println("************************affichage**************");
-	    System.out.println(proxy1.listAll());
+//	    System.out.println("************************affichage**************");
+//	    System.out.println(proxy1.listAll());
 	  	/*List<Need> list1=new ArrayList<>();
 	  	list1=proxy1.listAll();
 	  	for(Need projet1:list1)
 		{
 			System.out.println(projet1.getType());
 		}*/
-	    System.out.println("************************suppresion**************");
+	   /* System.out.println("************************suppresion**************");
 	    Need n= (Need)proxy1.findNeedById(2);
 		System.out.println(n.getType());
 	    proxy1.deleteNeed(n);
-		System.out.println("succes");
+		System.out.println("succes");*/
 	}
 }

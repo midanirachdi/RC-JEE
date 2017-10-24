@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.Need;
 import tn.esprit.interfaces.NeedService;
 
@@ -60,6 +61,15 @@ public class NeedImpl implements NeedService{
 		Query req = em.createQuery
 				("select n from Need n where n.name like :x ");
 			req.setParameter("x", "%" +n+ "%");
+			List resultList = req.getResultList();
+			return resultList;
+	}
+
+	@Override
+	public List<Need> getNeedByDis(DistrictChef d) {
+		Query req = em.createQuery
+				("select n from Need n where n.dischef = :x ");
+			req.setParameter("x",d);
 			List resultList = req.getResultList();
 			return resultList;
 	}
