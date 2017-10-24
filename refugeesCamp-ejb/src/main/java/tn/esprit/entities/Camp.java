@@ -65,7 +65,7 @@ public class Camp implements Serializable{
 		this.createdAt=createdAt;
 	}
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}

@@ -1,12 +1,13 @@
 package tn.esprit.resources;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,7 +36,8 @@ public class DonationRessource {
 	DonationService donationservice;
 	@EJB
 	CampService cs;
-	
+	String clientId = "AXWaTaAVKEbzNcdqqbYCSnAxI1tNB6uiIINJphmt3DKeNHErhZdFSDHxj_6owFCld7oS-CwkeGCbcE3a";
+	String clientSecret = "EC--VCYTG-icuQgIz0WchzeK2xryFzfIO0lHU5VSDJeHIl_B4XLuSce2PAd-MrkIZ4ypflkVyyNTS5Cj";
 	
 	public DonationRessource() {
 		super();
@@ -49,15 +51,10 @@ public class DonationRessource {
 		camp.setId(id);
 		return Response.ok(donationservice.getCampAvgTotalDonation(camp)).build();
 	}
-	
-		
-	
-	
 	@GET
-	@Path("/{total}/{currency}")
-	public Response generateDonation(@PathParam("total")double total,@PathParam("currency")String currency){
-		String clientId = "AcG08W3mBVODYQMJFzB_ojA3ylNxL4ot9ptCY92akURy9WOFxi426XEvqYlZZG38APEqsJLzxwb0NmH-";
-		String clientSecret = "EHVEu1m90nsiv-x8S6vzaqrSbC25vg0oZ3RdtYm4Z5A2uA09WFTPpeQ67RrHc54RtJVvxXIKitxSR7VO";
+	@Path("/add")
+	public Response generateDonation(@QueryParam("total")double total,@QueryParam("currency")String currency){
+		
 		APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 		// Set payer details
 		Payer payer = new Payer();
@@ -94,46 +91,37 @@ public class DonationRessource {
 			Payment createdPayment = payment.create(context);
 			Donation d=new Donation(createdPayment.getId(), Double.parseDouble(createdPayment.getTransactions().get(0).getAmount().getTotal()), new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency());
 			donationservice.add(d);
-			return Response.status(Status.CREATED).entity(createdPayment.getLinks().get(1).getHref()).build();
+			return Response.temporaryRedirect(new URI(createdPayment.getLinks().get(1).getHref())).build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
+			return Response.serverError().build();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
 		}
-		return Response.serverError().build();
 	}
-	@POST
-	@Path("/{total}/{currency}")
-	public Response generateDonationForCamp(@PathParam("total")double total,@PathParam("currency")String currency,Camp c){
-		if (cs.findById(c.getId())==null)
+	@GET
+	@Path("/addtocamp")
+	public Response generateDonationForCamp(@QueryParam("total")double total,@QueryParam("currency")String currency,@QueryParam("camp_id")int id){
+		if (cs.findById(id)==null)
 			return Response.status(Status.NOT_FOUND).build();
-		String clientId = "AcG08W3mBVODYQMJFzB_ojA3ylNxL4ot9ptCY92akURy9WOFxi426XEvqYlZZG38APEqsJLzxwb0NmH-";
-		String clientSecret = "EHVEu1m90nsiv-x8S6vzaqrSbC25vg0oZ3RdtYm4Z5A2uA09WFTPpeQ67RrHc54RtJVvxXIKitxSR7VO";
+		Camp c=cs.findById(id);
 		APIContext context = new APIContext(clientId, clientSecret, "sandbox");
-		// Set payer details
 		Payer payer = new Payer();
 		payer.setPaymentMethod("paypal");
-
-		// Set redirect URLs
 		RedirectUrls redirectUrls = new RedirectUrls();
 		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
 		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
-
-		// Payment amount
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
-		// Total must be equal to sum of shipping, tax and subtotal.
 		amount.setTotal(total+"");
-
-		// Transaction information
 		Transaction transaction = new Transaction();
 		transaction.setAmount(amount);
 		transaction
 		.setDescription("Donation for Camp"+c.getName());
-
 		// Add transaction to a list
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		transactions.add(transaction);
-
-		// Add payment details
 		Payment payment = new Payment();
 		payment.setIntent("sale");
 		payment.setPayer(payer);
@@ -141,13 +129,19 @@ public class DonationRessource {
 		payment.setTransactions(transactions);
 		try {
 			Payment createdPayment = payment.create(context);
-			Donation d=new Donation(createdPayment.getId(), Double.parseDouble(createdPayment.getTransactions().get(0).getAmount().getTotal()), new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency(),c);
+			Donation d=new Donation(createdPayment.getId(), Double.parseDouble(createdPayment.getTransactions().get(0).getAmount().getTotal()),
+					new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency()
+					,c);
 			donationservice.add(d);
-			return Response.status(Status.CREATED).entity(createdPayment.getLinks().get(1).getHref()).build();
+			return Response.temporaryRedirect(new URI(createdPayment.getLinks().get(1).getHref())).build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
+			return Response.serverError().build();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
 		}
-		return Response.serverError().build();
+		
 	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -163,8 +157,6 @@ public class DonationRessource {
 	public Response confirmDonation(@QueryParam("paymentId")String paymentId,@QueryParam("token")String token,@QueryParam("PayerID")String PayerID){
 		Donation d = donationservice.findById(paymentId);
 		if ((d != null) && (d.getValidatedAt()==null)){
-			String clientId = "AcG08W3mBVODYQMJFzB_ojA3ylNxL4ot9ptCY92akURy9WOFxi426XEvqYlZZG38APEqsJLzxwb0NmH-";
-			String clientSecret = "EHVEu1m90nsiv-x8S6vzaqrSbC25vg0oZ3RdtYm4Z5A2uA09WFTPpeQ67RrHc54RtJVvxXIKitxSR7VO";
 			APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 			Payment payapproved=new Payment();
 			payapproved.setId(paymentId);
@@ -175,12 +167,14 @@ public class DonationRessource {
 			  d.setValidatedAt(new Date());
 			  d.setState("valid");
 			  donationservice.update(d);
-			  Response.ok().entity("Thanks for your donation").build();
+			  return Response.ok().entity("Thanks for your donation").build();
 			} catch (PayPalRESTException e) {
 			  System.err.println(e.getDetails());
+				return Response.serverError().build();
 			}
+		}else{
+			return Response.serverError().build();
 		}
-		return Response.serverError().build();
 	}
 	@GET
 	@Path("/cancel")

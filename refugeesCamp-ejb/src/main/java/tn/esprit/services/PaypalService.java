@@ -26,8 +26,8 @@ import tn.esprit.interfaces.PaypalRemoteInterface;
 public class PaypalService{
 	Context ctx;
 	//My ClientId and Secret
-	String clientId = "Aey8unrFl71F5O3NTjBCNe08Nh9ktrzKf6kOM_XAvsZUhdDk2uxWbJkFimU5gUHR7GE-rdLCA9Rwhs9p";
-	String clientSecret = "EJfDu1NxotLb02YHc-Q3bqRYTnxoN01ZtydBmFdwurFCzpldFJD2qhqhMJO-FyiaDjBCJX2Uhu1LmlAn";
+	String clientId = "AXWaTaAVKEbzNcdqqbYCSnAxI1tNB6uiIINJphmt3DKeNHErhZdFSDHxj_6owFCld7oS-CwkeGCbcE3a";
+	String clientSecret = "EC--VCYTG-icuQgIz0WchzeK2xryFzfIO0lHU5VSDJeHIl_B4XLuSce2PAd-MrkIZ4ypflkVyyNTS5Cj";
 	APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 	public String generatePayment(double total,String currency){
 		DonationRemoteInterface ds = null;
@@ -44,8 +44,8 @@ public class PaypalService{
 
 		// Set redirect URLs
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/process");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
 
 		// Payment amount
 		Amount amount = new Amount();
@@ -57,7 +57,7 @@ public class PaypalService{
 		Transaction transaction = new Transaction();
 		transaction.setAmount(amount);
 		transaction
-		.setDescription("thanks for your donation.");
+		.setDescription("Donation for RefugeesCamp.com");
 
 		// Add transaction to a list
 		List<Transaction> transactions = new ArrayList<Transaction>();
