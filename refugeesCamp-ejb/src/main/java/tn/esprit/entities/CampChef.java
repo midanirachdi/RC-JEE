@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
@@ -18,8 +20,8 @@ public class CampChef extends User {
 		super();
 	}
 	
-	@OneToMany(mappedBy="campchef")
-	@JsonIgnore
+	@OneToMany(mappedBy="campchef",fetch=FetchType.EAGER)
+	@JsonManagedReference
 	  private List<JobOffer> joboffers;
 
 	public List<JobOffer> getJoboffers() {

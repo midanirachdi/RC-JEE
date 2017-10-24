@@ -8,10 +8,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Need implements Serializable{
@@ -24,6 +27,9 @@ public class Need implements Serializable{
 	private Date date;
 
 	private String description;
+	@ManyToOne
+	@JoinColumn(name="idcampchef")
+	private CampChef campchef ;
 	
 	/* ******************* Added */
 	@Enumerated(EnumType.STRING)/* added */ 
@@ -63,9 +69,21 @@ public class Need implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	
+	
+	public CampChef getCampchef() {
+		return campchef;
+	}
+	public void setCampchef(CampChef campchef) {
+		this.campchef = campchef;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "Need [id=" + id + ", type=" + type + ", description=" + description + ", date=" + date + "]";
+		return "Need [id=" + id + ", date=" + date + ", description=" + description + ", campchef=" + campchef
+				+ ", type=" + type + ", quantity=" + quantity + ", status=" + status + "]";
 	}
 	public Need() {
 		super();

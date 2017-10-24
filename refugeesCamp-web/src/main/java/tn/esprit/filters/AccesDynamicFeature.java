@@ -13,17 +13,9 @@ public class AccesDynamicFeature implements DynamicFeature  {
 	go to window > preferences > jax-RS validator > disable it*/
 	@Override
 	public void configure(ResourceInfo resourceInfo, FeatureContext context) {
-		System.out.println("start dynamic");
 	    if (resourceInfo.getResourceMethod().isAnnotationPresent(AllowTo.class)) {
 	    	AllowTo annotation = resourceInfo.getResourceMethod().getAnnotation(AllowTo.class);
-	    	  if(annotation!=null)
-	    	  {
-	    		  for(int i=0;i<annotation.roles().length;i++)
-	    		  {System.out.println(annotation.roles()[i]);}
-	    		  System.out.println("end roles");
-	    	  }
 	        context.register(new CostumFilter(annotation.roles()));}
-	    System.out.println("end dynamic");
 		}
 
 

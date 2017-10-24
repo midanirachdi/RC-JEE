@@ -49,7 +49,7 @@ public abstract class AbstractFacade <T extends IdentifiedInterface>{
 	public List<T> findRange(int startPosition,int maxResult){
 		CriteriaQuery cq=getEntityManager().getCriteriaBuilder().createQuery();
 		cq.select(cq.from(entityClass));
-		Query q= getEntityManager().createQuery(cq).setFirstResult(startPosition).setMaxResults(maxResult+startPosition);
+		Query q= getEntityManager().createQuery(cq).setFirstResult(startPosition-1).setMaxResults(maxResult);
 		
 		return q.getResultList();		
 	}

@@ -26,39 +26,21 @@ public class NeedRessource {
 	@EJB
 	NeedImpl metier;
 	
-	
-	@GET
-	@Path("/test")
-	public String test()
-	{
-		return "TEST refugee";		
-	}
-	
 	@POST
-	@Path("/addn")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addProject(Need t){
 		metier.addNeed(t);
-	
-		return Response.status(Status.CREATED).build();
-		
+		return Response.status(Status.CREATED).build();	
 	}
 	
 	@GET
-	@Path("/listern")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getNeed()
 	{
-		
-		return Response.ok(metier.listAll()).build();
-		
+		return Response.ok(metier.listAll()).build();	
 	}
 	
-
 	
-	
-	
-	/*
 	@PUT
 	@Path("/update")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -84,7 +66,7 @@ public class NeedRessource {
 	public Response getNeedById(@PathParam("id")int id)
 	{
 		return Response.ok(metier.findNeedById(id)).build();	
-	}*/
+	}
 	
 	/*@GET
 	@Path("/listerpar")
@@ -95,5 +77,14 @@ public class NeedRessource {
 		return Response.ok(metier.findAll()).build();
 		
 	}*/
+	
+	
+	
+	@GET
+	@Path("/test")
+	public String test()
+	{
+		return "TEST refugee";		
+	}
 
 }

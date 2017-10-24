@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
@@ -29,9 +29,9 @@ public class DistrictChef extends User{
 	  @JoinColumn(name="camp_ID")	
 	  @JsonBackReference
 	  private Camp camp;
-	  
-	  @OneToMany(mappedBy="districtchef")
-	  @JsonIgnore
+
+	  @OneToMany(mappedBy="districtchef",fetch=FetchType.EAGER)
+	  @JsonManagedReference
 	  private List<JobOffer> joboffers;
 
 	public List<JobOffer> getJoboffers() {
