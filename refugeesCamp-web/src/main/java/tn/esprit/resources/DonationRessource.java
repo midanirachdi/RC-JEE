@@ -42,6 +42,13 @@ public class DonationRessource {
 	}
 	
 	@GET
+	@Path("/avg")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getCampAllAvg(){
+		return Response.ok(donationservice.getCampAvgTotalDonation()).build();
+	}
+	
+	@GET
 	@Path("/avg/{campId}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getCampAvg(@PathParam("campId") Integer id){

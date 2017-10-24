@@ -95,7 +95,34 @@ public class DonationService implements DonationRemoteInterface{
 		
 		
 		return totalTND;
-			
+	}
+	public Double getCampAvgTotalDonation(){
+		List<Donation> list = findAll();
+		
+		Map<String, Double> currencyMap = new HashMap<>();// listz jdid 
+		
+		for(Donation donation : list){
+			Double amount = currencyMap.get(donation.getCurrency().toUpperCase());
+			if(amount == null){
+				currencyMap.put(donation.getCurrency().toUpperCase(), donation.getAmount());
+			}else{
+				currencyMap.put(donation.getCurrency().toUpperCase(), donation.getAmount() + amount);
+			}
+		}
+		
+		Double totalTND = 0d;
+		
+		for (Map.Entry<String, Double> entry : currencyMap.entrySet()) {
+			try {
+				totalTND += convert(entry.getKey(), "TND", entry.getValue());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return totalTND;
 	}
 	
 }
