@@ -91,7 +91,7 @@ public class LoginResourece {
 	{	
 		User u=null;
 		u=us.findByUserName(email);
-		if(u==null)
+		if(u==null && !u.isDisable())
 			return Response.status(Status.NOT_FOUND).build();
 		
 		try {
