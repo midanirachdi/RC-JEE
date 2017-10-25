@@ -36,7 +36,7 @@ public class Stock implements Serializable {
 	private String notes;
 	
 	
-	List<Product> produits=new ArrayList<Product>();
+	List<Provider> providers=new ArrayList<Provider>();
 	
 	public Stock() {
 		super();
@@ -52,7 +52,7 @@ public class Stock implements Serializable {
 		this.notes = notes;
 	}
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -103,12 +103,12 @@ public class Stock implements Serializable {
 	}
 	
 	@OneToMany(fetch=FetchType.EAGER,mappedBy="stock")
-	public List<Product> getProduits() {
-		return produits;
+	public List<Provider> getProviders() {
+		return providers;
 	}
 
-	public void setProduits(List<Product> produits) {
-		this.produits = produits;
+	public void setProviders(List<Provider> providers) {
+		this.providers = providers;
 	}
 
 	

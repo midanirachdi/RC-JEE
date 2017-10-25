@@ -29,6 +29,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.authorization.CredentialsAuth;
 import tn.esprit.authorization.Iauth;
 import tn.esprit.entities.User;
@@ -90,7 +91,7 @@ public class LoginResourece {
 	{	
 		User u=null;
 		u=us.findByUserName(email);
-		if(u==null)
+		if(u==null && !u.isDisable())
 			return Response.status(Status.NOT_FOUND).build();
 		
 		try {
@@ -129,7 +130,7 @@ public class LoginResourece {
 			int id = Integer.parseInt(jws.getBody().get("id").toString());
 			 newPass=us.generatePassword(id);
 			 User u=us.find(id);
-			   String subject="reset mail";
+			   String subject="Refugees camp new password";
 			   String content="You'r new password is : "+newPass;
 			   ms.send(u.getEmail(),subject,content);
 	
@@ -142,7 +143,25 @@ public class LoginResourece {
 	}
 	
 	
+	@GET
+	@Path("/confirm")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response ValidateUserEmail(@QueryParam("taccess") String taccess){
+		Jws<Claims> jws = null;
+		
+		try {
+			jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(taccess);
+
+			 String email =jws.getBody().get("email").toString();
 	
-	
+			 User u=us.findByUserName(email);
+			 u.setDisable(false);
+			 us.updateUserNoPassword(u);
+		} catch (Exception e) {
+		return Response.status(Status.UNAUTHORIZED).build();
+		}
+		return Response.status(Status.ACCEPTED).build();
+	}
 
 }

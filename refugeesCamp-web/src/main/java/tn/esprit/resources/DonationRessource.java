@@ -30,7 +30,7 @@ import tn.esprit.entities.Donation;
 import tn.esprit.services.CampService;
 import tn.esprit.services.DonationService;
 
-@Path("/donation")
+@Path("/donations")
 public class DonationRessource {
 	@EJB
 	DonationService donationservice;
@@ -69,8 +69,8 @@ public class DonationRessource {
 
 		// Set redirect URLs
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donations/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donations/confirm");
 
 		// Payment amount
 		Amount amount = new Amount();
@@ -117,15 +117,15 @@ public class DonationRessource {
 		Payer payer = new Payer();
 		payer.setPaymentMethod("paypal");
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donations/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donations/confirm");
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
 		amount.setTotal(total+"");
 		Transaction transaction = new Transaction();
 		transaction.setAmount(amount);
 		transaction
-		.setDescription("Donation for Camp"+c.getName());
+		.setDescription("Donation for Camp :"+c.getName());
 		// Add transaction to a list
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		transactions.add(transaction);

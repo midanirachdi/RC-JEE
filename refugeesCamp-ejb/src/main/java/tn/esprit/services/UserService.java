@@ -54,17 +54,23 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 	
 	
 	public User findByUserName(String mail){	
-		User result = (User)em.createQuery("select u from User u where  u.email = :mail").setParameter("mail", mail).getSingleResult(); 
-		return result;
+		User result=null;
+		try
+		{
+		 result = (User)em.createQuery("select u from User u where  u.email = :mail").setParameter("mail", mail).getSingleResult(); 
+		}
+		catch(Exception e){}
+			
+		 return result;
 	}
 	
 	
 	private boolean verifyUser(String userName,String pswd){
 		
 		boolean ok=false;
-		
+		User u=null;
 		try {
-			User u= findByUserName(userName);
+		    u= findByUserName(userName);
 			
 			ok= EncrypterClass.Password.match(pswd, u.getPassword());
 		} catch (Exception e) {
@@ -72,7 +78,7 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 			e.printStackTrace();
 		}
 		
-		return ok;
+		return ok && !u.isDisable();
 	}
 	
 	public User login(String userName,String pswd)
