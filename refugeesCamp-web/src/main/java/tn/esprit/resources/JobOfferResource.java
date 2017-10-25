@@ -1,6 +1,7 @@
 package tn.esprit.resources;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -17,9 +19,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import tn.esprit.authorization.AllowTo;
+import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
+import tn.esprit.entities.User;
 import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.RefugeeService;
 import tn.esprit.services.UserService;
@@ -29,6 +36,8 @@ import tn.esprit.utils.GenerateCoverLetterPdf;
 @RequestScoped
 public class JobOfferResource {
 
+	private final String KEY_B64 = Base64.getEncoder().encodeToString("secret".getBytes());
+	
 	@EJB
 	JobOfferImpl joService;
 
@@ -55,7 +64,17 @@ public class JobOfferResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@AllowTo(roles = { "DistrictChef" })
-	public Response AddJobOffer(JobOffer jo) {
+	public Response AddJobOffer(
+			JobOffer jo,
+			@HeaderParam("Authorization") String auth) {
+		String token=auth.split(" ")[1];
+		Jws<Claims> jws = null;
+		jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
+		int iduser = Integer.parseInt(jws.getBody().get("id").toString());
+		User u=us.find(iduser);
+		System.out.println(u.getId());
+		
+		jo.setDistrictchef((DistrictChef)u);
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
 		return Response.status(Status.NOT_FOUND).build();
