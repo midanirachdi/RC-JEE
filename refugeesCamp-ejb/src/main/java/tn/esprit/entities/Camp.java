@@ -78,7 +78,7 @@ public class Camp implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	@OneToOne (cascade=CascadeType.ALL)
+	@OneToOne (cascade=CascadeType.MERGE)
     @JoinColumn(name="campChef_ID", unique= true, nullable=true, insertable=true, updatable=true)
 	public CampChef getCampchief() {
 		return campchief;
