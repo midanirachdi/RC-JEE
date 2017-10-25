@@ -1,6 +1,9 @@
 package tn.esprit.utils;
 
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
@@ -9,7 +12,11 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.JobOffer;
+import tn.esprit.entities.News;
+import tn.esprit.entities.Stock;
 import tn.esprit.entities.User;
+import tn.esprit.services.NewsService;
+import tn.esprit.services.StockService;
 import tn.esprit.services.UserService;
 
 
@@ -19,13 +26,18 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	
 	 @EJB 
 	 private UserService us;
+	 @EJB
+	 private StockService ss;
+	 @EJB
+	 private NewsService ns;
 	
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		
 		initUsers();
-		
+		initStock();
+		initNews();
 	}
 
 	@Override
@@ -70,6 +82,26 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		
 		
 		
+	}
+	
+	private void initStock() {
+		Stock st=new Stock();
+		st.setStockType(Stock.stockNeedsEnum.Water);
+		st.setNotes("nothing");
+		st.setQteTotal(100);
+		st.setQteInStock(100);
+		st.setStockValue(500);
+		ss.add(st);
+	}
+	
+	private void initNews() {
+		News n=new News();
+		n.setAuthor("Salim");
+		n.setContent("Test news test news test news");
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		n.setDateOfCreation(timestamp);
+		ns.add(n);
+			
 	}
 	private void initJobOffers(){
 		//TODO midani
