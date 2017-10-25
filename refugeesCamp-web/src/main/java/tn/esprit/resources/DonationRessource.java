@@ -69,8 +69,8 @@ public class DonationRessource {
 
 		// Set redirect URLs
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donations/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donations/confirm");
 
 		// Payment amount
 		Amount amount = new Amount();
@@ -117,8 +117,8 @@ public class DonationRessource {
 		Payer payer = new Payer();
 		payer.setPaymentMethod("paypal");
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donations/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donations/confirm");
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
 		amount.setTotal(total+"");

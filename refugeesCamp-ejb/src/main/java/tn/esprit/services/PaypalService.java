@@ -44,8 +44,8 @@ public class PaypalService{
 
 		// Set redirect URLs
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donation/cancel");
-		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donation/confirm");
+		redirectUrls.setCancelUrl("http://localhost:18080/refugeesCamp-web/api/donations/cancel");
+		redirectUrls.setReturnUrl("http://localhost:18080/refugeesCamp-web/api/donations/confirm");
 
 		// Payment amount
 		Amount amount = new Amount();
