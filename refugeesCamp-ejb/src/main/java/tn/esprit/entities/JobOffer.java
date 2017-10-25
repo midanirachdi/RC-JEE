@@ -1,10 +1,8 @@
 package tn.esprit.entities;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,11 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.ws.rs.WebApplicationException;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Entity implementation class for Entity: JobOffer
@@ -120,7 +116,7 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idDistrictchef",referencedColumnName="id",insertable=true,updatable=true)
-	@JsonBackReference(value="aaa")
+	@JsonBackReference(value="dchef_joboffer")
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}

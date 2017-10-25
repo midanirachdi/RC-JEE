@@ -31,10 +31,5 @@ public class CampChef extends User {
 	public void setJoboffers(List<JobOffer> joboffers) {
 		this.joboffers = joboffers;
 	}
-
-	@Override
-	public String toString() {
-		return super.toString() + ",\njoboffers=" + joboffers + "\n}";
-	}
 	  
 }

@@ -1,8 +1,11 @@
 package tn.esprit.resources;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,6 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,8 +31,10 @@ import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Admin;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.User;
 import tn.esprit.entities.Volunteer;
+import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.UserService;
 
 @Path("users")
@@ -37,6 +43,9 @@ public class UserResource {
 	
 	@Inject 
 	private UserService us;
+	
+	@Inject
+	JobOfferImpl joService;
 	
 	private final String KEY_B64 = Base64.getEncoder().encodeToString("secret".getBytes());
 
@@ -176,7 +185,19 @@ public class UserResource {
 	
 	
 	
-	
+	@GET
+	@Path("/{dc_id}/joboffers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"CampChef"})
+	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
+		
+		List<JobOffer> jolist = new ArrayList<JobOffer>();
+		jolist = joService.findByDistrictChief(dc_id);
+
+		if (!jolist.isEmpty())
+			return Response.status(Status.CREATED).entity(jolist).build();
+		return Response.status(Status.NOT_FOUND).build();
+	}
 	
 	
 	

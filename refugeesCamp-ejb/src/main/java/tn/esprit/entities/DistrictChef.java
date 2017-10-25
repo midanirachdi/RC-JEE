@@ -31,7 +31,7 @@ public class DistrictChef extends User{
 	  private Camp camp;
 
 	  @OneToMany(mappedBy="districtchef",fetch=FetchType.EAGER)
-	  @JsonManagedReference(value="aaa")
+	  @JsonManagedReference(value="dchef_joboffer")
 	  private List<JobOffer> joboffers;
 
 	public List<JobOffer> getJoboffers() {
