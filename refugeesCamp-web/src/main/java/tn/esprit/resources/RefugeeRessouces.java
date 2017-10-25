@@ -19,11 +19,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import tn.esprit.authorization.AllowTo;
-import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Refugee;
-import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.RefugeeService;
-import tn.esprit.utils.GenerateCoverLetterPdf;
 
 @RequestScoped
 @Path("/Refugees")
@@ -31,8 +28,7 @@ public class RefugeeRessouces {
 
 	@EJB
 	RefugeeService refugeeS;
-	@EJB
-	JobOfferImpl joService;
+	
 
 	public RefugeeRessouces() {
 		super();
@@ -122,35 +118,6 @@ public class RefugeeRessouces {
 		double f2 = (f * 100) / f1;
 		return Response.status(200).entity(f2).build();
 	}
-
-
-	@GET
-	@Path("/all/sorted/{id_jobOffer}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
-		JobOffer jo = joService.findById(id_jobOffer);
-
-		List<Refugee> bestCandidates = new ArrayList<>();
-		bestCandidates = refugeeS.findBestCandidates(jo.getFieldOfWork());
-		for (Refugee r : bestCandidates) {
-			refugeeS.sendMail(jo.getTitle(), r.getEmail(),jo.getId(),r.getId());
-		}
-
-		return Response.status(200).entity(bestCandidates).build();
-	}
-
-	@GET
-	@Path("/pdf/{id_jobOffer}/{id_refugee}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response thepdf(@PathParam(value="id_jobOffer") int id_jobOffer,@PathParam(value="id_refugee") int id_refugee) {
-		JobOffer jo = joService.findById(id_jobOffer);
-		Refugee r = refugeeS.findById(id_refugee);
-		
-		GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
-		g.topdf(jo,r);
-		return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .").build();
-	}
-
 
 	
 	@GET

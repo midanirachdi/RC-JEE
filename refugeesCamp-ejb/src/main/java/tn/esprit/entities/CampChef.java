@@ -32,12 +32,4 @@ public class CampChef extends User {
 		this.joboffers = joboffers;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + ",\njoboffers=" + joboffers + "\n}";
-	}
-	
-
-	 
-	 
 }
