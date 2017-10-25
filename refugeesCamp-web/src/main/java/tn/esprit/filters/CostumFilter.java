@@ -38,7 +38,7 @@ public class CostumFilter implements ContainerRequestFilter {
 
 				String tokenRole = jws.getBody().get("role").toString();
 				if (!hasRole(tokenRole))
-					ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+					ctx.abortWith(Response.status(Response.Status.METHOD_NOT_ALLOWED).build());
 			} catch (SignatureException e) {
 				ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 			}
@@ -46,7 +46,7 @@ public class CostumFilter implements ContainerRequestFilter {
 		}
 
 		else
-			ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			ctx.abortWith(Response.status(Response.Status.FORBIDDEN).build());
 	}
 
 	private boolean hasRole(String tknRole) {
