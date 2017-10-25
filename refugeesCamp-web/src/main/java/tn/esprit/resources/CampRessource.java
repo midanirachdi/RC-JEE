@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response.Status;
 import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Camp;
 import tn.esprit.services.CampService;
-@Path("/camp")
+@Path("/camps")
 public class CampRessource {
 	@EJB
 	CampService cs;
@@ -31,7 +31,6 @@ public class CampRessource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"Admin"})
 	public  Response listall(){
 		List<Camp> ls= cs.findAll();
 		if (!ls.isEmpty())
@@ -66,7 +65,6 @@ public class CampRessource {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"Admin"})
 	public Response getCamp(@PathParam("id")int id){
 		Camp c= cs.findById(id);
 		if (c!=null) {
