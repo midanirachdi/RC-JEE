@@ -195,7 +195,7 @@ public class UserResource {
 		jolist = joService.findByDistrictChief(dc_id);
 
 		if (!jolist.isEmpty())
-			return Response.status(Status.CREATED).entity(jolist).build();
+			return Response.status(Status.ACCEPTED).entity(jolist).build();
 		return Response.status(Status.NOT_FOUND).build();
 	}
 	

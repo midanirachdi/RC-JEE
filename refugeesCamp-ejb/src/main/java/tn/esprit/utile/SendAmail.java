@@ -47,7 +47,7 @@ public class SendAmail {
 			String htmlcontent = "Congratulations,<br><br><br> You have been selected as a potential candidate for this job offer!"
 					+ "<br> We know that job search is long process so we have decided to help you with the first few steps:"
 					+ "<br><br>If you would like to generate your cover letter through our app go to : "
-					+ "<a href='http://localhost:18080/refugeesCamp-web/api/Refugee/pdf/"+id_jobOffer+"/"+id_refugee+"'>Generate my cover letter</a>"
+					+ "<a href='http://localhost:18080/refugeesCamp-web/api/joboffers/"+id_jobOffer+"/refugees/"+id_refugee+"/pdf"+"'>Generate my cover letter</a>"
 					+ "<br><br>You can also make your own custom CV by following the link below :"
 					+ "<br> <a href='https://goo.gl/qWzSPu'>Resume generator</a>"
 					+ "<br><br> Make sure to watch these job interview videos for more information :"

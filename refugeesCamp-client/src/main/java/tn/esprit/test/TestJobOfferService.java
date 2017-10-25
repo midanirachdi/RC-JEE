@@ -1,11 +1,15 @@
 package tn.esprit.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.Refugee;
 import tn.esprit.interfaces.RefugeeInterfaceRemote;
 
 public class TestJobOfferService {
@@ -38,7 +42,7 @@ public class TestJobOfferService {
 			 CampChef cc = new CampChef();
 			 dc.setFirstName("dchief1");
 			 cc.setFirstName("cchief1");
-	
+			
   
 //			 Camp rcamp = new Camp();
 //			 Refugee r = new Refugee( "Midani", 
