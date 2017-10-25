@@ -54,8 +54,14 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 	
 	
 	public User findByUserName(String mail){	
-		User result = (User)em.createQuery("select u from User u where  u.email = :mail").setParameter("mail", mail).getSingleResult(); 
-		return result;
+		User result=null;
+		try
+		{
+		 result = (User)em.createQuery("select u from User u where  u.email = :mail").setParameter("mail", mail).getSingleResult(); 
+		}
+		catch(Exception e){}
+			
+		 return result;
 	}
 	
 	

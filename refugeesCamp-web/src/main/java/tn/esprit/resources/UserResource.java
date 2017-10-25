@@ -79,10 +79,12 @@ public class UserResource {
 	public Response doRegister(String req,@HeaderParam("Authorization") String auth)
 	{
 
-
+		
 		User user=null;
+		User emailUserExisting=null;
 		try {
 			user = new ObjectMapper().readValue(req, User.class);
+	
 			if(auth!=null)
 			{ 
 		
@@ -95,8 +97,11 @@ public class UserResource {
 			{return  Response.status(Response.Status.UNAUTHORIZED).build();}}
 			else if (!(user instanceof Volunteer))
 			return Response.status(Response.Status.UNAUTHORIZED).build();
-			 
+			 	
 			   user.setDisable(true);
+				emailUserExisting=us.findByUserName(user.getEmail());
+				if(emailUserExisting!=null)
+				{ return Response.status(Status.CONFLICT).build();}
 			   us.registerUser(user);
 			   Date exp = new Date(System.currentTimeMillis() + 300000);
 			   String jwtString = Jwts.builder()
