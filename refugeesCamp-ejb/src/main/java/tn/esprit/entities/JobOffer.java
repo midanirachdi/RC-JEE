@@ -24,15 +24,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class JobOffer implements Serializable {
 
-	   
-	
 	private int id;
 	private String description;
 	private Date begindate;
 	private Date enddate;
 	private int contactnumber;
 	private String fieldOfWork;
-	private String jobTitle;
+
 	private int salaryEstimate;
 	private String companyName;
 	private String companyAdress;
@@ -45,50 +43,46 @@ public class JobOffer implements Serializable {
 
 	public JobOffer() {
 		super();
-	}   
-
-
+	}
 
 	public JobOffer(String description, Date begindate, Date enddate, int contactnumber, String fieldOfWork,
-			String jobTitle, int salaryEstimate, String companyName, String companyAdress, String contactEmail,
-			String contactName, String title, DistrictChef districtchef, CampChef campchef) {
+			int salaryEstimate, String companyName, String companyAdress, String contactEmail, String contactName,
+			String title, DistrictChef districtchef, CampChef campchef) {
 		super();
 		this.description = description;
 		this.begindate = begindate;
 		this.enddate = enddate;
 		this.contactnumber = contactnumber;
 		this.fieldOfWork = fieldOfWork;
-		this.jobTitle = jobTitle;
 		this.salaryEstimate = salaryEstimate;
 		this.companyName = companyName;
 		this.companyAdress = companyAdress;
 		this.contactEmail = contactEmail;
 		this.contactName = contactName;
-		this.title=title;
+		this.title = title;
 		this.districtchef = districtchef;
 		this.campchef = campchef;
 	}
 
-
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}   
+	}
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	public Date getBegindate() {
 		return this.begindate;
@@ -96,8 +90,9 @@ public class JobOffer implements Serializable {
 
 	public void setBegindate(Date begindate) {
 		this.begindate = begindate;
-	}   
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	}
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	public Date getEnddate() {
 		return this.enddate;
@@ -105,7 +100,8 @@ public class JobOffer implements Serializable {
 
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
-	}   
+	}
+
 	public int getContactnumber() {
 		return this.contactnumber;
 	}
@@ -114,139 +110,91 @@ public class JobOffer implements Serializable {
 		this.contactnumber = contactnumber;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idDistrictchef",referencedColumnName="id",insertable=true,updatable=true)
-	@JsonBackReference(value="dchef_joboffer")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idDistrictchef", referencedColumnName = "id", insertable = true, updatable = true)
+	@JsonBackReference(value = "dchef_joboffer")
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}
+
 	public void setDistrictchef(DistrictChef districtchef) {
 		this.districtchef = districtchef;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idCampchef",referencedColumnName="id",insertable=true,updatable=true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idCampchef", referencedColumnName = "id", insertable = true, updatable = true)
 	@JsonBackReference
 	public CampChef getCampchef() {
 		return campchef;
 	}
+
 	public void setCampchef(CampChef campchef) {
 		this.campchef = campchef;
 	}
-
 
 	public String getFieldOfWork() {
 		return fieldOfWork;
 	}
 
-
-
 	public void setFieldOfWork(String fieldOfWork) {
 		this.fieldOfWork = fieldOfWork;
 	}
-
-
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
-
-
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-
-
 
 	public int getSalaryEstimate() {
 		return salaryEstimate;
 	}
 
-
-
 	public void setSalaryEstimate(int salaryEstimate) {
 		this.salaryEstimate = salaryEstimate;
 	}
-
-
 
 	public String getCompanyName() {
 		return companyName;
 	}
 
-
-
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
-
 
 	public String getCompanyAdress() {
 		return companyAdress;
 	}
 
-
-
 	public void setCompanyAdress(String companyAdress) {
 		this.companyAdress = companyAdress;
 	}
-
-
 
 	public String getContactEmail() {
 		return contactEmail;
 	}
 
-
-
 	public void setContactEmail(String contactEmail) {
 		this.contactEmail = contactEmail;
 	}
-
-
 
 	public String getContactName() {
 		return contactName;
 	}
 
-
-
 	public void setContactName(String contactName) {
 		this.contactName = contactName;
 	}
-
-
 
 	public String getTitle() {
 		return title;
 	}
 
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "JobOffer [description=" + description + ", begindate=" + begindate + ", enddate=" + enddate
-				+ ", contactnumber=" + contactnumber + ", fieldOfWork=" + fieldOfWork + ", jobTitle=" + jobTitle
-				+ ", salaryEstimate=" + salaryEstimate + ", companyName=" + companyName + ", companyAdress="
-				+ companyAdress + ", contactEmail=" + contactEmail + ", contactName=" + contactName + ", title=" + title
+				+ ", contactnumber=" + contactnumber + ", fieldOfWork=" + fieldOfWork + ", salaryEstimate="
+				+ salaryEstimate + ", companyName=" + companyName + ", companyAdress=" + companyAdress
+				+ ", contactEmail=" + contactEmail + ", contactName=" + contactName + ", title=" + title
 				+ ", districtchef=" + districtchef + ", campchef=" + campchef + "]";
 	}
 
-
-
-
-
-	
-
-
-	
-   
 }

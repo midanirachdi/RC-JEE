@@ -25,7 +25,6 @@ import tn.esprit.services.RefugeeService;
 import tn.esprit.services.UserService;
 import tn.esprit.utils.GenerateCoverLetterPdf;
 
-
 @Path("/joboffers")
 @RequestScoped
 public class JobOfferResource {
@@ -39,7 +38,7 @@ public class JobOfferResource {
 	UserService us;
 	@EJB
 	RefugeeService refugeeS;
-	
+
 	public JobOfferResource() {
 		super();
 	}
@@ -55,9 +54,8 @@ public class JobOfferResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"DistrictChef"})
-	public Response AddJobOffer(
-			JobOffer jo) {
+	@AllowTo(roles = { "DistrictChef" })
+	public Response AddJobOffer(JobOffer jo) {
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
 		return Response.status(Status.NOT_FOUND).build();
@@ -65,7 +63,7 @@ public class JobOfferResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"DistrictChef"})
+	@AllowTo(roles = { "DistrictChef" })
 	public Response GetAllJobOffers() {
 		List<JobOffer> jolist = new ArrayList<JobOffer>();
 		jolist = joService.findAll();
@@ -75,67 +73,73 @@ public class JobOfferResource {
 		return Response.status(Status.NOT_FOUND).build();
 	}
 
-
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"DistrictChef"})
+	// @AllowTo(roles={"DistrictChef"})
 	public Response GetJobOfferById(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
-		if(jo!=null)
+		if (jo != null)
 			return Response.status(Status.CREATED).entity(jo).build();
 		return Response.status(404).build();
 	}
+
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"DistrictChef"})
+	@AllowTo(roles = { "DistrictChef" })
 	public Response DeleteJobOffer(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
 		if (joService.delete(jo))
-			return Response.status(Status.CREATED).build();
+			return Response.status(Status.ACCEPTED).build();
 		return Response.status(404).build();
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"DistrictChef"})
+	@AllowTo(roles = { "DistrictChef" })
 	public Response UpdateJobOffer(JobOffer jo) {
-		if(joService.update(jo))
-			return Response.status(Status.CREATED).build();
+		if (joService.update(jo))
+			return Response.status(Status.ACCEPTED).build();
 		return Response.status(Status.NOT_MODIFIED).build();
 	}
-	
+
 	@GET
 	@Path("/{id_jobOffer}/best_candidates")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"CampChef"})
+	@AllowTo(roles = { "CampChef" })
 	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
 		JobOffer jo = joService.findById(id_jobOffer);
+		if (jo != null) {
+			List<Refugee> bestCandidates = new ArrayList<>();
+			bestCandidates = refugeeS.findBestCandidates(jo.getFieldOfWork());
+			if (!bestCandidates.isEmpty()) {
+				for (Refugee r : bestCandidates) {
+					refugeeS.sendMail(jo.getTitle(), r.getEmail(), jo.getId(), r.getId());
+				}
 
-		List<Refugee> bestCandidates = new ArrayList<>();
-		bestCandidates = refugeeS.findBestCandidates(jo.getFieldOfWork());
-		for (Refugee r : bestCandidates) {
-			refugeeS.sendMail(jo.getTitle(), r.getEmail(),jo.getId(),r.getId());
+				return Response.status(Status.ACCEPTED).entity(bestCandidates).build();
+			}
+			return Response.status(Status.NOT_FOUND).build();
 		}
-
-		return Response.status(200).entity(bestCandidates).build();
+		return Response.status(Status.NOT_FOUND).build();
 	}
 
 	@GET
 	@Path("/{id_jobOffer}/refugees/{id_refugee}/pdf")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response GenerateMotivationLetter(
-			@PathParam(value="id_jobOffer") int id_jobOffer,
-			@PathParam(value="id_refugee") int id_refugee) {
+	public Response GenerateMotivationLetter(@PathParam(value = "id_jobOffer") int id_jobOffer,
+			@PathParam(value = "id_refugee") int id_refugee) {
 		JobOffer jo = joService.findById(id_jobOffer);
 		Refugee r = refugeeS.findById(id_refugee);
-		
-		GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
-		g.topdf(jo,r);
-		return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .").build();
-	}	
-
+		if (jo != null && r != null) {
+			GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
+			g.topdf(jo, r);
+			return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .")
+					.build();
+		}
+		return Response.status(Status.NOT_FOUND).build();
+	}
 
 }

@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -20,9 +21,16 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 
 	@Override
 	public boolean add(JobOffer joboffer) {
+
 		if (joboffer != null) {
-			em.persist(joboffer);
-			return true;
+			Date date_debut = joboffer.getBegindate();
+			Date date_fin = joboffer.getEnddate();
+
+			if (date_debut.before(date_fin) == true) {
+				em.persist(joboffer);
+				return true;
+			}
+			return false;
 		}
 		return false;
 
@@ -38,8 +46,14 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 	public boolean update(JobOffer joboffer) {
 		// merge old and new instances
 		if (joboffer != null) {
-			em.merge(joboffer);
-			return true;
+			Date date_debut = joboffer.getBegindate();
+			Date date_fin = joboffer.getEnddate();
+
+			if (date_debut.before(date_fin) == true) {
+				em.merge(joboffer);
+				return true;
+			}
+			return false;
 		}
 		return false;
 
@@ -66,7 +80,7 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 	public List<JobOffer> findByDistrictChief(int dc_id) {
 
 		String requete = "SELECT jo FROM JobOffer jo JOIN jo.districtchef d WHERE d.id= ?1 ORDER BY jo.begindate DESC";
-		return em.createQuery(requete).setParameter(1, dc_id).getResultList();		
+		return em.createQuery(requete).setParameter(1, dc_id).getResultList();
 
 	}
 
