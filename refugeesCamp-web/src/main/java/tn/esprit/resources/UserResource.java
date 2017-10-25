@@ -221,7 +221,8 @@ public class UserResource {
 			@QueryParam("rowNumber") int rowNumber
 		)
 	{
-
+		if(page <=0 || rowNumber <=0)
+			return Response.status(Status.EXPECTATION_FAILED).build();
 		
 		return  Response.status(Response.Status.ACCEPTED).header("nbr", us.count()).entity(us.findRange(page, rowNumber)).build();
 	}

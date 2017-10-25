@@ -31,7 +31,10 @@ public abstract class AbstractFacade <T extends IdentifiedInterface>{
 	}
 	
 	public void remove(T entity){
-		getEntityManager().remove(getEntityManager().merge(entity));
+		try
+		{
+		getEntityManager().remove(getEntityManager().merge(entity));}
+		catch(Exception e){}
 	}
 	
 	public T find(Object id){
@@ -46,10 +49,10 @@ public abstract class AbstractFacade <T extends IdentifiedInterface>{
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 	
-	public List<T> findRange(int startPosition,int maxResult){
+	public List<T> findRange(int index,int maxResult){
 		CriteriaQuery cq=getEntityManager().getCriteriaBuilder().createQuery();
 		cq.select(cq.from(entityClass));
-		Query q= getEntityManager().createQuery(cq).setFirstResult(startPosition-1).setMaxResults(maxResult);
+		Query q= getEntityManager().createQuery(cq).setFirstResult(((index-1)*maxResult)).setMaxResults(maxResult);
 		
 		return q.getResultList();		
 	}

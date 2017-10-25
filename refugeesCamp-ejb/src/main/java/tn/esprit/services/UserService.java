@@ -172,12 +172,12 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 		 
 		 
 		 if(!lName.trim().equals(""))
-		 {params.add(new SearchCriteria("lasttName", ":", lName)) ;}
+		 {params.add(new SearchCriteria("lastName", ":", lName)) ;}
 
 		 
 		 
 		 if(!email.trim().equals(""))
-		 {params.add(new SearchCriteria("email", ":", fName)) ;}
+		 {params.add(new SearchCriteria("email", ":", email)) ;}
 		 
 		 return searchUser(params);
 	 }
