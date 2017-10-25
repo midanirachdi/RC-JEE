@@ -16,6 +16,7 @@ import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Stock;
 import tn.esprit.entities.User;
+import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
 import tn.esprit.services.NewsService;
 import tn.esprit.services.StockService;
@@ -86,7 +87,49 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		us.registerUser(u3);
 		
 		
+		User u4= new DistrictChef();
+		u4.setFirstName("hafsa");
+		u4.setLastName("mtu");
+		u4.setEmail("hafsa.mtu@esprit.com");
+		u4.setDisable(false);
+		u4.setPassword("DistrictChef");
+		us.registerUser(u4);
 		
+		
+		User u5= new Volunteer();
+		u5.setFirstName("mohamed amin");
+		u5.setLastName("garci");
+		u5.setEmail("mohamedamine.garci@esprit.tn");
+		u5.setDisable(false);
+		u5.setPassword("Volunteer");
+		us.registerUser(u5);
+		
+		User u6= new Volunteer();
+		u6.setFirstName("maysen");
+		u6.setLastName("ayed");
+		u6.setEmail("maysen.ayed@esprit.com");
+		u6.setDisable(false);
+		u6.setPassword("Volunteer");
+		us.registerUser(u6);
+		
+		
+		User u7= new Volunteer();
+		u7.setFirstName("ahlem");
+		u7.setLastName("jerbi");
+		u7.setEmail("ahlem.jerbi@esprit.com");
+		u7.setDisable(false);
+		u7.setPassword("Volunteer");
+		us.registerUser(u7);
+		
+		
+		
+		User u8= new Volunteer();
+		u8.setFirstName("mohamed");
+		u8.setLastName("salim");
+		u8.setEmail("mohamed.salim@esprit.com");
+		u8.setDisable(false);
+		u8.setPassword("Volunteer");
+		us.registerUser(u8);
 	}
 	private void initCamps(){
 		Camp c1=new Camp("Camp1", true, "TN", 250, new Date());
