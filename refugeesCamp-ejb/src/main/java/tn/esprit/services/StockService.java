@@ -144,6 +144,14 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 		return false;
 	}
 	
+	public List<Need> ListNeedsByStatus(int status){
+		String requete = "SELECT n FROM Need n where n.status=:p";
+		return em.createQuery(requete,Need.class).setParameter("p",status).getResultList();
+	}
 	
+	public List<Stock> ListStockBreak(){
+		String requete = "SELECT n FROM Stock n where n.qteInStock<(n.qteTotal*0.2)";
+		return em.createQuery(requete,Stock.class).getResultList();
+	}
 }
 

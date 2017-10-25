@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -32,9 +32,4 @@ public class CampChef extends User {
 		this.joboffers = joboffers;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + ",\njoboffers=" + joboffers + "\n}";
-	}
-	  
 }

@@ -1,11 +1,18 @@
 package tn.esprit.resources;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.net.URI;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Date;
+=======
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+>>>>>>> 6e6e277aa9e5d4f24f070c3218eb6001f0a51170
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -22,7 +29,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+<<<<<<< HEAD
 import javax.ws.rs.core.UriInfo;
+=======
+>>>>>>> 6e6e277aa9e5d4f24f070c3218eb6001f0a51170
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,9 +44,14 @@ import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Admin;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.User;
 import tn.esprit.entities.Volunteer;
+<<<<<<< HEAD
 import tn.esprit.services.MailSenderService;
+=======
+import tn.esprit.services.JobOfferImpl;
+>>>>>>> 6e6e277aa9e5d4f24f070c3218eb6001f0a51170
 import tn.esprit.services.UserService;
 
 @Path("users")
@@ -46,6 +61,7 @@ public class UserResource {
 	@Inject 
 	private UserService us;
 	
+<<<<<<< HEAD
 	
 	
 	 @Context
@@ -54,6 +70,10 @@ public class UserResource {
 	
 	@Inject 
 	private MailSenderService ms;
+=======
+	@Inject
+	JobOfferImpl joService;
+>>>>>>> 6e6e277aa9e5d4f24f070c3218eb6001f0a51170
 	
 	private final String KEY_B64 = Base64.getEncoder().encodeToString("secret".getBytes());
 
@@ -207,7 +227,19 @@ public class UserResource {
 	
 	
 	
-	
+	@GET
+	@Path("/{dc_id}/joboffers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@AllowTo(roles={"CampChef"})
+	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
+		
+		List<JobOffer> jolist = new ArrayList<JobOffer>();
+		jolist = joService.findByDistrictChief(dc_id);
+
+		if (!jolist.isEmpty())
+			return Response.status(Status.CREATED).entity(jolist).build();
+		return Response.status(Status.NOT_FOUND).build();
+	}
 	
 	
 	

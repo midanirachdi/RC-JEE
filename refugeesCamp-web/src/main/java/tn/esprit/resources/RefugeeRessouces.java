@@ -13,24 +13,22 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import tn.esprit.entities.JobOffer;
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Refugee;
-import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.RefugeeService;
-import tn.esprit.utils.GenerateCoverLetterPdf;
 
 @RequestScoped
-@Path("/Refugee")
+@Path("/Refugees")
 public class RefugeeRessouces {
 
 	@EJB
 	RefugeeService refugeeS;
-	@EJB
-	JobOfferImpl joService;
+	
 
 	public RefugeeRessouces() {
 		super();
@@ -43,9 +41,8 @@ public class RefugeeRessouces {
 	public void setRefugeeService(RefugeeService refugeeS) {
 		this.refugeeS = refugeeS;
 	}
-
+	@AllowTo(roles={"Admin"})
 	@GET
-	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllRefugees() {
 		List<Refugee> l = new ArrayList<Refugee>();
@@ -55,7 +52,7 @@ public class RefugeeRessouces {
 		else
 			return Response.status(404).build();
 	}
-
+	@AllowTo(roles={"CampChef","Admin"})
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -67,10 +64,10 @@ public class RefugeeRessouces {
 			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + id + " not found !")
 					.build();
 	}
-
+	
+	@AllowTo(roles={"CampChef"})
 	@DELETE
-	@Path("/delete/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}")
 	public Response DeleteRefugee(@PathParam(value = "id") int id) {
 		Refugee re = refugeeS.findById(id);
 		if (re != null) {
@@ -84,9 +81,8 @@ public class RefugeeRessouces {
 					.build();
 	}
 
-	// @AllowTo(roles={"Admin"})
+	@AllowTo(roles={"CampChef"})
 	@POST
-	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response AddRefugee(Refugee r) {
 		if (refugeeS.add(r)) {
@@ -95,61 +91,33 @@ public class RefugeeRessouces {
 			return Response.status(400).build(); // 400 Bad request
 	}
 
+	@AllowTo(roles={"CampChef"})
 	@PUT
-	@Path("/update/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response UpdateRefugee(@PathParam(value = "id") int id, Refugee r) {
-		Refugee re = refugeeS.findById(id);
+	public Response UpdateRefugee(Refugee r) {
+		Refugee re = refugeeS.findById(r.getId());
 		if (re != null) {
-			r.setId(id); // we have to add the setId or the hibernate will add a
+			r.setId(re.getId()); // we have to add the setId or the hibernate will add a
 							// new record in DataBase
 			if (refugeeS.update(r)) {
 				return Response.ok("Refugee updated successfuly").build();
 			} else
 				return Response.status(304).build(); // 304 Not modified
 		} else
-			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + id + " not found !")
+			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + r.getId() + " not found !")
 					.build();
+
 	}
 
 	@GET
-	@Path("/gender/{sex}")
+	@Path("/stats")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetRefugeeByGender(@PathParam(value = "sex") String sex) {
+	public Response GetRefugeeByGender(@QueryParam(value = "sex") String sex) {
 		int f = refugeeS.countRefugeePerGender(sex);
 		int f1 = refugeeS.findAll().size();
 		double f2 = (f * 100) / f1;
 		return Response.status(200).entity(f2).build();
 	}
-
-
-	@GET
-	@Path("/all/sorted/{id_jobOffer}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
-		JobOffer jo = joService.findById(id_jobOffer);
-
-		List<Refugee> bestCandidates = new ArrayList<>();
-		bestCandidates = refugeeS.findBestCandidates(jo.getFieldOfWork());
-		for (Refugee r : bestCandidates) {
-			refugeeS.sendMail(jo.getTitle(), r.getEmail(),jo.getId(),r.getId());
-		}
-
-		return Response.status(200).entity(bestCandidates).build();
-	}
-
-	@GET
-	@Path("/pdf/{id_jobOffer}/{id_refugee}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response thepdf(@PathParam(value="id_jobOffer") int id_jobOffer,@PathParam(value="id_refugee") int id_refugee) {
-		JobOffer jo = joService.findById(id_jobOffer);
-		Refugee r = refugeeS.findById(id_refugee);
-		
-		GenerateCoverLetterPdf g = new GenerateCoverLetterPdf();
-		g.topdf(jo,r);
-		return Response.ok("Thank you for using our services . You will find your cover letter in your desktop .").build();
-	}
-
 
 	
 	@GET

@@ -169,10 +169,52 @@ public class StockResources {
 			
 		}
 		
-		
 		return Response.status(Status.BAD_REQUEST).build();
 	}
-
+	
+	@GET
+	@Path("/manageneeds/acceptedneeds")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listAcceptedNeeds() {
+		List<Need> need = new ArrayList<Need>();
+		need = stockService.ListNeedsByStatus(1);
+		if (!need.isEmpty()) return Response.status(Status.OK).entity(need).build();
+		return Response.status(Status.BAD_GATEWAY).build();
+	}
+	@GET
+	@Path("/manageneeds/refusedneeds")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listRefusedNeeds() {
+		List<Need> need = new ArrayList<Need>();
+		need = stockService.ListNeedsByStatus(-1);
+		if (!need.isEmpty()) return Response.status(Status.OK).entity(need).build();
+		return Response.status(Status.BAD_GATEWAY).build();
+	}
+	@GET
+	@Path("/manageneeds/pendingneeds")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listpendingNeeds() {
+		List<Need> need = new ArrayList<Need>();
+		need = stockService.ListNeedsByStatus(0);
+		if (!need.isEmpty()) return Response.status(Status.OK).entity(need).build();
+		return Response.status(Status.BAD_GATEWAY).build();
+	}
+	
+	@GET
+	@Path("/stockbreak")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listStockBreak() {
+		List<Stock> stock = new ArrayList<Stock>();
+		stock = stockService.ListStockBreak();
+		if (!stock.isEmpty()) return Response.status(Status.OK).entity(stock).build();
+		return Response.status(Status.BAD_GATEWAY).build();
+	}
+	// TODO Advanced Search on Stock And Needs
+	// TODO Notification, warning and alerts, "Out of Stock', Must buy Goods...
+	// TODO Fournissurs and their contact, goods shiping(Dateof arrival, date of demand, prices, sort by prices, add fournisseur ect )
+	// TODO Link buying Goods with money already donated (Contact Khalil).
+	// TODO Handle all resteasy exceptions
 }
+ 	
 
 

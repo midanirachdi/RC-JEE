@@ -1,6 +1,7 @@
 package tn.esprit.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -18,12 +19,13 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName(value = "DistrictChef")
 public class DistrictChef extends User{
 	
-	
-	
 	  public DistrictChef() {
 		super();
 	}
-
+	  
+	  @OneToMany(mappedBy="dischef",fetch=FetchType.EAGER)
+	  @JsonManagedReference(value="districtNeeds")	  
+ private Set<Need> needs;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	  @JoinColumn(name="camp_ID")	
@@ -31,7 +33,7 @@ public class DistrictChef extends User{
 	  private Camp camp;
 
 	  @OneToMany(mappedBy="districtchef",fetch=FetchType.EAGER)
-	  @JsonManagedReference(value="aaa")
+	  @JsonManagedReference(value="dchef_joboffer")
 	  private List<JobOffer> joboffers;
 
 	public List<JobOffer> getJoboffers() {

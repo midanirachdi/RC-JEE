@@ -31,7 +31,7 @@ public class CampRessource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"Admin"})
+	//@AllowTo(roles={"Admin"})
 	public  Response listall(){
 		List<Camp> ls= cs.findAll();
 		if (!ls.isEmpty())

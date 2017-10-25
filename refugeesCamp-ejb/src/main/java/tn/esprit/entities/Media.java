@@ -1,6 +1,7 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tn.esprit.entities.News;
 
@@ -32,13 +35,15 @@ public class Media implements Serializable {
 		this.id = id;
 		this.title = title;
 		this.path = path;
+		this.news=new ArrayList<News>();
 	}
 
 	public Media() {
 		super();
+		news=new ArrayList<News>();
 	}
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -62,7 +67,7 @@ public class Media implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
+	@JsonIgnore
 	@ManyToMany
 	public List<News> getNews() {
 		return news;

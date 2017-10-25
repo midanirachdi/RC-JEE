@@ -30,29 +30,25 @@ public class Refugee implements Serializable {
 		BAC, BACplus3, BACplus5, BACplus8
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private int id;
 	private String firstname;
 	private String lastName;
 	private String sex;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
+
 	private Date dateOfBirth;
 	private String nationality;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="camp_ID")
-	@JsonBackReference
+
 	private Camp rcamp;
 
-	@Enumerated(EnumType.STRING)
+	
 	private LanguageLevelEnum frenchlanguageLevel;
-	@Enumerated(EnumType.STRING)
+	
 	private LanguageLevelEnum englishlanguageLevel;
 
-	@Enumerated(EnumType.STRING)
+	
 	private HighestDegreeEnum highestDegree;
 
 	private int yearsOfExperience;
@@ -70,7 +66,7 @@ public class Refugee implements Serializable {
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
+	@Enumerated(EnumType.STRING)
 	public LanguageLevelEnum getFrenchlanguageLevel() {
 		return frenchlanguageLevel;
 	}
@@ -78,7 +74,7 @@ public class Refugee implements Serializable {
 	public void setFrenchlanguageLevel(LanguageLevelEnum frenchlanguageLevel) {
 		this.frenchlanguageLevel = frenchlanguageLevel;
 	}
-
+	@Enumerated(EnumType.STRING)
 	public LanguageLevelEnum getEnglishlanguageLevel() {
 		return englishlanguageLevel;
 	}
@@ -86,7 +82,7 @@ public class Refugee implements Serializable {
 	public void setEnglishlanguageLevel(LanguageLevelEnum englishlanguageLevel) {
 		this.englishlanguageLevel = englishlanguageLevel;
 	}
-
+	@Enumerated(EnumType.STRING)
 	public HighestDegreeEnum getHighestDegree() {
 		return highestDegree;
 	}
@@ -126,7 +122,8 @@ public class Refugee implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.nationality = nationality;
 	}
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -183,7 +180,8 @@ public class Refugee implements Serializable {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -199,7 +197,9 @@ public class Refugee implements Serializable {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="camp_ID")
+	@JsonBackReference(value="forraffa")
 	public Camp getRcamp() {
 		return rcamp;
 	}

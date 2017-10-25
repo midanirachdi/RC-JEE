@@ -6,12 +6,17 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Need implements Serializable{
@@ -24,6 +29,10 @@ public class Need implements Serializable{
 	private Date date;
 
 	private String description;
+	@ManyToOne(fetch=FetchType.EAGER)	
+	@JoinColumn(name="iddcchef")
+	@JsonBackReference(value="districtNeeds")
+	private DistrictChef dischef ;
 	
 	/* ******************* Added */
 	@Enumerated(EnumType.STRING)/* added */ 
@@ -63,9 +72,22 @@ public class Need implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	
+	
+	
+	
+	public DistrictChef getDischef() {
+		return dischef;
+	}
+	public void setDischef(DistrictChef dischef) {
+		this.dischef = dischef;
+	}
+	
 	@Override
 	public String toString() {
-		return "Need [id=" + id + ", type=" + type + ", description=" + description + ", date=" + date + "]";
+		return "Need [id=" + id + ", date=" + date + ", description=" + description + ", dischef=" + dischef + ", type="
+				+ type + ", quantity=" + quantity + ", status=" + status + "]";
 	}
 	public Need() {
 		super();
