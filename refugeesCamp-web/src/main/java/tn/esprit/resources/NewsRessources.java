@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.News;
 import tn.esprit.services.NewsService;
 
@@ -46,6 +47,7 @@ public class NewsRessources {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
+	@AllowTo(roles = { "Admin" })
 	public Response AddNews(News news) {
 		
 		if (newsService.add(news)) return Response.status(Status.CREATED).build();
@@ -78,6 +80,7 @@ public class NewsRessources {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@AllowTo(roles = { "Admin" })
 	public Response DeleteNews(@PathParam(value = "id") int id) {
 		
 		News news = newsService.findById(id);
@@ -90,6 +93,7 @@ public class NewsRessources {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
+	@AllowTo(roles = { "Admin" })
 	public Response UpdateNews(News news) {
 		News exNews=newsService.findById(news.getId());
 		//Change Tests:
