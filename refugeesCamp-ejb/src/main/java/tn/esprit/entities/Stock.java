@@ -1,17 +1,15 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /*
 * author: Salim Ben Hassine
@@ -36,8 +34,6 @@ public class Stock implements Serializable {
 	private String notes;
 	
 	
-	List<Provider> providers=new ArrayList<Provider>();
-	
 	public Stock() {
 		super();
 	}
@@ -53,6 +49,7 @@ public class Stock implements Serializable {
 	}
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "stock_id")
 	public int getId() {
 		return id;
 	}
@@ -102,14 +99,7 @@ public class Stock implements Serializable {
 		this.notes = notes;
 	}
 	
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="stock")
-	public List<Provider> getProviders() {
-		return providers;
-	}
 
-	public void setProviders(List<Provider> providers) {
-		this.providers = providers;
-	}
 
 	
 
