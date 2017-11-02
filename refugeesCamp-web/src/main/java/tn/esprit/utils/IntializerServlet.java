@@ -15,14 +15,17 @@ import tn.esprit.entities.DistrictChef;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
+import tn.esprit.entities.Refugee;
 import tn.esprit.entities.Stock;
 import tn.esprit.entities.Stock.stockNeedsEnum;
 import tn.esprit.entities.StockNotification;
 import tn.esprit.entities.User;
+import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
 import tn.esprit.services.StockNotificationService;
+import tn.esprit.services.RefugeeService;
 import tn.esprit.services.StockService;
 import tn.esprit.services.UserService;
 
@@ -43,7 +46,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	 private StockNotificationService sns;
 	 @EJB
 	 private NeedImpl nes;
-	 
+	 private RefugeeService rs;
 	
 	
 	@Override
@@ -55,6 +58,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		initCamps();
 		initNotification();
 		initNeeds();
+		initRefugees();
 	}
 
 	@Override
@@ -106,7 +110,49 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		us.registerUser(u4);
 		
 		
+		User u5= new DistrictChef();
+		u5.setFirstName("hafsa");
+		u5.setLastName("mtu");
+		u5.setEmail("hafsa.mtu@esprit.com");
+		u5.setDisable(false);
+		u5.setPassword("DistrictChef");
+		us.registerUser(u5);
 		
+		
+		User u9= new Volunteer();
+		u9.setFirstName("mohamed amin");
+		u9.setLastName("garci");
+		u9.setEmail("mohamedamine.garci@esprit.tn");
+		u9.setDisable(false);
+		u9.setPassword("Volunteer");
+		us.registerUser(u9);
+		
+		User u6= new Volunteer();
+		u6.setFirstName("maysen");
+		u6.setLastName("ayed");
+		u6.setEmail("maysen.ayed@esprit.com");
+		u6.setDisable(false);
+		u6.setPassword("Volunteer");
+		us.registerUser(u6);
+		
+		
+		User u7= new Volunteer();
+		u7.setFirstName("ahlem");
+		u7.setLastName("jerbi");
+		u7.setEmail("ahlem.jerbi@esprit.com");
+		u7.setDisable(false);
+		u7.setPassword("Volunteer");
+		us.registerUser(u7);
+		
+		
+		
+		User u8= new Volunteer();
+		u8.setFirstName("mohamed");
+		u8.setLastName("salim");
+		u8.setEmail("mohamed.salim@esprit.com");
+		u8.setDisable(false);
+		u8.setPassword("Volunteer");
+		us.registerUser(u8);
 	}
 	private void initCamps(){
 		Camp c1=new Camp("Camp1", true, "TN", 250, new Date());
@@ -227,5 +273,98 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		//TODO midani
 	}
 	
+	private void initRefugees(){
+		
+		Refugee r1 = new Refugee();
+		r1.setFirstname("moez");
+		r1.setLastName("Feki");
+		r1.setPhoneNumber(52314985);
+		r1.setDateOfBirth(new Date(1993-1900,05,25));
+		r1.setSex("homme");
+		r1.setYearsOfExperience(3);
+		rs.add(r1);	
+		
+		Refugee r2 = new Refugee(); 
+		r2.setFirstname("Khaled");
+		r2.setLastName("Feki");
+		r2.setPhoneNumber(52314985);
+		r2.setDateOfBirth(new Date(2012-1900,05-1,19));
+		r2.setSex("homme");
+		r2.setYearsOfExperience(3);
+		rs.add(r2);
+		
+		Refugee r3 = new Refugee();
+		r3.setFirstname("Walid");
+		r3.setLastName("ghedira");
+		r3.setPhoneNumber(21365478);
+		r3.setDateOfBirth(new Date(2009-1900,05-1,16));
+		r3.setSex("homme");
+		r3.setYearsOfExperience(3);
+		rs.add(r3);
+		
+		Refugee r4 = new Refugee();
+		r4.setFirstname("soufia");
+		r4.setLastName("ghedira");
+		r4.setPhoneNumber(21569874);
+		r4.setDateOfBirth(new Date(1930-1900,06-1,30));
+		r4.setSex("femme");
+		r4.setYearsOfExperience(3);
+		rs.add(r4);
+		
+		Refugee r5 = new Refugee();
+		r5.setFirstname("michelle");
+		r5.setLastName("alora");
+		r5.setPhoneNumber(21569874);
+		r5.setDateOfBirth(new Date(1950-1900,03-1,02));
+		r5.setSex("femme");
+		r5.setYearsOfExperience(2);
+		rs.add(r5);
+		
+		Refugee r6 = new Refugee();
+		r6.setFirstname("jack");
+		r6.setLastName("fina");
+		r6.setPhoneNumber(23658741);
+		r6.setDateOfBirth(new Date(1990-1900,03-1,10));
+		r6.setSex("homme");
+		r6.setYearsOfExperience(2);
+		rs.add(r6);
+		
+		Refugee r7 = new Refugee();
+		r7.setFirstname("steve");
+		r7.setLastName("job");
+		r7.setPhoneNumber(22258741);
+		r7.setDateOfBirth(new Date(2005-1900,05-1,23));
+		r7.setSex("homme");
+		r7.setYearsOfExperience(2);
+		rs.add(r7);
+		
+		Refugee r8 = new Refugee();
+		r8.setFirstname("majda");
+		r8.setLastName("loumi");
+		r8.setPhoneNumber(22269741);
+		r8.setDateOfBirth(new Date(1987-1900,07-1,12));
+		r8.setSex("femme");
+		r8.setYearsOfExperience(2);
+		rs.add(r8);
+		
+		Refugee r9 = new Refugee();
+		r9.setFirstname("maria");
+		r9.setLastName("safir");
+		r9.setPhoneNumber(22266341);
+		r9.setDateOfBirth(new Date(1920-1900,07-1,04));
+		r9.setSex("femme");
+		r9.setYearsOfExperience(0);
+		rs.add(r9);
+		
+		Refugee r10 = new Refugee();
+		r10.setFirstname("louis");
+		r10.setLastName("fonci");
+		r10.setPhoneNumber(25697341);
+		r10.setDateOfBirth(new Date(1960-1900,03-1,9));
+		r10.setSex("homme");
+		r10.setYearsOfExperience(1);
+		rs.add(r10);
+		
+	}
 	
 }

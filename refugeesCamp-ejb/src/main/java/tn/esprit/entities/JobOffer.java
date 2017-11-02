@@ -111,7 +111,7 @@ public class JobOffer implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idDistrictchef", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name = "DISTRICTCHEF_ID")
 	@JsonBackReference(value = "dchef_joboffer")
 	public DistrictChef getDistrictchef() {
 		return districtchef;
@@ -122,7 +122,7 @@ public class JobOffer implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idCampchef", referencedColumnName = "id", insertable = true, updatable = true)
+	@JoinColumn(name = "CAMPCHEF_ID")
 	@JsonBackReference
 	public CampChef getCampchef() {
 		return campchef;

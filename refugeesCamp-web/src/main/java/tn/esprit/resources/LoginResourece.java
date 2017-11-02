@@ -59,6 +59,24 @@ public class LoginResourece {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logUser(@HeaderParam("Authorization") String authStr)
 	{
+		 if(authStr.startsWith("Bearer"))
+		 {
+				Jws<Claims> jws = null;
+				int id=-1; 
+					try {
+						jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(authStr.split(" ")[1]);
+
+					    id = Integer.parseInt(jws.getBody().get("id").toString());
+						return Response.status(200)
+								.header(HttpHeaders.AUTHORIZATION,authStr)
+								.build();
+					}
+					catch(Exception e){
+						return Response.status(Status.UNSUPPORTED_MEDIA_TYPE).build();
+					}
+		
+			
+		 }
 	     Iauth auth= new CredentialsAuth(us);
 	    User u= auth.authentify(authStr);
 	    if(u==null)
