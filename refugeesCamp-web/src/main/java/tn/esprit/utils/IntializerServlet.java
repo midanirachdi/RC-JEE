@@ -46,6 +46,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	 private StockNotificationService sns;
 	 @EJB
 	 private NeedImpl nes;
+	 @EJB
 	 private RefugeeService rs;
 	
 	
