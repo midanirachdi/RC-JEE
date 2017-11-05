@@ -12,7 +12,6 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
-import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Stock;
 import tn.esprit.entities.User;
@@ -161,9 +160,5 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ns.add(n);
 			
 	}
-	private void initJobOffers(){
-		//TODO midani
-	}
-	
 	
 }
