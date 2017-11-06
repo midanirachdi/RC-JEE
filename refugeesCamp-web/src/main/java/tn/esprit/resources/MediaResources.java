@@ -23,6 +23,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Media;
 import tn.esprit.services.MediaService;
 
@@ -67,9 +69,10 @@ public class MediaResources {
 
 
 	@POST
-	@Consumes("multipart/form-data")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response handleRegistration(@Context HttpServletRequest req) throws Exception {
+	@AllowTo(roles = { "Admin" })
+	public Response addMedia(@Context HttpServletRequest req) throws Exception {
 		 StringBuilder files = new StringBuilder();
 		 FileItemFactory factory = new DiskFileItemFactory();
 		 ServletFileUpload upload = new ServletFileUpload(factory);
@@ -105,11 +108,12 @@ public class MediaResources {
 		
 	@GET
 	@Produces(MediaType.TEXT_HTML)
+	@AllowTo(roles = { "Admin" })
 	public String uploadInterface(@PathParam(value= "id")int id)
 	{
 		return "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\">\r\n" + 
 				"\r\n" +"<p>\r\n" + "<br>Select a file : <input type=\"file\" name=\"uploadedFile\" size=\"50\" />\r\n" + 
-				"</p>\r\n" +id+ "\r\n" + "<input type=\"submit\" value=\"Upload\" />\r\n"+"</form>\r\n";
+				"</p>\r\n\r\n" + "<input type=\"submit\" value=\"Upload\" />\r\n"+"</form>\r\n";
 	}
 	
  	@GET  

@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import tn.esprit.entities.Need;
 import tn.esprit.entities.Stock;
+import tn.esprit.entities.StockNotification;
 import tn.esprit.interfaces.StockLocalInterface;
 import tn.esprit.interfaces.StockRemoteInterface;
 
@@ -21,7 +23,8 @@ import tn.esprit.interfaces.StockRemoteInterface;
 public class StockService implements StockLocalInterface,StockRemoteInterface {
 	@PersistenceContext(unitName = "refugeesCamp-ejb")
 	EntityManager em;
-
+	
+	StockNotificationService sn= new StockNotificationService();
 	@Override
 	public boolean add(Stock stock) {
 		String req="Select s from Stock s where s.stockType=:p";
@@ -101,6 +104,9 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 				double initValue=stock.getStockValue();
 				stock.setStockValue(stock.getStockValue()-((initValue/stock.getQteInStock())*need.getQuantity()));
 				stock.setQteInStock(stock.getQteInStock()-need.getQuantity());
+				if(stock.getQteInStock()<=(stock.getQteTotal()*0.2)) {
+					createStockNotif(stock);
+				}
 				need.setStatus(status);
 				/* persist */
 				update(stock);
@@ -152,6 +158,19 @@ public class StockService implements StockLocalInterface,StockRemoteInterface {
 	public List<Stock> ListStockBreak(){
 		String requete = "SELECT n FROM Stock n where n.qteInStock<(n.qteTotal*0.2)";
 		return em.createQuery(requete,Stock.class).getResultList();
+	}
+	
+	private void createStockNotif(Stock stock)
+	{
+		
+		StockNotification st=new StockNotification();
+		st.setMessage("Stock will be ended soon under 20%");
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		st.setDateOfNotification(timestamp);
+		st.setStatus(0); /* 1 viewed notification | 0 unviewed*/
+		st.setStock(stock);
+		em.persist(st);
+		
 	}
 }
 
