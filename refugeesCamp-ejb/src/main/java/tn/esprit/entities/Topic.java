@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Topic implements Serializable {
 	
@@ -32,10 +35,12 @@ public class Topic implements Serializable {
 	private boolean closed;
 	
 	@OneToMany(mappedBy = "topic")
+	@JsonManagedReference("topic")
 	private Set<Comment> Comments;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="User_ID")
+	@JsonBackReference("user")
 	private User user;
 	
     @ManyToMany(cascade = CascadeType.PERSIST)

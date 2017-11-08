@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -197,12 +198,12 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 
 	
-	@OneToMany(mappedBy = "user")
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
+	@JsonManagedReference("user")
 	private Set<Topic> topics;
 	
-	@OneToMany(mappedBy = "user")
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
+	@JsonManagedReference("comment")
 	private Set<Comment> comments;
 
 	public Set<Topic> getTopics() {
