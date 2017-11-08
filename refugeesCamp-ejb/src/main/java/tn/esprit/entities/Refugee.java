@@ -3,6 +3,7 @@ package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -56,8 +58,17 @@ public class Refugee implements Serializable {
 	private String fieldOfWork;
 	private String adress;
 	private int phoneNumber;
-	
 
+
+	private MedicalFolder fiche;
+	@OneToOne
+	public MedicalFolder getFiche() {
+		return fiche;
+	}
+
+	public void setFiche(MedicalFolder fiche) {
+		this.fiche = fiche;
+	}
 	
 	public int getPhoneNumber() {
 		return phoneNumber;
