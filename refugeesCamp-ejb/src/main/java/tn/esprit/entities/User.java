@@ -2,6 +2,7 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -169,6 +171,32 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 	
 	private String lastResetQuery;
+	
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Topic> Topics;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<Comment> Comments;
+
+	public Set<Topic> getTopics() {
+		return Topics;
+	}
+
+
+	public void setTopics(Set<Topic> topics) {
+		Topics = topics;
+	}
+
+
+	public Set<Comment> getComments() {
+		return Comments;
+	}
+
+
+	public void setComments(Set<Comment> comments) {
+		Comments = comments;
+	}
 	
 		
 }
