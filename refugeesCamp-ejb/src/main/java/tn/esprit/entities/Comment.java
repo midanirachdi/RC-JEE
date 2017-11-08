@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 public class Comment implements Serializable {
 	
@@ -23,10 +25,12 @@ public class Comment implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="Topic_ID")
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private Topic topic;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="User_ID")
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private User user;
 	
 	public Topic getTopic() {

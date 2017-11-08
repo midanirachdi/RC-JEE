@@ -2,6 +2,7 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -63,6 +65,11 @@ public abstract class User implements IdentifiedInterface,Serializable{
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+
+	public User() {
+		
 	}
 
 
@@ -189,28 +196,30 @@ public abstract class User implements IdentifiedInterface,Serializable{
 
 	
 	@OneToMany(mappedBy = "user")
-	private Set<Topic> Topics;
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private Set<Topic> topics;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<Comment> Comments;
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private Set<Comment> comments;
 
 	public Set<Topic> getTopics() {
-		return Topics;
+		return topics;
 	}
 
 
 	public void setTopics(Set<Topic> topics) {
-		Topics = topics;
+		topics = topics;
 	}
 
 
 	public Set<Comment> getComments() {
-		return Comments;
+		return comments;
 	}
 
 
 	public void setComments(Set<Comment> comments) {
-		Comments = comments;
+		comments = comments;
 	}
 
 	
