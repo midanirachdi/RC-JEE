@@ -69,6 +69,8 @@ public abstract class User implements IdentifiedInterface,Serializable{
 
 
 	public User() {
+		comments=new HashSet<Comment>();
+		topics=new HashSet<Topic>();
 		
 	}
 
