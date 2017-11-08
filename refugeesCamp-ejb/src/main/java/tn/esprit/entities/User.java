@@ -2,11 +2,9 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.Set;
-=======
 import java.util.List;
->>>>>>> 878a7fbd3e4d15c161a5f671d6757468983c48fb
+
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -188,7 +186,7 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 	private String lastResetQuery;
 	
-<<<<<<< HEAD
+
 	
 	@OneToMany(mappedBy = "user")
 	private Set<Topic> Topics;
@@ -214,11 +212,12 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	public void setComments(Set<Comment> comments) {
 		Comments = comments;
 	}
-=======
+
+	
 	@OneToMany(mappedBy="assignedTo",fetch=FetchType.EAGER)
 	@JsonManagedReference
 	private List<Task> tasks;
->>>>>>> 878a7fbd3e4d15c161a5f671d6757468983c48fb
+
 	
 		
 }
