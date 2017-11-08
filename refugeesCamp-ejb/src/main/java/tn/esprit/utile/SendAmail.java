@@ -37,13 +37,11 @@ public class SendAmail {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(fromEmail));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(refugeeEmail)); // parameter
-																									// here
-			message.setSubject(" - You are a strong candidate for the job offer: " + jobOfferTitle);// here
-																									// too
-			// String htmlcontent = FileUtils.readFileToString(
-			// new File("./src/main/java/tn/esprit/utile/emailTemplate.html"),
-			// "UTF-8");
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(refugeeEmail)); 
+																									
+			message.setSubject(" - You are a strong candidate for the job offer: " + jobOfferTitle);
+																									
+			
 			String htmlcontent = "Congratulations,<br><br><br> You have been selected as a potential candidate for this job offer!"
 					+ "<br> We know that job search is long process so we have decided to help you with the first few steps:"
 					+ "<br><br>If you would like to generate your cover letter through our app go to : "
