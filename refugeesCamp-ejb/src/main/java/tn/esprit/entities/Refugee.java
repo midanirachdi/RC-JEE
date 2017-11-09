@@ -191,8 +191,7 @@ public class Refugee implements Serializable {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
