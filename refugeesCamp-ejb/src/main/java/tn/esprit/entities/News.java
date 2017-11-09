@@ -14,10 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -32,17 +35,19 @@ public class News implements Serializable {
 	private String author;
 	private String content;
 	private Date dateOfCreation;
+	private Admin admin;
 	
 	//private Admin newsCreator;
 	
 	private List<Media> medias;
 	
-	public News(int id, String author, String content, Date dateOfCreation) {
+	public News(int id, String author, String content, Date dateOfCreation,Admin admin) {
 		super();
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.dateOfCreation = dateOfCreation;
+		this.admin=admin;
 	
 	}
 	
@@ -91,7 +96,7 @@ public class News implements Serializable {
 	}
 */
 	
-	@ManyToMany(mappedBy="news",fetch=FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "news")
 	public List<Media> getMedias() {
 		return medias;
 	}
@@ -99,6 +104,18 @@ public class News implements Serializable {
 
 	public void setMedias(List<Media> medias) {
 		this.medias = medias;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AdminId")
+	@JsonBackReference
+	public Admin getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 	
 	

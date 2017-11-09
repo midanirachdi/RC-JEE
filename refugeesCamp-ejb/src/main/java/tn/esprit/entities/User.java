@@ -2,17 +2,26 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.List;
+
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -57,6 +66,13 @@ public abstract class User implements IdentifiedInterface,Serializable{
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+
+	public User() {
+		comments=new HashSet<Comment>();
+		topics=new HashSet<Topic>();
+		
 	}
 
 
@@ -131,6 +147,16 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 
 	
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+
 	@Override
 	public String toString() {
 		return " User {\nfirstName=" + firstName + ",\nlastName=" + lastName + ",\nemail=" + email + ",\nbirthDay=" + birthDay
@@ -169,6 +195,41 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 	
 	private String lastResetQuery;
+	
+
+	
+	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
+	@JsonManagedReference("user")
+	private Set<Topic> topics;
+	
+	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
+	@JsonManagedReference("comment")
+	private Set<Comment> comments;
+
+	public Set<Topic> getTopics() {
+		return topics;
+	}
+
+
+	public void setTopics(Set<Topic> topics) {
+		topics = topics;
+	}
+
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+
+	public void setComments(Set<Comment> comments) {
+		comments = comments;
+	}
+
+	
+	@OneToMany(mappedBy="assignedTo",fetch=FetchType.EAGER)
+	@JsonManagedReference
+	private List<Task> tasks;
+
 	
 		
 }

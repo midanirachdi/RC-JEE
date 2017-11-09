@@ -5,10 +5,9 @@ package tn.esprit.services;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,10 +59,11 @@ public class MediaService {
 		String req="Select n from News n where n.id=:p";
 		News news=em.createQuery(req,News.class).setParameter("p",id).getSingleResult();
 		media.setPath(path);
-		List<News> ln=new ArrayList<News>();
+		/*List<News> ln=new ArrayList<News>();
 		if(media.getNews().size()!=0) {ln.addAll(media.getNews());}
 		ln.add(news);
-		media.setNews(ln);
+		media.setNews(ln);*/
+		media.setNews(news);
 		media.setTitle("Untitled-"+media.getId());
 		if (media != null) {
 			em.persist(media);

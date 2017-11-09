@@ -12,7 +12,6 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
-import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Refugee;
@@ -24,8 +23,8 @@ import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
-import tn.esprit.services.StockNotificationService;
 import tn.esprit.services.RefugeeService;
+import tn.esprit.services.StockNotificationService;
 import tn.esprit.services.StockService;
 import tn.esprit.services.UserService;
 
@@ -167,13 +166,18 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		cs.add(cwc);
 	}
 	private void initStock() {
+		Admin u=new Admin();
+		u.setId(1);
+	
 		Stock st=new Stock();
 		st.setStockType(Stock.stockNeedsEnum.Water);
 		st.setNotes("nothing");
 		st.setQteTotal(100);
+		st.setAdmin(u);
 		st.setQteInStock(65);
 		st.setStockValue(500);
 		ss.add(st);
+		
 		
 		Stock st2=new Stock();
 		st2.setStockType(Stock.stockNeedsEnum.Clothes);
@@ -181,6 +185,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		st2.setQteTotal(100);
 		st2.setQteInStock(65);
 		st2.setStockValue(500);
+		st2.setAdmin(u);
 		ss.add(st2);
 		
 		Stock st3=new Stock();
@@ -188,14 +193,18 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		st3.setNotes("nothing");
 		st3.setQteTotal(100);
 		st3.setQteInStock(80);
+		st3.setAdmin(u);
 		st3.setStockValue(500);
 		ss.add(st3);
 	}
 	
 	private void initNews() {
+		Admin u=new Admin();
+		u.setId(1);
 		News n=new News();
 		n.setAuthor("Salim");
 		n.setContent("Test news test news test news");
+		n.setAdmin(u);
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		n.setDateOfCreation(timestamp);
 		ns.add(n);
@@ -204,9 +213,11 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		n2.setAuthor("Salim");
 		n2.setContent("222222 Test news test news test news");
 		n2.setDateOfCreation(timestamp);
+		n2.setAdmin(u);
 		ns.add(n2);
 			
 	}
+
 	
 	private void initNotification() {
 		StockNotification st=new StockNotification();
