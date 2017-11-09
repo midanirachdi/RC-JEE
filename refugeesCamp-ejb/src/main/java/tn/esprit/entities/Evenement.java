@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Evenement implements Serializable{
 	/**
@@ -30,6 +32,7 @@ public class Evenement implements Serializable{
 	private CampChef creator;
 	private List<Volunteer> staff;
 	private List<Refugee> refugees;
+	private List<Rating> ratings;
 	
 	
 	public Evenement() {
@@ -71,7 +74,11 @@ public class Evenement implements Serializable{
 	public List<Refugee> getRefugees() {
 		return refugees;
 	}
-	
+	@OneToMany(mappedBy = "evenement")
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -102,6 +109,12 @@ public class Evenement implements Serializable{
 	public void setRefugees(List<Refugee> refugees) {
 		this.refugees = refugees;
 	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
+	
 	
 	
 	
