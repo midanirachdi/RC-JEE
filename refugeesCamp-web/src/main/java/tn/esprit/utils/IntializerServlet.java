@@ -12,7 +12,6 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
-import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Refugee;
@@ -24,8 +23,8 @@ import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
-import tn.esprit.services.StockNotificationService;
 import tn.esprit.services.RefugeeService;
+import tn.esprit.services.StockNotificationService;
 import tn.esprit.services.StockService;
 import tn.esprit.services.UserService;
 
@@ -218,6 +217,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ns.add(n2);
 			
 	}
+
 	
 	private void initNotification() {
 		StockNotification st=new StockNotification();

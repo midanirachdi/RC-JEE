@@ -5,7 +5,6 @@ import java.util.Base64;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -33,7 +32,6 @@ import tn.esprit.services.UserService;
 import tn.esprit.utils.GenerateCoverLetterPdf;
 
 @Path("/joboffers")
-@RequestScoped
 public class JobOfferResource {
 
 	private final String KEY_B64 = Base64.getEncoder().encodeToString("secret".getBytes());
@@ -72,7 +70,6 @@ public class JobOfferResource {
 		jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
 		int iduser = Integer.parseInt(jws.getBody().get("id").toString());
 		User u=us.find(iduser);
-		System.out.println(u.getId());
 		
 		jo.setDistrictchef((DistrictChef)u);
 		if (joService.add(jo))
