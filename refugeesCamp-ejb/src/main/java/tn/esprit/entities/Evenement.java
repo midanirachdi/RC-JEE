@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-public class Event implements Serializable{
+public class Evenement implements Serializable{
 	/**
 	 * 
 	 */
@@ -32,7 +32,7 @@ public class Event implements Serializable{
 	private List<Refugee> refugees;
 	
 	
-	public Event() {
+	public Evenement() {
 	}
 	
 	@Id

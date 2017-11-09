@@ -61,7 +61,7 @@ public class Refugee implements Serializable {
 	private String fieldOfWork;
 	private String adress;
 	private int phoneNumber;
-	private List<Event> events;
+	private List<Evenement> events;
 
 	private MedicalFolder fiche;
 	@OneToOne
@@ -240,11 +240,11 @@ public class Refugee implements Serializable {
 	}
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "refugee_event", joinColumns = @JoinColumn(name = "refugee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
-	public List<Event> getEvents() {
+	public List<Evenement> getEvents() {
 		return events;
 	}
 
-	public void setEvents(List<Event> events) {
+	public void setEvents(List<Evenement> events) {
 		this.events = events;
 	}
 	

@@ -18,14 +18,14 @@ public class Volunteer extends User {
 	
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "volunter_event", joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
-	private List<Event> events;
+	private List<Evenement> events;
 	
 	public Volunteer(){}
 
-	public List<Event> getEvents() {
+	public List<Evenement> getEvents() {
 		return events;
 	}
-	public void setEvents(List<Event> events) {
+	public void setEvents(List<Evenement> events) {
 		this.events = events;
 	}
 	

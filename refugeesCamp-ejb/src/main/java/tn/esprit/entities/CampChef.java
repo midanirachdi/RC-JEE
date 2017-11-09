@@ -25,7 +25,7 @@ public class CampChef extends User {
 	private List<JobOffer> joboffers;
 	@OneToMany(mappedBy="creator",fetch=FetchType.EAGER)
 	@JsonManagedReference
-	private List<Event> events;
+	private List<Evenement> events;
 
 	public List<JobOffer> getJoboffers() {
 		return joboffers;
@@ -35,11 +35,11 @@ public class CampChef extends User {
 		this.joboffers = joboffers;
 	}
 	
-	public List<Event> getEvents() {
+	public List<Evenement> getEvents() {
 		return events;
 	}
 
-	public void setEvents(List<Event> events) {
+	public void setEvents(List<Evenement> events) {
 		this.events = events;
 	}
 	
