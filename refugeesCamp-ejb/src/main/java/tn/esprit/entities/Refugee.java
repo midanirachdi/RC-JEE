@@ -65,6 +65,7 @@ public class Refugee implements Serializable {
 
 	private MedicalFolder fiche;
 	@OneToOne
+	@JoinColumn(name="fiche_ID")
 	public MedicalFolder getFiche() {
 		return fiche;
 	}
