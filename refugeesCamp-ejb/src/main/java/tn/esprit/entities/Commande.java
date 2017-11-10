@@ -39,6 +39,7 @@ public class Commande implements Serializable {
 	private int qteOfProduct;
 	private int status;
 	
+	private Provider provider;
 	private Product product;
 	private Stock stock;
 	private Admin admin;
@@ -144,6 +145,18 @@ public class Commande implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Provider")
+	@JsonBackReference
+	public Provider getProvider() {
+		return provider;
+	}
+	
+	
+	public void setProvider(Provider provider) {
+		this.provider = provider;
 	}
 	
 	
