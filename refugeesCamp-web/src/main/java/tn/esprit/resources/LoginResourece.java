@@ -68,7 +68,7 @@ public class LoginResourece {
 
 					    id = Integer.parseInt(jws.getBody().get("id").toString());
 						return Response.status(200)
-								.header(HttpHeaders.AUTHORIZATION,authStr)
+								.header(HttpHeaders.AUTHORIZATION,authStr).header(HttpHeaders.CONTENT_TYPE, "application/json")
 								.build();
 					}
 					catch(Exception e){
@@ -95,7 +95,7 @@ public class LoginResourece {
 	  
 	   
 	   return Response.status(200)
-				.header(HttpHeaders.AUTHORIZATION,"Bearer "+jwtString)
+				.header(HttpHeaders.AUTHORIZATION,"Bearer "+jwtString).header(HttpHeaders.CONTENT_TYPE, "application/json")
 				.build();
 
 	}
