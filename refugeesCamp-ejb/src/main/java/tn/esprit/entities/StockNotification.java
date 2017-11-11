@@ -74,7 +74,7 @@ public class StockNotification {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="stock_id")
+	@JoinColumn(name="StockId")
 	public Stock getStock() {
 		return stock;
 	}

@@ -41,7 +41,7 @@ public class RefugeeRessouces {
 	public void setRefugeeService(RefugeeService refugeeS) {
 		this.refugeeS = refugeeS;
 	}
-	@AllowTo(roles={"Admin"})
+	// @AllowTo(roles={"Admin"})
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllRefugees() {

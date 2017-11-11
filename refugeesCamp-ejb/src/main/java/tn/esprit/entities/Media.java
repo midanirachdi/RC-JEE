@@ -1,16 +1,16 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tn.esprit.entities.News;
 
@@ -28,19 +28,19 @@ public class Media implements Serializable {
 	private int id;
 	private String title;
 	private String path;
-	private List<News> news;
+	private News news;
 	
-	public Media(int id, String title, String path) {
+	public Media(int id, String title, String path,News news) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.path = path;
-		this.news=new ArrayList<News>();
+		this.news=news;
 	}
 
 	public Media() {
 		super();
-		news=new ArrayList<News>();
+		
 	}
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -67,15 +67,17 @@ public class Media implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	@JsonIgnore
-	@ManyToMany
-	public List<News> getNews() {
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "NewsId")
+	public News getNews() {
 		return news;
 	}
 
-	public void setNews(List<News> news) {
+	public void setNews(News news) {
 		this.news = news;
 	}
+	
 	
 	
 }

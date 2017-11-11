@@ -2,6 +2,7 @@ package tn.esprit.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -58,10 +61,11 @@ public class Refugee implements Serializable {
 	private String fieldOfWork;
 	private String adress;
 	private int phoneNumber;
-
+	private List<Evenement> events;
 
 	private MedicalFolder fiche;
 	@OneToOne
+	@JoinColumn(name="fiche_ID")
 	public MedicalFolder getFiche() {
 		return fiche;
 	}
@@ -191,8 +195,7 @@ public class Refugee implements Serializable {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -235,5 +238,17 @@ public class Refugee implements Serializable {
 	public void setAdress(String adress) {
 		this.adress = adress;
 	}
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "refugee_event", joinColumns = @JoinColumn(name = "refugee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
+	public List<Evenement> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Evenement> events) {
+		this.events = events;
+	}
+	
+	
+	
 
 }

@@ -29,6 +29,7 @@ public class Task implements Serializable {
 		super();
 	}   
 	@Id    
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
@@ -72,7 +73,7 @@ public class Task implements Serializable {
 		this.status = status;
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "UserId")
 	@JsonBackReference
 	public User getAssignedTo() {
 		return assignedTo;
