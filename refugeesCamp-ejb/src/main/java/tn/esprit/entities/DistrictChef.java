@@ -49,7 +49,13 @@ public class DistrictChef extends User{
 		return   super.toString() + ",\ncamp=" + camp + ",\njoboffers=" + joboffers + "\n}";
 	}
 
+////////debut
+	 @OneToMany(mappedBy="dischef",fetch=FetchType.EAGER)
+	  @JsonManagedReference(value="districtCourses")	  
+private Set<Course> courses;
 
+	////////// fin
+	
 	
 	 
 	

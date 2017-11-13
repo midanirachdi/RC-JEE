@@ -65,7 +65,7 @@ public class DonationService implements DonationRemoteInterface{
 		
 		Elements element= document.select(".uccResultAmount");
 		
-		return Double.parseDouble(element.text());
+		return Double.parseDouble(element.text());         /// lahi tconverti string chor double
 	}
 	
 	public Double getCampAvgTotalDonation(Camp camp){
