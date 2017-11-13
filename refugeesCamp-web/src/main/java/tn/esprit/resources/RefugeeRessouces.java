@@ -41,7 +41,7 @@ public class RefugeeRessouces {
 	public void setRefugeeService(RefugeeService refugeeS) {
 		this.refugeeS = refugeeS;
 	}
-	@AllowTo(roles={"Admin"})
+	// @AllowTo(roles={"Admin"})
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAllRefugees() {
@@ -77,8 +77,8 @@ public class RefugeeRessouces {
 				return Response.status(500).build(); // 500 internal server
 														// error
 		} else
-			return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : " + id + " not found !")
-					.build();
+			return Response.status(Response.Status.NO_CONTENT)
+					       .build();
 	}
 
 	@AllowTo(roles={"CampChef"})
@@ -104,7 +104,7 @@ public class RefugeeRessouces {
 			} else
 				return Response.status(304).build(); // 304 Not modified
 		} else
-			return Response.status(Response.Status.NOT_FOUND).entity("refugee with id : " + r.getId() + " not found !")
+			return Response.status(Response.Status.NO_CONTENT).entity("refugee with id : " + r.getId() + " not found !")
 					.build();
 
 	}

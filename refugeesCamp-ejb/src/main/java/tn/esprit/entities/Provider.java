@@ -6,46 +6,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
 * author: Salim Ben Hassine
 */
 @Entity
 public class Provider implements Serializable {
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3652474096808383171L;
-
-	private int id;
-	private String providerName	;
-	private String Address;
-	private String Country;
-	private int Tel;
+	private static final long serialVersionUID = 1907265730479053799L;
 	
-	private Stock stock;
+	private int id;
+	private String nom;
+	private String adresse;
+	private String email;
+	private String tel;
 	
 	public Provider() {
 		super();
 	}
-
 	
-	
-	public Provider(int id, String providerName, String address, String country, int tel, Stock stock) {
+	public Provider(int id, String nom, String adresse, String email, String tel) {
 		super();
 		this.id = id;
-		this.providerName = providerName;
-		Address = address;
-		Country = country;
-		Tel = tel;
-		this.stock = stock;
+		this.nom = nom;
+		this.adresse = adresse;
+		this.email = email;
+		this.tel = tel;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -57,65 +47,39 @@ public class Provider implements Serializable {
 		this.id = id;
 	}
 
-	public String getProviderName() {
-		return providerName;
+	public String getNom() {
+		return nom;
 	}
 
-
-
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
-
-
-	public String getAddress() {
-		return Address;
+	public String getAdresse() {
+		return adresse;
 	}
 
-
-
-	public void setAddress(String address) {
-		Address = address;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 
-
-
-	public String getCountry() {
-		return Country;
+	public String getEmail() {
+		return email;
 	}
 
-
-
-	public void setCountry(String country) {
-		Country = country;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-
-
-	public int getTel() {
-		return Tel;
+	public String getTel() {
+		return tel;
 	}
 
-
-
-	public void setTel(int tel) {
-		Tel = tel;
-	}
-
-
-
-	@ManyToOne
-	@JsonIgnore
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	
 	
-
+	
 }
 

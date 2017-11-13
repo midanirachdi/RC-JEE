@@ -44,8 +44,6 @@ public class CredentialsAuth implements Iauth {
 	
 			
 			String[] tableCred= decodedString.split(":");
-			
-		    System.out.println(tableCred[0]+"*****"+ tableCred[1]);
 			u=userService.login(tableCred[0], tableCred[1]);
 			
 		}
