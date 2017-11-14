@@ -22,6 +22,7 @@ public class Task implements Serializable {
 	private Date startDate;
 	private Date endDate;
 	private String status;
+	private int progress;
 	private User assignedTo;
 	private static final long serialVersionUID = 1L;
 
@@ -71,6 +72,13 @@ public class Task implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public int getProgress() {
+		return progress;
+	}
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UserId")
