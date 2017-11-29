@@ -2,6 +2,9 @@ package tn.esprit.utils;
 
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.ejb.EJB;
@@ -12,27 +15,33 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Refugee;
 import tn.esprit.entities.Stock;
 import tn.esprit.entities.Stock.stockNeedsEnum;
 import tn.esprit.entities.StockNotification;
+import tn.esprit.entities.Task;
 import tn.esprit.entities.User;
 import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
+import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
 import tn.esprit.services.RefugeeService;
 import tn.esprit.services.StockNotificationService;
 import tn.esprit.services.StockService;
+import tn.esprit.services.TaskImpl;
 import tn.esprit.services.UserService;
+
 
 
 @WebListener
 public class IntializerServlet implements javax.servlet.ServletContextListener  {
 
-	
+	 @EJB 
+	 private TaskImpl ts;
 	 @EJB 
 	 private UserService us;
 	 @EJB
@@ -47,6 +56,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	 private NeedImpl nes;
 	 @EJB
 	 private RefugeeService rs;
+
+	 @EJB
+	 private JobOfferImpl js;
 	
 	
 	@Override
@@ -59,6 +71,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		initNotification();
 		initNeeds();
 		initRefugees();
+		try {
+			initJobOffers();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -67,7 +86,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		
 	}
 
-	
+	private void initTasks(){
+		
+	}
 	private void initUsers(){
 		User u=new Admin();
 		u.setFirstName("Mohamad");
@@ -153,6 +174,44 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		u8.setDisable(false);
 		u8.setPassword("Volunteer");
 		us.registerUser(u8);
+		
+		
+		Task t = new Task();
+		t.setName("install new tents");
+		t.setDescription("use the new bought tents");
+		t.setStartDate(new Date());
+		t.setEndDate(new Date());
+		t.setProgress(50);
+		t.setStatus("started");
+		t.setAssignedTo(u2);
+		
+		Task t1 = new Task();
+		t1.setName("Repair the main building roof ");
+		t1.setDescription("talk to the concerned district chief");
+		t1.setStartDate(new Date());
+		t1.setEndDate(new Date());
+		t1.setProgress(100);
+		t1.setStatus("closed");
+		t1.setAssignedTo(u2);
+		
+		Task t2 = new Task();
+		t2.setName("Clean the 3rd district");
+		t2.setDescription("split into two groups");
+		t2.setStartDate(new Date());
+		t2.setEndDate(new Date());
+		t2.setProgress(80);
+		t2.setStatus("started");
+		t2.setAssignedTo(u3);
+		
+		Task t3 = new Task();
+		t3.setName("Add all the refugees to the platform");
+		t3.setDescription("verify coordinates");
+		t3.setStartDate(new Date());
+		t3.setEndDate(new Date());
+		t3.setProgress(100);
+		t3.setStatus("closed");
+		t3.setAssignedTo(u4);
+		
 	}
 	private void initCamps(){
 		Camp c1=new Camp("Camp1", true, "TN", 250, new Date());
@@ -281,8 +340,36 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		nes.addNeed(n5);
 		
 	}
-	private void initJobOffers(){
+	private void initJobOffers() throws ParseException{
 		//TODO midani
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = " 2014-02-11";
+		String dateString2 = " 2014-04-11";
+			Date d = sdf.parse(dateString);
+			Date d2 = sdf.parse(dateString2);
+		
+		
+		
+		CampChef cf=(CampChef)us.find(3);
+		DistrictChef df=(DistrictChef)us.find(4);
+		JobOffer jo1 = new JobOffer(
+				"first jo desc",
+				d,
+				d2,
+				201111,
+				"IT",
+				2100,
+				"Sangard",
+				"adr 1",
+				"s@s.fr",
+				"foulen contact",
+				"first jo",
+				df,
+				cf);
+		js.add(jo1);
+				
+				
 	}
 	
 	private void initRefugees(){

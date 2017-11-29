@@ -10,12 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Entity implementation class for Entity: JobOffer
@@ -45,8 +46,10 @@ public class JobOffer implements Serializable {
 		super();
 	}
 
-	public JobOffer(String description, Date begindate, Date enddate, int contactnumber, String fieldOfWork,
-			int salaryEstimate, String companyName, String companyAdress, String contactEmail, String contactName,
+	public JobOffer(String description, Date begindate, Date enddate, 
+			int contactnumber, String fieldOfWork,
+			int salaryEstimate, String companyName, String companyAdress, 
+			String contactEmail, String contactName,
 			String title, DistrictChef districtchef, CampChef campchef) {
 		super();
 		this.description = description;
@@ -110,9 +113,9 @@ public class JobOffer implements Serializable {
 		this.contactnumber = contactnumber;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "DISTRICTCHEF_ID")
-	@JsonBackReference(value = "dchef_joboffer")
+	//@JsonManagedReference(value = "dchef_joboffer")
 	public DistrictChef getDistrictchef() {
 		return districtchef;
 	}
@@ -121,9 +124,9 @@ public class JobOffer implements Serializable {
 		this.districtchef = districtchef;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CAMPCHEF_ID")
-	@JsonBackReference
+	//@JsonManagedReference(value = "cchef_joboffer")
 	public CampChef getCampchef() {
 		return campchef;
 	}
