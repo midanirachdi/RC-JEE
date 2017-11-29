@@ -1,13 +1,15 @@
 package tn.esprit.resources;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -58,9 +60,10 @@ public class DonationRessource {
 		camp.setId(id);
 		return Response.ok(donationservice.getCampAvgTotalDonation(camp)).build();
 	}
-	@GET
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/add")
-	public Response generateDonation(@QueryParam("total")double total,@QueryParam("currency")String currency){
+	public Response generateDonation(@FormParam("amount")double total,@FormParam("currency")String currency){
 		
 		APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 		// Set payer details
@@ -98,18 +101,16 @@ public class DonationRessource {
 			Payment createdPayment = payment.create(context);
 			Donation d=new Donation(createdPayment.getId(), Double.parseDouble(createdPayment.getTransactions().get(0).getAmount().getTotal()), new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency());
 			donationservice.add(d);
-			return Response.temporaryRedirect(new URI(createdPayment.getLinks().get(1).getHref())).build();
+			return Response.ok().entity(createdPayment.getLinks().get(1).getHref()).build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
 			return Response.serverError().build();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-			return Response.serverError().build();
 		}
 	}
-	@GET
+	@POST
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/addtocamp")
-	public Response generateDonationForCamp(@QueryParam("total")double total,@QueryParam("currency")String currency,@QueryParam("camp_id")int id){
+	public Response generateDonationForCamp(@FormParam("amount")double total,@FormParam("currency")String currency,@FormParam("camp_id")int id){
 		if (cs.findById(id)==null)
 			return Response.status(Status.NOT_FOUND).build();
 		Camp c=cs.findById(id);
@@ -140,12 +141,9 @@ public class DonationRessource {
 					new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency()
 					,c);
 			donationservice.add(d);
-			return Response.temporaryRedirect(new URI(createdPayment.getLinks().get(1).getHref())).build();
+			return Response.ok().entity(createdPayment.getLinks().get(1).getHref()).build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
-			return Response.serverError().build();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
 			return Response.serverError().build();
 		}
 		
