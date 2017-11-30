@@ -7,28 +7,23 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import tn.esprit.entities.Camp;
-import tn.esprit.interfaces.CampRemoteInterface;
+import tn.esprit.entities.Evenement;
+import tn.esprit.interfaces.EvenementRemoteInterface;
 
 public class CampServiceTest {
-	public static void main(String []args){
-		try {
+	public static void main(String []args) throws NamingException{
 			Context ctx = new InitialContext();
-			CampRemoteInterface proxy=(CampRemoteInterface)ctx.lookup("/refugeesCamp-ear/refugeesCamp-ejb/CampService!tn.esprit.interfaces.CampRemoteInterface");
-			proxy.add(new Camp("campNow",true,"TN",500,new Date()));
-			proxy.add(new Camp("campY",false,"FR",100,new Date()));
-			proxy.add(new Camp("campX",true,"AN",200,new Date()));
-//			System.out.println(proxy.findAll());
+			EvenementRemoteInterface proxy=(EvenementRemoteInterface)ctx
+					.lookup("refugeesCamp-ear/refugeesCamp-ejb/EvenementService!tn.esprit.services.EvenementService");
+			Evenement e=new Evenement();
+			e.setDateEvent(new Date());
+			e.setName("EventX");
+			e.setLocation("TN");
+			e.setNbplace(4);
+			proxy.add(e);//			System.out.println(proxy.findAll());
 //			Camp found =proxy.findById(6);
 //			System.out.println(found);
 //			proxy.delete(found);
 //			System.out.println("Success");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Naming JNDI Problem");
-		}catch (EJBException e) {
-			// TODO Auto-generated catch block
-			System.out.println("EJB Problem");
-		}
 	}
 }
