@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 @Entity
@@ -34,6 +36,7 @@ public class Rating implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "idEvent", referencedColumnName = "id", insertable = false, updatable = false)
+	@JsonBackReference
 	private Evenement evenement;
 	
 	public Rating(){
