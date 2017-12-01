@@ -61,17 +61,17 @@ public class JobOfferResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef" })
+	//@AllowTo(roles = { "DistrictChef" })
 	public Response AddJobOffer(
 			JobOffer jo,
 			@HeaderParam("Authorization") String auth) {
-		String token=auth.split(" ")[1];
-		Jws<Claims> jws = null;
-		jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
-		int iduser = Integer.parseInt(jws.getBody().get("id").toString());
-		User u=us.find(iduser);
-		
-		jo.setDistrictchef((DistrictChef)u);
+//		String token=auth.split(" ")[1];
+//		Jws<Claims> jws = null;
+//		jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
+//		int iduser = Integer.parseInt(jws.getBody().get("id").toString());
+//		User u=us.find(iduser);
+//		
+//		jo.setDistrictchef((DistrictChef)u);
 		if (joService.add(jo))
 			return Response.status(Status.CREATED).build();
 		return Response.status(Status.NOT_FOUND).build();
@@ -79,7 +79,7 @@ public class JobOfferResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef" })
+	//@AllowTo(roles = { "DistrictChef" })
 	public Response GetAllJobOffers() {
 		List<JobOffer> jolist = new ArrayList<JobOffer>();
 		jolist = joService.findAll();
@@ -103,7 +103,7 @@ public class JobOfferResource {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef" })
+	//@AllowTo(roles = { "DistrictChef" })
 	public Response DeleteJobOffer(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
 		if (joService.delete(jo))
@@ -114,7 +114,7 @@ public class JobOfferResource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef" })
+	//@AllowTo(roles = { "DistrictChef" })
 	public Response UpdateJobOffer(JobOffer jo) {
 		if (joService.update(jo))
 			return Response.status(Status.ACCEPTED).build();
@@ -124,7 +124,7 @@ public class JobOfferResource {
 	@GET
 	@Path("/{id_jobOffer}/best_candidates")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "CampChef" })
+	//@AllowTo(roles = { "CampChef" })
 	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
 		JobOffer jo = joService.findById(id_jobOffer);
 		if (jo != null) {

@@ -3,6 +3,7 @@ package tn.esprit.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,17 +21,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+@DiscriminatorValue(value = "Need")
 public class Need implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)// identity wela sequence wela table
 	private int id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)/// lay tendar vla base m3aha heure
 	private Date date;
 
 	private String description;
-	@ManyToOne(fetch=FetchType.EAGER)	
+	@ManyToOne(fetch=FetchType.EAGER)	///ta36ini 4e ver lmet3ala9 bihe
 	@JoinColumn(name="iddcchef")
 	@JsonBackReference(value="districtNeeds")
 	private DistrictChef dischef ;
@@ -43,7 +45,7 @@ public class Need implements Serializable{
 	
 	/* ******************** */
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;///La sérialisation nécessite d’accéder à tous les champs de l’objet un par un pour sauvegarder leur valeur
 
 	
 

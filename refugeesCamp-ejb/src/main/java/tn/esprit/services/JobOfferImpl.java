@@ -22,6 +22,8 @@ public class JobOfferImpl implements JobOfferRemoteInterface, JobOfferLocalInter
 	@Override
 	public boolean add(JobOffer joboffer) {
 
+//		em.persist(joboffer);
+//		return true;
 		if (joboffer != null) {
 			Date date_debut = joboffer.getBegindate();
 			Date date_fin = joboffer.getEnddate();

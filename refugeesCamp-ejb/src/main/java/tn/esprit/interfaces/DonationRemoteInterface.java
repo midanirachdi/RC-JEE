@@ -16,4 +16,5 @@ public interface DonationRemoteInterface {
 	List<Donation> findByCamp(Camp c);
 	Donation findById(String id);
 	Double convert(String from, String to, Double amount) throws IOException;
+	Double getCampAvgTotalDonation(Camp camp);
 }

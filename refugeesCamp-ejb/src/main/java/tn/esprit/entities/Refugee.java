@@ -23,6 +23,7 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Refugee implements Serializable {
@@ -240,7 +241,8 @@ public class Refugee implements Serializable {
 	}
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "refugee_event", joinColumns = @JoinColumn(name = "refugee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
-	public List<Evenement> getEvents() {
+	@JsonIgnore
+    public List<Evenement> getEvents() {
 		return events;
 	}
 

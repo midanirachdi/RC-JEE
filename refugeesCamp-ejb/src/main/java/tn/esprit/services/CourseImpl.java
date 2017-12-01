@@ -9,66 +9,66 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import tn.esprit.entities.DistrictChef;
-import tn.esprit.entities.Need;
-import tn.esprit.interfaces.NeedService;
+import tn.esprit.entities.Course;
+import tn.esprit.interfaces.CourseService;
 
 @Stateless
 @LocalBean
-public class NeedImpl implements NeedService{
+public class CourseImpl implements CourseService{
 
 	@PersistenceContext   // vih +entites persistance  ...injectih v entity manager
 	EntityManager em;     //gestionnaire entites
 
 	@Override
-	public void addNeed(Need n) {
+	public void addCourse(Course c) {
 		// TODO Auto-generated method stub
-		em.persist(n);
+		em.persist(c);
 		em.flush();
-		System.out.println("Need ajouté avec succes");
+		System.out.println("Course ajouté avec succes");
 
 		
 	}
 
 	@Override
-	public void deleteNeed(Need n) {
+	public void deleteCourse(Course c) {
 		// TODO Auto-generated method stub
-		em.remove(em.merge(n));
+		em.remove(em.merge(c));
 
 	}
 
 	@Override
-	public void updateNeed(Need n) {
+	public void updateCourse(Course c) {
 		// TODO Auto-generated method stub
-		em.merge(n);	
+		em.merge(c);	
 
 	}
 
 	@Override
-	public Need findNeedById(int id) {
+	public Course findCourseById(int id) {
 		// TODO Auto-generated method stub
-		return em.find(Need.class,id);
+		return em.find(Course.class,id);
 	}
 
 	@Override
-	public List<Need> listAll() {
+	public List<Course> listAll() {
 		// TODO Auto-generated method stub
-		return em.createQuery("SELECT n FROM Need n",Need.class).getResultList();
+		return em.createQuery("SELECT c FROM Course c",Course.class).getResultList();
 	}
 
 	@Override
-	public List<Need> getNeedByType(String n) {
+	public List<Course> getCourseByName(String c) {
 		// TODO Auto-generated method stub
 		Query req = em.createQuery
-				("select n from Need n where n.name like :x ");
-			req.setParameter("x", "%" +n+ "%");
+				("select c from Course c where c.name like :x ");
+			req.setParameter("x", "%" +c+ "%");
 			List resultList = req.getResultList();
 			return resultList;
 	}
 
 	@Override
-	public List<Need> getNeedByDis(DistrictChef d) {
+	public List<Course> getCourseByDis(DistrictChef d) {
 		Query req = em.createQuery
-				("select n from Need n where n.dischef = :x ");
+				("select c from Course c where c.dischef = :x ");
 			req.setParameter("x",d);
 			List resultList = req.getResultList();
 			return resultList;
