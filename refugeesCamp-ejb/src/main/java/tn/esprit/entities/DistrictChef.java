@@ -12,8 +12,10 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @DiscriminatorValue(value = "DistrictChef")
@@ -26,6 +28,7 @@ public class DistrictChef extends User {
 
 	@OneToMany(mappedBy = "dischef", fetch = FetchType.EAGER)
 	@JsonManagedReference(value = "districtNeeds")
+    @JsonInclude(value=Include.NON_EMPTY)
 	private Set<Need> needs;
 
 	@ManyToOne(fetch = FetchType.LAZY)
