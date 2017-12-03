@@ -10,8 +10,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
@@ -22,11 +24,13 @@ public class Volunteer extends User {
 	
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "volunter_event", joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
+
+    @JsonIgnore
     @JsonInclude(value=Include.NON_EMPTY)
     private List<Evenement> events;
     
 	@OneToMany(mappedBy = "volunteer")
-    @JsonInclude(value=Include.NON_EMPTY)
+	@JsonIgnore
 	private List<Rating> ratings;
 	
 	public Volunteer(){}

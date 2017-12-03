@@ -45,6 +45,10 @@ public class EvenementService implements EvenementRemoteInterface{
 
 	@Override
 	public void delete(Evenement e) {
+		em.merge(e);
+		for (Rating r : e.getRatings()) {
+			em.remove(em.merge(r));
+		}
 		em.remove(em.merge(e));
 		
 	}
