@@ -210,6 +210,32 @@ public class UserResource {
 	}
 	
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/me")
+	@AllowTo(roles={"Admin","CampChef","DistrictChef","Volunteer"})
+	public Response doGetMe(@HeaderParam("Authorization") String auth){
+		
+		int id;
+		User user=null;
+		try {
+			
+			String token=auth.split(" ")[1];
+			Jws<Claims> jws = null;
+			jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
+			id=Integer.parseInt(jws.getBody().get("id").toString());
+			user=us.find(id);
+			user.setPassword("");
+			
+		} catch (Exception e) {
+			return Response.status(Response.Status.NOT_MODIFIED).build();
+		}
+		
+		return   Response.status(Response.Status.ACCEPTED).entity(user).build();
+	}
+	
+	
 	
 	
 	@GET

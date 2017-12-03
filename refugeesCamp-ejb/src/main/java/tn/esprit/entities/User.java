@@ -44,6 +44,7 @@ import tn.esprit.interfaces.IdentifiedInterface;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role")
+@JsonInclude(Include.NON_NULL)
 public abstract class User implements IdentifiedInterface,Serializable{
 	
     public static final long serialVersionUID = 196919661993L;
@@ -196,14 +197,41 @@ public abstract class User implements IdentifiedInterface,Serializable{
 	
 	private String lastResetQuery;
 	
+	private String facebookId;
+	
+	private String googleId;
+	
 
 	
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+
+
+	public String getGoogleId() {
+		return googleId;
+	}
+
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
+
+
+
 	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
 	@JsonManagedReference("user")
+    @JsonInclude(value=Include.NON_EMPTY)
 	private Set<Topic> topics;
 	
 	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
 	@JsonManagedReference("comment")
+    @JsonInclude(value=Include.NON_EMPTY)
 	private Set<Comment> comments;
 
 	public Set<Topic> getTopics() {
