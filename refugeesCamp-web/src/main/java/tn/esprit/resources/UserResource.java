@@ -131,7 +131,7 @@ public class UserResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"Admin"})
+	@AllowTo(roles={"Admin"})
 	public Response doList()
 	{
 		System.out.println("method");
@@ -232,7 +232,7 @@ public class UserResource {
 	@GET
 	@Path("/{dc_id}/joboffers")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"CampChef"})
+	@AllowTo(roles={"CampChef"})
 	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
 		
 		List<JobOffer> jolist = new ArrayList<JobOffer>();
