@@ -19,6 +19,8 @@ import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
 import tn.esprit.entities.Refugee;
+import tn.esprit.entities.Refugee.HighestDegreeEnum;
+import tn.esprit.entities.Refugee.LanguageLevelEnum;
 import tn.esprit.entities.Stock;
 import tn.esprit.entities.Stock.stockNeedsEnum;
 import tn.esprit.entities.StockNotification;
@@ -353,6 +355,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		
 		CampChef cf=(CampChef)us.find(3);
 		DistrictChef df=(DistrictChef)us.find(4);
+		
 		JobOffer jo1 = new JobOffer(
 				"first jo desc",
 				d,
@@ -367,7 +370,22 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 				"first jo",
 				df,
 				cf);
+		JobOffer jo2 = new JobOffer(
+				"Work within a small development team to build and maintain business applications and tools , apply Agile development methodologies,build back-end (database) and front-end (UI) systems ,design and develop reports (reporting)",
+				d,
+				d2,
+				784545447,
+				"IT",
+				1200,
+				"EQUIPE TECHNIQUE TUNISIENNE",
+				"Centre Urbain Nord , Résidence Malek Center, Bloc B / 7ème étage - Appartement B7-1, Tunis, 1003, Tunisia.",
+				"recruit@ett.tn",
+				"Zied Zarga",
+				"Software engineer: Senior JAVA/ANGULARJS developer",
+				df,
+				cf);
 		js.add(jo1);
+		js.add(jo2);
 				
 				
 	}
@@ -381,6 +399,12 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r1.setDateOfBirth(new Date(1993-1900,05,25));
 		r1.setSex("homme");
 		r1.setYearsOfExperience(3);
+		r1.setFrenchlanguageLevel(LanguageLevelEnum.A);
+		r1.setEnglishlanguageLevel(LanguageLevelEnum.C);
+		r1.setHighestDegree(HighestDegreeEnum.BACplus5);
+		r1.setYearsOfExperience(1);
+		r1.setFieldOfWork("IT");
+		r1.setEmail("midani.rachdi@esprit.tn");
 		rs.add(r1);	
 		
 		Refugee r2 = new Refugee(); 
@@ -463,7 +487,36 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r10.setSex("homme");
 		r10.setYearsOfExperience(1);
 		rs.add(r10);
+
+		Refugee r11 = new Refugee();
+		r11.setFirstname("Ali");
+		r11.setLastName("Ahmdi");
+		r11.setPhoneNumber(52314985);
+		r11.setDateOfBirth(new Date(1993-1900,05,25));
+		r11.setSex("homme");
+		r11.setYearsOfExperience(3);
+		r11.setFrenchlanguageLevel(LanguageLevelEnum.C);
+		r11.setEnglishlanguageLevel(LanguageLevelEnum.C);
+		r11.setHighestDegree(HighestDegreeEnum.BACplus5);
+		r11.setYearsOfExperience(1);
+		r11.setFieldOfWork("IT");
+		r11.setEmail("rachdi.midani@gmail.com");
+		rs.add(r11);
 		
+		Refugee r12 = new Refugee();
+		r12.setFirstname("Mohsen");
+		r12.setLastName("Cherif");
+		r12.setPhoneNumber(52314985);
+		r12.setDateOfBirth(new Date(1993-1900,05,25));
+		r12.setSex("homme");
+		r12.setYearsOfExperience(1);
+		r12.setFrenchlanguageLevel(LanguageLevelEnum.C);
+		r12.setEnglishlanguageLevel(LanguageLevelEnum.C);
+		r12.setHighestDegree(HighestDegreeEnum.BACplus8);
+		r12.setYearsOfExperience(1);
+		r12.setFieldOfWork("IT");
+		r12.setEmail("midani.rachdi@esprit.tn");
+		rs.add(r12);
 	}
 	
 }

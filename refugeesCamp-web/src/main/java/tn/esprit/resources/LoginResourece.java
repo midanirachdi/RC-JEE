@@ -1,5 +1,6 @@
 package tn.esprit.resources;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.security.Key;
@@ -11,6 +12,7 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
@@ -23,6 +25,17 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -30,9 +43,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import tn.esprit.authorization.AllowTo;
+import tn.esprit.authorization.AuthFactory;
 import tn.esprit.authorization.CredentialsAuth;
 import tn.esprit.authorization.Iauth;
 import tn.esprit.entities.User;
+import tn.esprit.entities.Volunteer;
 import tn.esprit.services.MailSenderService;
 import tn.esprit.services.UserService;
 
@@ -77,7 +92,9 @@ public class LoginResourece {
 		
 			
 		 }
-	     Iauth auth= new CredentialsAuth(us);
+		 String[] strs=authStr.split(" ");
+	    Iauth auth= AuthFactory.getInstance(us,strs[0]);
+	    System.out.println(auth.getClass());
 	    User u= auth.authentify(authStr);
 	    if(u==null)
 	    {
@@ -180,6 +197,49 @@ public class LoginResourece {
 		return Response.status(Status.UNAUTHORIZED).build();
 		}
 		return Response.status(Status.ACCEPTED).build();
+	}
+	
+	
+	@GET
+	@Path("/fauth")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response doFacebookLogin(@QueryParam("facebookToken") String taccess){
+		User user=null;
+		try {
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			HttpGet httpget = new HttpGet(""
+					+ "https://graph.facebook.com/v2.11/me?fields=id%2Cname%2Cfirst_name%2Clast_name%2Cbirthday%2Cemail&access_token="+taccess);
+			CloseableHttpResponse response = httpclient.execute(httpget);
+			String body = EntityUtils.toString(response.getEntity());
+			response.close();
+			
+			ObjectMapper mapper = new ObjectMapper();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map = mapper.readValue(body, new TypeReference<Map<String, String>>(){});
+			
+			user=us.facebookLogin(map.get("id").toString());
+			if(user==null)
+			{
+				user=new Volunteer();
+				user.setFirstName(map.get("first_name").toString());
+				user.setLastName(map.get("last_name").toString());
+				user.setEmail(map.get("email").toString());
+				user.setFacebookId(map.get("id").toString());
+				us.create(user);
+				user=us.facebookLogin(map.get("id").toString());
+			}
+
+			return Response.status(Status.OK).entity(user).build();
+		} catch (ClientProtocolException e) {
+
+			  return Response.status(Status.FORBIDDEN).entity("Error")
+		   				.build();
+		} catch (IOException e) {
+
+			  return Response.status(Status.FORBIDDEN).entity("Error")
+		   				.build();
+		}
 	}
 
 }

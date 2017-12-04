@@ -181,6 +181,29 @@ public class UserService extends AbstractFacade<User> implements UserServiceInte
 		 
 		 return searchUser(params);
 	 }
+	 
+	 public User facebookLogin(String fbId){
+			User result=null;
+			try
+			{
+			 result = (User)em.createQuery("select u from User u where  u.facebookId = :facebookId").setParameter("facebookId", fbId).getSingleResult(); 
+			}
+			catch(Exception e){}
+			
+			return result;
+	 }
+	 
+	 
+	 public User googleLogin(String ggId){
+			User result=null;
+			try
+			{
+			 result = (User)em.createQuery("select u from User u where  u.googleId = :googleId").setParameter("googleId", ggId).getSingleResult(); 
+			}
+			catch(Exception e){}
+			
+			return result;
+	 }
     
     
 
