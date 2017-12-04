@@ -13,6 +13,8 @@ public interface EvenementLocalInterface {
 	void update(Evenement e);
 
 	List<Evenement> findAll();
+	
+	List<Evenement> findUpcoming();
 
 	Evenement findById(int id);
 

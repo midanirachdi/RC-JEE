@@ -47,8 +47,8 @@ public class Evenement implements Serializable{
 	public int getId() {
 		return id;
 	}
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateEvent() {
 		return dateEvent;
 	}

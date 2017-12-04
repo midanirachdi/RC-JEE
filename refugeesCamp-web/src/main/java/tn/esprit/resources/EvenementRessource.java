@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import tn.esprit.authorization.AllowTo;
 import tn.esprit.entities.Evenement;
@@ -51,16 +50,26 @@ public class EvenementRessource {
 	public Response getAll(){
 		List<Evenement> ls= es.findAll();
 		if (!ls.isEmpty())
-			return Response.status(Status.FOUND).entity(ls).build();
+			return Response.ok().entity(ls).build();
 		return Response.noContent().build();
 	}
+	@GET
+	@Path("/upcoming")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUpcoming(){
+		List<Evenement> ls= es.findUpcoming();
+		if (!ls.isEmpty())
+			return Response.ok().entity(ls).build();
+		return Response.noContent().build();
+	}
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEvenement(@PathParam("id")int id){
 		Evenement e= es.findById(id);
 		if (e!=null) {
-			 return Response.status(Status.FOUND).entity(e).build();
+			 return Response.ok().entity(e).build();
 		}
 		return Response.noContent().build();
 	}

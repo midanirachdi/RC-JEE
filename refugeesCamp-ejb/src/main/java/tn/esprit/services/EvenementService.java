@@ -34,7 +34,7 @@ public class EvenementService implements EvenementRemoteInterface{
 
 	@Override
 	public List<Evenement> findAll() {
-		String requete = "SELECT ev FROM Evenement ev";
+		String requete = "SELECT ev FROM Evenement ev order by ev.dateEvent desc";
 		return em.createQuery(requete,Evenement.class).getResultList();
 	}
 
@@ -50,7 +50,6 @@ public class EvenementService implements EvenementRemoteInterface{
 			em.remove(em.merge(r));
 		}
 		em.remove(em.merge(e));
-		
 	}
 
 	@Override
@@ -59,6 +58,12 @@ public class EvenementService implements EvenementRemoteInterface{
 		r.setRatingId(new RatingId(v.getId(), e.getId()));
 		em.merge(r);
 		return true;
+	}
+
+	@Override
+	public List<Evenement> findUpcoming() {
+		String requete = "SELECT ev FROM Evenement ev WHERE ev.dateEvent > CURRENT_DATE order by ev.dateEvent";
+		return em.createQuery(requete,Evenement.class).getResultList();
 	}
 	
 	
