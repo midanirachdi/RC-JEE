@@ -258,22 +258,55 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	}
 	
 	private void initNews() {
+		String st="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+		
 		Admin u=new Admin();
 		u.setId(1);
 		News n=new News();
 		n.setAuthor("Salim");
-		n.setContent("Test news test news test news");
+		n.setContent(st);
+		n.setTitle("What is Lorem Ipsum?");
 		n.setAdmin(u);
+		n.setLocation("Tunisia");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		n.setDateOfCreation(timestamp);
 		ns.add(n);
 		
 		News n2=new News();
 		n2.setAuthor("Salim");
-		n2.setContent("222222 Test news test news test news");
-		n2.setDateOfCreation(timestamp);
+		n2.setContent(st);
+		n2.setTitle("What is Lorem Ipsum?");
 		n2.setAdmin(u);
+		n2.setLocation("Japan");
+		n2.setDateOfCreation(timestamp);
 		ns.add(n2);
+		
+		News n3=new News();
+		n3.setAuthor("Salim");
+		n3.setContent(st);
+		n3.setTitle("Why do we use it?");
+		n3.setAdmin(u);
+		n3.setLocation("Tunisia");
+		n3.setDateOfCreation(timestamp);
+		ns.add(n3);
+		
+		News n4=new News();
+		n4.setAuthor("Salim");
+		n4.setContent(st);
+		n4.setTitle("Where can I get some?");
+		n4.setAdmin(u);
+		n4.setLocation("Egypt");
+		n4.setDateOfCreation(timestamp);
+		ns.add(n4);
+		
+		News n5=new News();
+		n5.setAuthor("Salim");
+		n5.setContent(st);
+		n5.setTitle("Where does it come from?");
+		n5.setAdmin(u);
+		n5.setLocation("France");
+		n5.setDateOfCreation(timestamp);
+		ns.add(n5);
 			
 	}
 
