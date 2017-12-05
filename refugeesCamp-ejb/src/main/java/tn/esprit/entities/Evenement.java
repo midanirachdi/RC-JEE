@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,8 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Evenement implements Serializable{
@@ -28,6 +31,7 @@ public class Evenement implements Serializable{
 	private int nbplace;
 	private String name;
 	private String location;
+	private String description;
 	private String imagename;
 	private CampChef creator;
 	private List<Volunteer> staff;
@@ -43,8 +47,8 @@ public class Evenement implements Serializable{
 	public int getId() {
 		return id;
 	}
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDateEvent() {
 		return dateEvent;
 	}
@@ -53,6 +57,9 @@ public class Evenement implements Serializable{
 	}
 	public String getName() {
 		return name;
+	}
+	public String getDescription() {
+		return description;
 	}
 	public String getLocation() {
 		return location;
@@ -67,20 +74,26 @@ public class Evenement implements Serializable{
 		return creator;
 	}
 	@ManyToMany(mappedBy = "events")
+	@JsonIgnore
 	public List<Volunteer> getStaff() {
 		return staff;
 	}
 	@ManyToMany(mappedBy="events")
+	@JsonIgnore
 	public List<Refugee> getRefugees() {
 		return refugees;
 	}
-	@OneToMany(mappedBy = "evenement")
+	@OneToMany(cascade=CascadeType.REMOVE,mappedBy = "evenement",fetch=FetchType.EAGER)
+	@JsonManagedReference
 	public List<Rating> getRatings() {
 		return ratings;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public void setDateEvent(Date dateEvent) {
 		this.dateEvent = dateEvent;

@@ -1,5 +1,7 @@
 package tn.esprit.resources;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.net.URI;
@@ -71,6 +73,16 @@ public class UserResource {
 	JobOfferImpl joService;
 
 	
+	
+	public void whenWriteStringUsingBufferedWritter_thenCorrect(String msg) 
+			  throws IOException {
+			    String str = msg;
+			    BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\azgar\\Documents\\tmp\\log.txt"));
+			    writer.write(str);
+			     
+			    writer.close();
+			}
+	
 	private final String KEY_B64 = Base64.getEncoder().encodeToString("secret".getBytes());
 
 	@POST
@@ -78,7 +90,13 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response doRegister(String req,@HeaderParam("Authorization") String auth)
 	{
-
+		try {
+			whenWriteStringUsingBufferedWritter_thenCorrect(req);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.println(req);
 		
 		User user=null;
 		User emailUserExisting=null;
@@ -119,6 +137,7 @@ public class UserResource {
 			
 			
 		} catch (IOException e) {
+			System.out.println(req);
 			e.printStackTrace();
 			return Response.status(Response.Status.FORBIDDEN).build();
 		} catch (Exception e) {
@@ -131,7 +150,7 @@ public class UserResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"Admin"})
+	@AllowTo(roles={"Admin"})
 	public Response doList()
 	{
 		System.out.println("method");
@@ -191,6 +210,32 @@ public class UserResource {
 	}
 	
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/me")
+	@AllowTo(roles={"Admin","CampChef","DistrictChef","Volunteer"})
+	public Response doGetMe(@HeaderParam("Authorization") String auth){
+		
+		int id;
+		User user=null;
+		try {
+			
+			String token=auth.split(" ")[1];
+			Jws<Claims> jws = null;
+			jws = Jwts.parser().setSigningKey(Base64.getDecoder().decode(KEY_B64)).parseClaimsJws(token);
+			id=Integer.parseInt(jws.getBody().get("id").toString());
+			user=us.find(id);
+			user.setPassword("");
+			
+		} catch (Exception e) {
+			return Response.status(Response.Status.NOT_MODIFIED).build();
+		}
+		
+		return   Response.status(Response.Status.ACCEPTED).entity(user).build();
+	}
+	
+	
 	
 	
 	@GET
@@ -232,7 +277,7 @@ public class UserResource {
 	@GET
 	@Path("/{dc_id}/joboffers")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@AllowTo(roles={"CampChef"})
+	@AllowTo(roles={"CampChef"})
 	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
 		
 		List<JobOffer> jolist = new ArrayList<JobOffer>();

@@ -10,9 +10,11 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @DiscriminatorValue(value = "CampChef")
@@ -30,6 +32,7 @@ public class CampChef extends User {
 	
 	@OneToMany(mappedBy="creator",fetch=FetchType.EAGER)
 	@JsonManagedReference
+    @JsonInclude(value=Include.NON_EMPTY)
 	private List<Evenement> events;
 
 	public List<JobOffer> getJoboffers() {
