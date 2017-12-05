@@ -50,7 +50,16 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 		return em.find(News.class, id);
 
 	}
+	
+	@Override
+	public List<News> findByCountry(String country) {
+		String req="select n from News n where n.location=:country";
+		return em.createQuery(req, News.class)
+				.setParameter("country", country)
+				.getResultList();
 
+	}
+	
 	@Override
 	public boolean delete(News news) {
 		if (news != null) {
