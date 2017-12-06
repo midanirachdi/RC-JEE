@@ -84,6 +84,19 @@ public class NewsRessources {
 		
 		return Response.status(Status.NOT_FOUND).build();
 	}
+	
+	@GET
+	@Path("/country/{country}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNewsByCountry(@PathParam(value = "country") String country) {
+		
+		List<News> news = new ArrayList<News>();
+		news = newsService.findByCountry(country);
+		
+		if (!news.isEmpty()) return Response.status(Status.OK).entity(news).build();
+		
+		return Response.status(Status.NOT_FOUND).build();
+	}
 
 	@GET
 	@Path("/{id}")
