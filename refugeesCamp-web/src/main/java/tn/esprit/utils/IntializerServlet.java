@@ -15,6 +15,7 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.Evenement;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
@@ -28,6 +29,7 @@ import tn.esprit.entities.Task;
 import tn.esprit.entities.User;
 import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
+import tn.esprit.services.EvenementService;
 import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
@@ -61,6 +63,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 
 	 @EJB
 	 private JobOfferImpl js;
+	 
+	 @EJB 
+	 private EvenementService es;
 	
 	
 	@Override
@@ -70,6 +75,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		initStock();
 		initNews();
 		initCamps();
+		initEvenements();
 		initNotification();
 		initNeeds();
 		initRefugees();
@@ -91,6 +97,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	private void initTasks(){
 		
 	}
+	
 	private void initUsers(){
 		User u=new Admin();
 		u.setFirstName("Mohamad");
@@ -214,6 +221,35 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		t3.setStatus("closed");
 		t3.setAssignedTo(u4);
 		
+	}
+	private void initEvenements(){
+		Evenement ev1=new Evenement();
+		ev1.setDateEvent(new Date());
+		ev1.setName("Tous pour l'humanité");
+		ev1.setLocation("Tunis,Centre Ville");
+		ev1.setImagename("humanite");
+		ev1.setNbplace(50);
+		ev1.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev1.setCreator((CampChef)us.find(3));
+		es.add(ev1);
+		Evenement ev2=new Evenement();
+		ev2.setDateEvent(new Date());
+		ev2.setName("Refugees all over England");
+		ev2.setLocation("UK,England");
+		ev2.setImagename("engrefs");
+		ev2.setNbplace(25);
+		ev2.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev2.setCreator((CampChef)us.find(3));
+		es.add(ev2);
+		Evenement ev3=new Evenement();
+		ev3.setDateEvent(new Date());
+		ev3.setName("Snow Event");
+		ev3.setLocation("Suisse,Genéve");
+		ev3.setImagename("snow");
+		ev3.setNbplace(42);
+		ev3.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev3.setCreator((CampChef)us.find(3));
+		es.add(ev3);
 	}
 	private void initCamps(){
 		Camp c1=new Camp("Camp1", true, "TN", 250, new Date());
