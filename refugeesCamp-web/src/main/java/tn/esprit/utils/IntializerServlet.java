@@ -379,8 +379,8 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		//TODO midani
 		
 		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String dateString = " 2014-02-11";
-		String dateString2 = " 2014-04-11";
+		String dateString = " 2017-02-11";
+		String dateString2 = " 2017-04-11";
 			Date d = sdf.parse(dateString);
 			Date d2 = sdf.parse(dateString2);
 		
@@ -390,36 +390,61 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		DistrictChef df=(DistrictChef)us.find(4);
 		
 		JobOffer jo1 = new JobOffer(
-				"first jo desc",
+				"Manage technical incidents , "
+				+ "monitor the incidents , "
+				+ "ensure quality of services provided on "
+				+ "the perimeter of the support incidents",
 				d,
 				d2,
-				201111,
+				20111121,
 				"IT",
 				2100,
-				"Sangard",
-				"adr 1",
-				"s@s.fr",
-				"foulen contact",
-				"first jo",
+				"Focus",
+				"Focus Building, Z.I Chotrana II, Ariana, 2036, Tunisia.",
+				"recruit@focus.com",
+				"Mohsen cherif",
+				"Technical Support BI",
 				df,
 				cf);
 		JobOffer jo2 = new JobOffer(
-				"Work within a small development team to build and maintain business applications and tools , apply Agile development methodologies,build back-end (database) and front-end (UI) systems ,design and develop reports (reporting)",
+				"Work within a small development "
+				+ "team to build and maintain business applications and "
+				+ "tools , apply Agile development methodologies,build "
+				+ "back-end (database) and front-end (UI) systems ,"
+				+ "design and develop reports (reporting)",
 				d,
 				d2,
 				784545447,
 				"IT",
 				1200,
 				"EQUIPE TECHNIQUE TUNISIENNE",
-				"Centre Urbain Nord , Résidence Malek Center, Bloc B / 7ème étage - Appartement B7-1, Tunis, 1003, Tunisia.",
+				"Centre Urbain Nord , Résidence Malek Center, "
+				+ "Bloc B / 7ème étage - Appartement B7-1, Tunis,"
+				+ " 1003, Tunisia.",
 				"recruit@ett.tn",
 				"Zied Zarga",
 				"Software engineer: Senior JAVA/ANGULARJS developer",
 				df,
 				cf);
+		JobOffer jo3 = new JobOffer(
+				"développer des projets plus au moins complexes "
+				+ "avec les technologies suivantes: Zend, React ",
+				d,
+				d2,
+				71941328,
+				"IT",
+				1200,
+				"TUIU SARL",
+				"Rue des Entrepreneurs, Immeuble Delta Center, "
+				+ "Charguia 2, 5, 2035, Tunisia",
+				"recruit@tuiu.tn",
+				"Ali Salhi",
+				"Développeur Web Full Stack",
+				df,
+				cf);
 		js.add(jo1);
 		js.add(jo2);
-				
+		js.add(jo3);				
 				
 	}
 	
