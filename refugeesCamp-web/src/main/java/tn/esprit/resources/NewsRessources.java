@@ -58,7 +58,7 @@ public class NewsRessources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@AllowTo(roles = { "Admin" })
 	public Response AddNews(@HeaderParam("Authorization") String auth,News news) {
 		String token=auth.split(" ")[1];

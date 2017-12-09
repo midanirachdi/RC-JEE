@@ -125,11 +125,11 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		us.registerUser(u3);
 		
 		User u4= new Admin();
-		u3.setFirstName("salim");
-		u3.setLastName("salim");
-		u3.setEmail("salim@test.com");
-		u3.setDisable(false);
-		u3.setPassword("salim");
+		u4.setFirstName("salim");
+		u4.setLastName("salim");
+		u4.setEmail("salim@test.com");
+		u4.setDisable(false);
+		u4.setPassword("salim");
 		us.registerUser(u4);
 		
 		
