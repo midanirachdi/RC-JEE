@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tn.esprit.authorization.AllowTo;
+import tn.esprit.entities.CampChef;
 import tn.esprit.entities.Evenement;
 import tn.esprit.entities.Volunteer;
 import tn.esprit.services.EvenementService;
@@ -73,6 +74,18 @@ public class EvenementRessource {
 		}
 		return Response.noContent().build();
 	}
+	
+	@GET
+	@Path("/creator/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCreator(@PathParam("id")int id){
+		Evenement e= es.findById(id);
+		if (e!=null) {
+			return Response.ok().entity(e.getCreator()).build();
+		}
+		return Response.noContent().build();
+	}
+	
 	@DELETE
 	@Path("/{id}")
 	@AllowTo(roles={"CampChef"})
