@@ -30,7 +30,7 @@ public class CampChef extends User {
 	private List<JobOffer> joboffers;
 	
 	
-	@OneToMany(mappedBy="creator",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="creator",fetch=FetchType.LAZY)
 	@JsonManagedReference
     @JsonInclude(value=Include.NON_EMPTY)
 	private List<Evenement> events;

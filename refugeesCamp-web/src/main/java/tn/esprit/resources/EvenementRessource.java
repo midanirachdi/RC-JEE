@@ -54,6 +54,17 @@ public class EvenementRessource {
 			return Response.ok().entity(ls).build();
 		return Response.noContent().build();
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/myevents/{id}")
+	@AllowTo(roles={"CampChef"})
+	public Response getMyEvents(@PathParam("id")int iduser){
+		List<Evenement> ls= es.findMine(iduser);
+		if (!ls.isEmpty())
+			return Response.ok().entity(ls).build();
+		return Response.noContent().build();
+	}
 	@GET
 	@Path("/upcoming")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -80,10 +91,17 @@ public class EvenementRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCreator(@PathParam("id")int id){
 		Evenement e= es.findById(id);
-		if (e!=null) {
-			return Response.ok().entity(e.getCreator()).build();
+		CampChef c=(CampChef) us.find(e.getCreator().getId());
+		if (c!=null) {
+			return Response.ok().entity(c).build();
 		}
 		return Response.noContent().build();
+	}
+	@GET
+	@Path("/rating/{id}")
+	public Response getRating(@PathParam("id")int id){
+		double note=es.calculnote(id);
+		return Response.ok().entity(note+"").build();
 	}
 	
 	@DELETE

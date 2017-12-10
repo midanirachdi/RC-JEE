@@ -70,7 +70,7 @@ public class Evenement implements Serializable{
 	public String getImagename() {
 		return imagename;
 	}
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference
 	public CampChef getCreator() {
 		return creator;
