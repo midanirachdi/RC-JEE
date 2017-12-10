@@ -79,7 +79,7 @@ public class JobOfferResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef","CampChef" })
+	//@AllowTo(roles = { "DistrictChef","CampChef" })
 	public Response GetAllJobOffers() {
 		List<JobOffer> jolist = new ArrayList<JobOffer>();
 		jolist = joService.findAll();
