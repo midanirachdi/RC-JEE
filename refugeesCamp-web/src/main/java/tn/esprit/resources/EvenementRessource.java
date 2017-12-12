@@ -36,11 +36,11 @@ public class EvenementRessource {
 		es.add(e);
 		return Response.ok().build();
 	}
-	@POST
-	@Path("/rateEvent")
+	@GET
+	@Path("/rateEvent/{idvolunteer}/{idevenement}/{mark}")
 	@AllowTo(roles={"Volunteer"})
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response RateEvenement(@FormParam("idvolunteer")int idvolunteer,@FormParam("idevenement")int idevenement,@FormParam("mark")int mark){
+	public Response RateEvenement(@PathParam("idvolunteer")int idvolunteer,@PathParam("idevenement")int idevenement,@PathParam("mark")int mark){
 		Volunteer v=(Volunteer) us.find(idvolunteer);
 		Evenement e=es.findById(idevenement);
 		es.rateEvent(v, e, mark);

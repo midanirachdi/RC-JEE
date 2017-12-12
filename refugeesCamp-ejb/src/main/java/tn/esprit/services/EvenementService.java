@@ -76,7 +76,7 @@ public class EvenementService implements EvenementRemoteInterface{
 		if (e.getRatings().size()!=0)
 			return sum/e.getRatings().size();
 		else
-			return 0;
+			return -1;
 	}
 
 	@Override
