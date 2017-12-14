@@ -184,6 +184,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		u8.setPassword("Volunteer");
 		us.registerUser(u8);
 		
+		User u11= new CampChef();
+		u11.setFirstName("ahmed");
+		u11.setLastName("derbala");
+		u11.setEmail("ahmed.derbala@esprit.com");
+		u11.setDisable(false);
+		u11.setPassword("CampChef");
+		us.registerUser(u11);
 		
 		Task t = new Task();
 		t.setName("install new tents");
@@ -250,6 +257,43 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev3.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev3.setCreator((CampChef)us.find(3));
 		es.add(ev3);
+		Evenement ev4=new Evenement();
+		ev4.setDateEvent(new Date());
+		ev4.setName("Help Syrian everywhere");
+		ev4.setLocation("Syria,Damascus");
+		ev4.setImagename("event2");
+		ev4.setNbplace(150);
+		ev4.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev4.setCreator((CampChef)us.find(3));
+		es.add(ev4);
+		Evenement ev5=new Evenement();
+		ev5.setDateEvent(new Date());
+		ev5.setName("All For Russia");
+		ev5.setLocation("Russia,Moscow");
+		ev5.setImagename("event3");
+		ev5.setNbplace(130);
+		ev5.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev5.setCreator((CampChef)us.find(10));
+		es.add(ev5);
+		Evenement ev6=new Evenement();
+		ev6.setDateEvent(new Date());
+		ev6.setName("United as Community");
+		ev6.setLocation("France,Paris");
+		ev6.setImagename("event4");
+		ev6.setNbplace(25);
+		ev6.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev6.setCreator((CampChef)us.find(10));
+		es.add(ev6);
+		Evenement ev7=new Evenement();
+		ev7.setDateEvent(new Date());
+		ev7.setName("Refugees of Canada");
+		ev7.setLocation("Canada,Montreal");
+		ev7.setImagename("event5");
+		ev7.setNbplace(250);
+		ev7.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev7.setCreator((CampChef)us.find(10));
+		es.add(ev7);
+		
 	}
 	private void initCamps(){
 		Camp c1=new Camp("Camp1", true, "TN", 250, new Date());
