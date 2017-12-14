@@ -75,7 +75,7 @@ public class CourseRessource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"DistrictChef"})
+	//@AllowTo(roles={"DistrictChef"})
 	public Response getCourse()
 	{
 		return Response.ok(metier.listAll()).build();	

@@ -277,7 +277,7 @@ public class UserResource {
 	@GET
 	@Path("/{dc_id}/joboffers")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles={"CampChef"})
+	//@AllowTo(roles={"DistrictChef"})
 	public Response GetJobOffersByDistrictChief(@PathParam(value = "dc_id") int dc_id) {
 		
 		List<JobOffer> jolist = new ArrayList<JobOffer>();

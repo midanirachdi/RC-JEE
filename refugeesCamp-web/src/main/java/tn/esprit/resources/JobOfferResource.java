@@ -103,7 +103,7 @@ public class JobOfferResource {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "DistrictChef" })
+	//@AllowTo(roles = { "DistrictChef" })
 	public Response DeleteJobOffer(@PathParam(value = "id") int id) {
 		JobOffer jo = joService.findById(id);
 		if (joService.delete(jo))
@@ -124,7 +124,7 @@ public class JobOfferResource {
 	@GET
 	@Path("/{id_jobOffer}/best_candidates")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "CampChef" })
+	//@AllowTo(roles = { "CampChef" })
 	public Response GetBestCandidates(@PathParam(value = "id_jobOffer") int id_jobOffer) {
 		JobOffer jo = joService.findById(id_jobOffer);
 		if (jo != null) {

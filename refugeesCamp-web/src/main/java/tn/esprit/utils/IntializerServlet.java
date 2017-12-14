@@ -424,6 +424,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		
 		CampChef cf=(CampChef)us.find(3);
 		DistrictChef df=(DistrictChef)us.find(4);
+		DistrictChef df2=(DistrictChef)us.find(5);
 		
 		JobOffer jo1 = new JobOffer(
 				"Manage technical incidents , "
@@ -471,12 +472,11 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 				"IT",
 				1200,
 				"TUIU SARL",
-				"Rue des Entrepreneurs, Immeuble Delta Center, "
-				+ "Charguia 2, 5, 2035, Tunisia",
+				"Avenue fattouma Bourguiba, 5, 2036, Tunisia.",
 				"recruit@tuiu.tn",
 				"Ali Salhi",
 				"Développeur Web Full Stack",
-				df,
+				df2,
 				cf);
 		js.add(jo1);
 		js.add(jo2);
