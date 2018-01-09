@@ -175,15 +175,6 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		us.registerUser(u7);
 		
 		
-		
-		User u8= new Volunteer();
-		u8.setFirstName("mohamed");
-		u8.setLastName("salim");
-		u8.setEmail("mohamed.salim@esprit.com");
-		u8.setDisable(false);
-		u8.setPassword("Volunteer");
-		us.registerUser(u8);
-		
 		User u11= new CampChef();
 		u11.setFirstName("ahmed");
 		u11.setLastName("derbala");
@@ -228,6 +219,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		t3.setStatus("closed");
 		t3.setAssignedTo(u4);
 		
+		User u8= new Volunteer();
+		u8.setFirstName("mohamed");
+		u8.setLastName("salim");
+		u8.setEmail("mohamed.salim@esprit.com");
+		u8.setDisable(false);
+		u8.setPassword("Volunteer");
+		us.registerUser(u8);
 	}
 	private void initEvenements(){
 		Evenement ev1=new Evenement();
