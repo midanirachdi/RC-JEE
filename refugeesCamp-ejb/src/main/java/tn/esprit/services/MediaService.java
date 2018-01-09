@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import tn.esprit.entities.Admin;
 import tn.esprit.entities.Media;
 import tn.esprit.entities.News;
 import tn.esprit.utile.MD5Encrypter;
@@ -54,16 +55,15 @@ public class MediaService {
 		return UPLOADED_FILE_PATH;
 	}
 	
-	public Media addMedia(String path,int id) {
+	public Media addMedia(String path,Admin admin) {
 		Media media=new Media();
 		String req="Select n from News n where n.id=:p";
-		News news=em.createQuery(req,News.class).setParameter("p",id).getSingleResult();
 		media.setPath(path);
 		/*List<News> ln=new ArrayList<News>();
 		if(media.getNews().size()!=0) {ln.addAll(media.getNews());}
 		ln.add(news);
 		media.setNews(ln);*/
-		media.setNews(news);
+		media.setAdmin(admin);
 		media.setTitle("Untitled-"+media.getId());
 		if (media != null) {
 			em.persist(media);

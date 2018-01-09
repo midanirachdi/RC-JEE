@@ -6,6 +6,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import tn.esprit.entities.News;
 import tn.esprit.interfaces.NewsLocalInterface;
@@ -30,7 +31,7 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 
 	@Override
 	public List<News> findAll() {
-		String requete = "SELECT n FROM News n";
+		String requete = "SELECT n FROM News n ORDER BY n.dateOfCreation DESC";
 		return em.createQuery(requete, News.class).getResultList();
 	}
 
@@ -51,9 +52,26 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 
 	}
 	
+	/*
+	public List<News> findLimitRows(int start,int rows) {
+		String req="FROM News n ORDER BY n.dateOfCreation DESC";
+		Query q = em.createQuery(req,News.class).setFirstResult(start).setMaxResults(rows).getResultList();
+		q.setFirstResult(start);
+		q.setMaxResults(rows);
+		return (List<News>) q.getResultList();
+		
+		/*String sql = "SELECT * FROM `news` ORDER by `dateOfCreation` DESC LIMIT start=:start,10;" + 
+				""
+				+ "SELECT * FROM EMPLOYEE WHERE id = :employee_id";
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(Employee.class);
+		query.setParameter("employee_id", 10);
+		List results = query.list();
+
+	}*/
 	@Override
 	public List<News> findByCountry(String country) {
-		String req="select n from News n where n.location=:country";
+		String req="select n from News n where n.location=:country ORDER BY n.dateOfCreation DESC";
 		return em.createQuery(req, News.class)
 				.setParameter("country", country)
 				.getResultList();

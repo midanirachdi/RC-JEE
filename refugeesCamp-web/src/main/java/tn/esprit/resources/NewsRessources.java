@@ -58,7 +58,7 @@ public class NewsRessources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@AllowTo(roles = { "Admin" })
 	public Response AddNews(@HeaderParam("Authorization") String auth,News news) {
 		String token=auth.split(" ")[1];
@@ -123,7 +123,7 @@ public class NewsRessources {
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@AllowTo(roles = { "Admin" })
 	public Response UpdateNews(News news) {
 		News exNews=newsService.findById(news.getId());
@@ -131,7 +131,9 @@ public class NewsRessources {
 		if(news.getAuthor()!=null) {exNews.setAuthor(news.getAuthor());}
 		if(news.getContent()!=null) {exNews.setContent(news.getContent());}
 		if(news.getDateOfCreation()!=null) {exNews.setDateOfCreation(news.getDateOfCreation());}
-		if(news.getMedias()!=null) {exNews.setMedias(news.getMedias());}
+		if(news.getTitle()!=null) {exNews.setTitle(news.getTitle());}
+		if(news.getLocation()!=null) {exNews.setLocation(news.getLocation());}
+		if(news.getMainPhoto()!=null) {exNews.setMainPhoto(news.getMainPhoto());}
 		
 		if(newsService.update(exNews))
 			return Response.status(Status.OK).build();

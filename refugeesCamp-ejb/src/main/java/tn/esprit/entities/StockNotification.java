@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
 * author: Salim Ben Hassine
@@ -75,6 +76,7 @@ public class StockNotification {
 
 	@ManyToOne
 	@JoinColumn(name="StockId")
+	@JsonIgnore
 	public Stock getStock() {
 		return stock;
 	}

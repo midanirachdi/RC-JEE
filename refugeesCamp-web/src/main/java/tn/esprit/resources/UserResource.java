@@ -103,7 +103,7 @@ public class UserResource {
 		try {
 			user = new ObjectMapper().readValue(req, User.class);
 	
-			if(auth!=null)
+			if(auth!=null || auth=="")
 			{ 
 		
 			String token=auth.split(" ")[1];
