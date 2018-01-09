@@ -31,7 +31,7 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 
 	@Override
 	public List<News> findAll() {
-		String requete = "SELECT n FROM News n";
+		String requete = "SELECT n FROM News n ORDER BY n.dateOfCreation DESC";
 		return em.createQuery(requete, News.class).getResultList();
 	}
 
@@ -71,7 +71,7 @@ public class NewsService implements NewsRemoteInterface, NewsLocalInterface {
 	}*/
 	@Override
 	public List<News> findByCountry(String country) {
-		String req="select n from News n where n.location=:country";
+		String req="select n from News n where n.location=:country ORDER BY n.dateOfCreation DESC";
 		return em.createQuery(req, News.class)
 				.setParameter("country", country)
 				.getResultList();

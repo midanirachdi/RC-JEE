@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tn.esprit.entities.News;
 
@@ -28,14 +29,14 @@ public class Media implements Serializable {
 	private int id;
 	private String title;
 	private String path;
-	private News news;
+	private Admin admin;
 	
-	public Media(int id, String title, String path,News news) {
+	public Media(int id, String title, String path,Admin admin) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.path = path;
-		this.news=news;
+		this.admin=admin;
 	}
 
 	public Media() {
@@ -69,13 +70,14 @@ public class Media implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "NewsId")
-	public News getNews() {
-		return news;
+	@JoinColumn(name = "AdminId")
+	@JsonIgnore
+	public Admin getAdmin() {
+		return admin;
 	}
 
-	public void setNews(News news) {
-		this.news = news;
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 	
 	

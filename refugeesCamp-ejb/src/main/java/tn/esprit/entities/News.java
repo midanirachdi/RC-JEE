@@ -39,12 +39,10 @@ public class News implements Serializable {
 	private String content;
 	private String location;
 	private Date dateOfCreation;
+	private String mainPhoto;
 	private Admin admin;
 	
-	//private Admin newsCreator;
-	
-	private List<Media> medias;
-	
+
 	public News(int id, String author, String content, Date dateOfCreation,String location,Admin admin) {
 		super();
 		this.id = id;
@@ -112,28 +110,7 @@ public class News implements Serializable {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-/*
-	@ManyToOne
-	public Admin getNewsCreator() {
-		return newsCreator;
-	}
-
-
-	public void setNewsCreator(Admin newsCreator) {
-		this.newsCreator = newsCreator;
-	}
-*/
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "news")
-	public List<Media> getMedias() {
-		return medias;
-	}
-
-
-	public void setMedias(List<Media> medias) {
-		this.medias = medias;
-	}
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AdminId")
 	@JsonBackReference
@@ -144,6 +121,16 @@ public class News implements Serializable {
 
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
+	}
+
+
+	public String getMainPhoto() {
+		return mainPhoto;
+	}
+
+
+	public void setMainPhoto(String mainPhoto) {
+		this.mainPhoto = mainPhoto;
 	}
 	
 	
