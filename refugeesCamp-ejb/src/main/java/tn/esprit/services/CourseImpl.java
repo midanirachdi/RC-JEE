@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -20,12 +21,23 @@ public class CourseImpl implements CourseService{
 	EntityManager em;     //gestionnaire entites
 
 	@Override
-	public void addCourse(Course c) {
+	public boolean addCourse(Course c) {
 		// TODO Auto-generated method stub
-		em.persist(c);
+		/*em.persist(c);
 		em.flush();
 		System.out.println("Course ajouté avec succes");
+*/
+		if (c != null) {
+			Date date_debut = c.getStartdate();
+			Date date_fin = c.getEnddate();
 
+			if (date_debut.before(date_fin) == true) {
+				em.persist(c);
+				return true;
+			}
+			return false;
+		}
+		return false;
 		
 	}
 
@@ -37,10 +49,20 @@ public class CourseImpl implements CourseService{
 	}
 
 	@Override
-	public void updateCourse(Course c) {
+	public boolean updateCourse(Course c) {
 		// TODO Auto-generated method stub
-		em.merge(c);	
+		//em.merge(c);	
+		if (c != null) {
+			Date date_debut = c.getStartdate();
+			Date date_fin = c.getEnddate();
 
+			if (date_debut.before(date_fin) == true) {
+				em.merge(c);
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 
 	@Override
