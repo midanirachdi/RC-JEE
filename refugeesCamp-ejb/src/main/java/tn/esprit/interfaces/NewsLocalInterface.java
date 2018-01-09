@@ -21,6 +21,8 @@ public interface NewsLocalInterface {
 	News findById(int id);
 
 	boolean delete(News news);
+	
+	List<News> findByCountry(String country);
 
 }
 

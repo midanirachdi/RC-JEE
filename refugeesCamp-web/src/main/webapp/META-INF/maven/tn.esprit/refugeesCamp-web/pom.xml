@@ -41,7 +41,12 @@
 </dependency>
 
 
-
+<!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-oauth2</artifactId>
+      <version>v1-rev136-1.23.0</version>
+    </dependency>
 		
 				<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>

@@ -21,5 +21,7 @@ public interface NewsRemoteInterface {
 	News findById(int id);
 
 	boolean delete(News news);
+	
+	List<News> findByCountry(String country);
 }
 
