@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -58,6 +59,7 @@ public class Evenement implements Serializable{
 	public String getName() {
 		return name;
 	}
+	@Column(length=1500)
 	public String getDescription() {
 		return description;
 	}
@@ -68,7 +70,7 @@ public class Evenement implements Serializable{
 	public String getImagename() {
 		return imagename;
 	}
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference
 	public CampChef getCreator() {
 		return creator;

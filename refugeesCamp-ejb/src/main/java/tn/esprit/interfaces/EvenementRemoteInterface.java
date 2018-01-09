@@ -19,5 +19,10 @@ public interface EvenementRemoteInterface {
 	void delete(Evenement e);
 	
 	boolean rateEvent(Volunteer v,Evenement e,int mark);
+	
+	double calculnote(int id);
+	
+	List<Evenement> findMine(int id);
+	
 
 }

@@ -34,7 +34,7 @@ public class CampRessource {
 	public  Response listall(){
 		List<Camp> ls= cs.findAll();
 		if (!ls.isEmpty())
-			return Response.status(Status.FOUND).entity(ls).build();
+			return Response.status(Status.OK).entity(ls).build();
 		return Response.serverError().build();
 	}
 	

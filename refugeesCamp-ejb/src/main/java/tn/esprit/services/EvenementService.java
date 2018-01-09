@@ -65,6 +65,25 @@ public class EvenementService implements EvenementRemoteInterface{
 		String requete = "SELECT ev FROM Evenement ev WHERE ev.dateEvent > CURRENT_DATE order by ev.dateEvent";
 		return em.createQuery(requete,Evenement.class).getResultList();
 	}
+
+	@Override
+	public double calculnote(int id) {
+		Evenement e =em.find(Evenement.class, id);
+		int sum=0;
+		for (Rating r : e.getRatings()) {
+			sum+=r.getMark();
+		}
+		if (e.getRatings().size()!=0)
+			return sum/e.getRatings().size();
+		else
+			return -1;
+	}
+
+	@Override
+	public List<Evenement> findMine(int id) {
+		String requete = "SELECT ev FROM Evenement ev where ev.creator.id = :id order by ev.dateEvent desc";
+		return em.createQuery(requete,Evenement.class).setParameter("id", id).getResultList();
+	}
 	
 	
 

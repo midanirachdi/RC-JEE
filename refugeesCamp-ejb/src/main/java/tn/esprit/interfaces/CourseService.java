@@ -10,9 +10,9 @@ import tn.esprit.entities.Course;
 @Remote
 public interface CourseService {
 	
-	public void addCourse(Course c);
+	public boolean addCourse(Course c);
 	public void deleteCourse(Course c);
-	public void updateCourse(Course c);
+	public boolean updateCourse(Course c);
 	public Course  findCourseById(int id);
 	public List<Course> listAll();
 	public List<Course> getCourseByName(String c);

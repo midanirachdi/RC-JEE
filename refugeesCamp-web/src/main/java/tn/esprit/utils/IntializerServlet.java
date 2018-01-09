@@ -15,6 +15,7 @@ import tn.esprit.entities.Admin;
 import tn.esprit.entities.Camp;
 import tn.esprit.entities.CampChef;
 import tn.esprit.entities.DistrictChef;
+import tn.esprit.entities.Evenement;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
@@ -28,6 +29,7 @@ import tn.esprit.entities.Task;
 import tn.esprit.entities.User;
 import tn.esprit.entities.Volunteer;
 import tn.esprit.services.CampService;
+import tn.esprit.services.EvenementService;
 import tn.esprit.services.JobOfferImpl;
 import tn.esprit.services.NeedImpl;
 import tn.esprit.services.NewsService;
@@ -61,6 +63,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 
 	 @EJB
 	 private JobOfferImpl js;
+	 
+	 @EJB 
+	 private EvenementService es;
 	
 	
 	@Override
@@ -70,6 +75,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		initStock();
 		initNews();
 		initCamps();
+		initEvenements();
 		initNotification();
 		initNeeds();
 		initRefugees();
@@ -91,6 +97,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 	private void initTasks(){
 		
 	}
+	
 	private void initUsers(){
 		User u=new Admin();
 		u.setFirstName("Mohamad");
@@ -177,6 +184,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		u8.setPassword("Volunteer");
 		us.registerUser(u8);
 		
+		User u11= new CampChef();
+		u11.setFirstName("ahmed");
+		u11.setLastName("derbala");
+		u11.setEmail("ahmed.derbala@esprit.com");
+		u11.setDisable(false);
+		u11.setPassword("CampChef");
+		us.registerUser(u11);
 		
 		Task t = new Task();
 		t.setName("install new tents");
@@ -213,6 +227,72 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		t3.setProgress(100);
 		t3.setStatus("closed");
 		t3.setAssignedTo(u4);
+		
+	}
+	private void initEvenements(){
+		Evenement ev1=new Evenement();
+		ev1.setDateEvent(new Date());
+		ev1.setName("Tous pour l'humanité");
+		ev1.setLocation("Tunis,Centre Ville");
+		ev1.setImagename("humanite");
+		ev1.setNbplace(50);
+		ev1.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev1.setCreator((CampChef)us.find(3));
+		es.add(ev1);
+		Evenement ev2=new Evenement();
+		ev2.setDateEvent(new Date());
+		ev2.setName("Refugees all over England");
+		ev2.setLocation("UK,England");
+		ev2.setImagename("engrefs");
+		ev2.setNbplace(25);
+		ev2.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev2.setCreator((CampChef)us.find(3));
+		es.add(ev2);
+		Evenement ev3=new Evenement();
+		ev3.setDateEvent(new Date());
+		ev3.setName("Snow Event");
+		ev3.setLocation("Suisse,Genéve");
+		ev3.setImagename("snow");
+		ev3.setNbplace(42);
+		ev3.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev3.setCreator((CampChef)us.find(3));
+		es.add(ev3);
+		Evenement ev4=new Evenement();
+		ev4.setDateEvent(new Date());
+		ev4.setName("Help Syrian everywhere");
+		ev4.setLocation("Syria,Damascus");
+		ev4.setImagename("event2");
+		ev4.setNbplace(150);
+		ev4.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev4.setCreator((CampChef)us.find(3));
+		es.add(ev4);
+		Evenement ev5=new Evenement();
+		ev5.setDateEvent(new Date());
+		ev5.setName("All For Russia");
+		ev5.setLocation("Russia,Moscow");
+		ev5.setImagename("event3");
+		ev5.setNbplace(130);
+		ev5.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev5.setCreator((CampChef)us.find(10));
+		es.add(ev5);
+		Evenement ev6=new Evenement();
+		ev6.setDateEvent(new Date());
+		ev6.setName("United as Community");
+		ev6.setLocation("France,Paris");
+		ev6.setImagename("event4");
+		ev6.setNbplace(25);
+		ev6.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev6.setCreator((CampChef)us.find(10));
+		es.add(ev6);
+		Evenement ev7=new Evenement();
+		ev7.setDateEvent(new Date());
+		ev7.setName("Refugees of Canada");
+		ev7.setLocation("Canada,Montreal");
+		ev7.setImagename("event5");
+		ev7.setNbplace(250);
+		ev7.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		ev7.setCreator((CampChef)us.find(10));
+		es.add(ev7);
 		
 	}
 	private void initCamps(){
@@ -379,8 +459,8 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		//TODO midani
 		
 		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String dateString = " 2014-02-11";
-		String dateString2 = " 2014-04-11";
+		String dateString = " 2017-02-11";
+		String dateString2 = " 2017-04-11";
 			Date d = sdf.parse(dateString);
 			Date d2 = sdf.parse(dateString2);
 		
@@ -390,36 +470,61 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		DistrictChef df=(DistrictChef)us.find(4);
 		
 		JobOffer jo1 = new JobOffer(
-				"first jo desc",
+				"Manage technical incidents , "
+				+ "monitor the incidents , "
+				+ "ensure quality of services provided on "
+				+ "the perimeter of the support incidents",
 				d,
 				d2,
-				201111,
+				20111121,
 				"IT",
 				2100,
-				"Sangard",
-				"adr 1",
-				"s@s.fr",
-				"foulen contact",
-				"first jo",
+				"Focus",
+				"Focus Building, Z.I Chotrana II, Ariana, 2036, Tunisia.",
+				"recruit@focus.com",
+				"Mohsen cherif",
+				"Technical Support BI",
 				df,
 				cf);
 		JobOffer jo2 = new JobOffer(
-				"Work within a small development team to build and maintain business applications and tools , apply Agile development methodologies,build back-end (database) and front-end (UI) systems ,design and develop reports (reporting)",
+				"Work within a small development "
+				+ "team to build and maintain business applications and "
+				+ "tools , apply Agile development methodologies,build "
+				+ "back-end (database) and front-end (UI) systems ,"
+				+ "design and develop reports (reporting)",
 				d,
 				d2,
 				784545447,
 				"IT",
 				1200,
 				"EQUIPE TECHNIQUE TUNISIENNE",
-				"Centre Urbain Nord , Résidence Malek Center, Bloc B / 7ème étage - Appartement B7-1, Tunis, 1003, Tunisia.",
+				"Centre Urbain Nord , Résidence Malek Center, "
+				+ "Bloc B / 7ème étage - Appartement B7-1, Tunis,"
+				+ " 1003, Tunisia.",
 				"recruit@ett.tn",
 				"Zied Zarga",
 				"Software engineer: Senior JAVA/ANGULARJS developer",
 				df,
 				cf);
+		JobOffer jo3 = new JobOffer(
+				"développer des projets plus au moins complexes "
+				+ "avec les technologies suivantes: Zend, React ",
+				d,
+				d2,
+				71941328,
+				"IT",
+				1200,
+				"TUIU SARL",
+				"Rue des Entrepreneurs, Immeuble Delta Center, "
+				+ "Charguia 2, 5, 2035, Tunisia",
+				"recruit@tuiu.tn",
+				"Ali Salhi",
+				"Développeur Web Full Stack",
+				df,
+				cf);
 		js.add(jo1);
 		js.add(jo2);
-				
+		js.add(jo3);				
 				
 	}
 	

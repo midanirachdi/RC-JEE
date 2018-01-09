@@ -60,10 +60,9 @@ public class DonationRessource {
 		camp.setId(id);
 		return Response.ok(donationservice.getCampAvgTotalDonation(camp)).build();
 	}
-	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
 	@Path("/add")
-	public Response generateDonation(@FormParam("amount")double total,@FormParam("currency")String currency){
+	public Response generateDonation(@QueryParam("amount")double total,@QueryParam("currency")String currency){
 		
 		APIContext context = new APIContext(clientId, clientSecret, "sandbox");
 		// Set payer details
@@ -101,16 +100,15 @@ public class DonationRessource {
 			Payment createdPayment = payment.create(context);
 			Donation d=new Donation(createdPayment.getId(), Double.parseDouble(createdPayment.getTransactions().get(0).getAmount().getTotal()), new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency());
 			donationservice.add(d);
-			return Response.ok().entity(createdPayment.getLinks().get(1).getHref()).build();
+			return Response.ok().entity("{ \"link\": \""+createdPayment.getLinks().get(1).getHref()+"\" }").build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
 			return Response.serverError().build();
 		}
 	}
-	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
 	@Path("/addtocamp")
-	public Response generateDonationForCamp(@FormParam("amount")double total,@FormParam("currency")String currency,@FormParam("camp_id")int id){
+	public Response generateDonationForCamp(@QueryParam("amount")double total,@QueryParam("currency")String currency,@QueryParam("camp_id")int id){
 		if (cs.findById(id)==null)
 			return Response.status(Status.NOT_FOUND).build();
 		Camp c=cs.findById(id);
@@ -141,7 +139,7 @@ public class DonationRessource {
 					new Date(), createdPayment.getTransactions().get(0).getAmount().getCurrency()
 					,c);
 			donationservice.add(d);
-			return Response.ok().entity(createdPayment.getLinks().get(1).getHref()).build();
+			return Response.ok().entity("{ \"link\": \""+createdPayment.getLinks().get(1).getHref()+"\" }").build();
 		} catch (PayPalRESTException e) {
 			System.err.println(e.getDetails());
 			return Response.serverError().build();

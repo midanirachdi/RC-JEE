@@ -58,7 +58,8 @@ public class Course implements Serializable{
 		this.id = id;
 	}
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	public Date getStartdate() {
 		return startdate;
 	}
@@ -67,7 +68,8 @@ public class Course implements Serializable{
 		this.startdate = startdate;
 	}
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	public Date getEnddate() {
 		return enddate;
 	}
