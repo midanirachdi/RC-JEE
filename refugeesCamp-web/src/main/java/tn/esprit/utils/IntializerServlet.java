@@ -19,6 +19,7 @@ import tn.esprit.entities.Evenement;
 import tn.esprit.entities.JobOffer;
 import tn.esprit.entities.Need;
 import tn.esprit.entities.News;
+import tn.esprit.entities.Rating;
 import tn.esprit.entities.Refugee;
 import tn.esprit.entities.Refugee.HighestDegreeEnum;
 import tn.esprit.entities.Refugee.LanguageLevelEnum;
@@ -75,7 +76,12 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		initStock();
 		initNews();
 		initCamps();
-		initEvenements();
+		try {
+			initEvenements();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		initNotification();
 		initNeeds();
 		initRefugees();
@@ -229,7 +235,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		t3.setAssignedTo(u4);
 		
 	}
-	private void initEvenements(){
+	private void initEvenements() throws ParseException{
 		Evenement ev1=new Evenement();
 		ev1.setDateEvent(new Date());
 		ev1.setName("Tous pour l'humanité");
@@ -239,8 +245,15 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev1.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev1.setCreator((CampChef)us.find(3));
 		es.add(ev1);
+		
 		Evenement ev2=new Evenement();
-		ev2.setDateEvent(new Date());
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String dateEvent = " 2017-02-11 11:50";
+			Date d = sdf.parse(dateEvent);
+
+			
+		ev2.setDateEvent(d);
 		ev2.setName("Refugees all over England");
 		ev2.setLocation("UK,England");
 		ev2.setImagename("engrefs");
@@ -248,8 +261,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev2.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev2.setCreator((CampChef)us.find(3));
 		es.add(ev2);
+		
+		
+		String dateEvent2 = " 2017-05-21 18:00";
+		Date d2 = sdf.parse(dateEvent2);
+		
 		Evenement ev3=new Evenement();
-		ev3.setDateEvent(new Date());
+		ev3.setDateEvent(d2);
 		ev3.setName("Snow Event");
 		ev3.setLocation("Suisse,Genéve");
 		ev3.setImagename("snow");
@@ -257,8 +275,12 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev3.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev3.setCreator((CampChef)us.find(3));
 		es.add(ev3);
+		
+		String dateEvent3 = " 2018-06-14 20:00";
+		Date d3 = sdf.parse(dateEvent3);
+		
 		Evenement ev4=new Evenement();
-		ev4.setDateEvent(new Date());
+		ev4.setDateEvent(d3);
 		ev4.setName("Help Syrian everywhere");
 		ev4.setLocation("Syria,Damascus");
 		ev4.setImagename("event2");
@@ -266,8 +288,13 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev4.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev4.setCreator((CampChef)us.find(3));
 		es.add(ev4);
+		
+		String dateEvent4 = " 2018-03-13 10:30";
+		Date d4 = sdf.parse(dateEvent4);
+		
+		
 		Evenement ev5=new Evenement();
-		ev5.setDateEvent(new Date());
+		ev5.setDateEvent(d4);
 		ev5.setName("All For Russia");
 		ev5.setLocation("Russia,Moscow");
 		ev5.setImagename("event3");
@@ -293,6 +320,11 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		ev7.setDescription("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 		ev7.setCreator((CampChef)us.find(10));
 		es.add(ev7);
+		Volunteer v=new Volunteer();
+		v.setId(6);
+		es.rateEvent(v, ev1, 3);
+		
+		
 		
 	}
 	private void initCamps(){
@@ -527,7 +559,6 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		js.add(jo3);				
 				
 	}
-	
 	private void initRefugees(){
 		
 		Refugee r1 = new Refugee();
@@ -535,7 +566,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r1.setLastName("Feki");
 		r1.setPhoneNumber(52314985);
 		r1.setDateOfBirth(new Date(1993-1900,05,25));
-		r1.setSex("homme");
+		r1.setSex("Male");
 		r1.setYearsOfExperience(3);
 		r1.setFrenchlanguageLevel(LanguageLevelEnum.A);
 		r1.setEnglishlanguageLevel(LanguageLevelEnum.C);
@@ -543,6 +574,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r1.setYearsOfExperience(1);
 		r1.setFieldOfWork("IT");
 		r1.setEmail("midani.rachdi@esprit.tn");
+		Camp c1 = cs.findById(4);
+		r1.setRcamp(c1);
+		r1.setNationality("French");
 		rs.add(r1);	
 		
 		Refugee r2 = new Refugee(); 
@@ -550,8 +584,10 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r2.setLastName("Feki");
 		r2.setPhoneNumber(52314985);
 		r2.setDateOfBirth(new Date(2012-1900,05-1,19));
-		r2.setSex("homme");
+		r2.setSex("Male");
 		r2.setYearsOfExperience(3);
+		r2.setRcamp(c1);
+		r2.setNationality("French");
 		rs.add(r2);
 		
 		Refugee r3 = new Refugee();
@@ -559,8 +595,10 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r3.setLastName("ghedira");
 		r3.setPhoneNumber(21365478);
 		r3.setDateOfBirth(new Date(2009-1900,05-1,16));
-		r3.setSex("homme");
+		r3.setSex("Male");
 		r3.setYearsOfExperience(3);
+		r3.setRcamp(c1);
+		r3.setNationality("Italian");
 		rs.add(r3);
 		
 		Refugee r4 = new Refugee();
@@ -568,8 +606,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r4.setLastName("ghedira");
 		r4.setPhoneNumber(21569874);
 		r4.setDateOfBirth(new Date(1930-1900,06-1,30));
-		r4.setSex("femme");
+		r4.setSex("Female");
 		r4.setYearsOfExperience(3);
+		r4.setNationality("Romanian");
 		rs.add(r4);
 		
 		Refugee r5 = new Refugee();
@@ -577,8 +616,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r5.setLastName("alora");
 		r5.setPhoneNumber(21569874);
 		r5.setDateOfBirth(new Date(1950-1900,03-1,02));
-		r5.setSex("femme");
+		r5.setSex("Female");
 		r5.setYearsOfExperience(2);
+		r5.setNationality("Nigerian");
 		rs.add(r5);
 		
 		Refugee r6 = new Refugee();
@@ -586,8 +626,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r6.setLastName("fina");
 		r6.setPhoneNumber(23658741);
 		r6.setDateOfBirth(new Date(1990-1900,03-1,10));
-		r6.setSex("homme");
+		r6.setSex("Male");
 		r6.setYearsOfExperience(2);
+		r6.setNationality("Palestinian");
 		rs.add(r6);
 		
 		Refugee r7 = new Refugee();
@@ -595,8 +636,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r7.setLastName("job");
 		r7.setPhoneNumber(22258741);
 		r7.setDateOfBirth(new Date(2005-1900,05-1,23));
-		r7.setSex("homme");
+		r7.setSex("Male");
 		r7.setYearsOfExperience(2);
+		r7.setNationality("Palestinian");
 		rs.add(r7);
 		
 		Refugee r8 = new Refugee();
@@ -604,8 +646,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r8.setLastName("loumi");
 		r8.setPhoneNumber(22269741);
 		r8.setDateOfBirth(new Date(1987-1900,07-1,12));
-		r8.setSex("femme");
+		r8.setSex("Female");
 		r8.setYearsOfExperience(2);
+		r8.setNationality("Palestinian");
 		rs.add(r8);
 		
 		Refugee r9 = new Refugee();
@@ -613,8 +656,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r9.setLastName("safir");
 		r9.setPhoneNumber(22266341);
 		r9.setDateOfBirth(new Date(1920-1900,07-1,04));
-		r9.setSex("femme");
+		r9.setSex("Female");
 		r9.setYearsOfExperience(0);
+		r9.setNationality("Palestinian");
 		rs.add(r9);
 		
 		Refugee r10 = new Refugee();
@@ -622,8 +666,9 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r10.setLastName("fonci");
 		r10.setPhoneNumber(25697341);
 		r10.setDateOfBirth(new Date(1960-1900,03-1,9));
-		r10.setSex("homme");
+		r10.setSex("Male");
 		r10.setYearsOfExperience(1);
+		r10.setNationality("Romanian");
 		rs.add(r10);
 
 		Refugee r11 = new Refugee();
@@ -631,7 +676,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r11.setLastName("Ahmdi");
 		r11.setPhoneNumber(52314985);
 		r11.setDateOfBirth(new Date(1993-1900,05,25));
-		r11.setSex("homme");
+		r11.setSex("Male");
 		r11.setYearsOfExperience(3);
 		r11.setFrenchlanguageLevel(LanguageLevelEnum.C);
 		r11.setEnglishlanguageLevel(LanguageLevelEnum.C);
@@ -639,6 +684,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r11.setYearsOfExperience(1);
 		r11.setFieldOfWork("IT");
 		r11.setEmail("rachdi.midani@gmail.com");
+		r11.setNationality("Romanian");
 		rs.add(r11);
 		
 		Refugee r12 = new Refugee();
@@ -646,7 +692,7 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r12.setLastName("Cherif");
 		r12.setPhoneNumber(52314985);
 		r12.setDateOfBirth(new Date(1993-1900,05,25));
-		r12.setSex("homme");
+		r12.setSex("Male");
 		r12.setYearsOfExperience(1);
 		r12.setFrenchlanguageLevel(LanguageLevelEnum.C);
 		r12.setEnglishlanguageLevel(LanguageLevelEnum.C);
@@ -654,7 +700,8 @@ public class IntializerServlet implements javax.servlet.ServletContextListener  
 		r12.setYearsOfExperience(1);
 		r12.setFieldOfWork("IT");
 		r12.setEmail("midani.rachdi@esprit.tn");
+		r12.setNationality("Romanian");
 		rs.add(r12);
-	}
-	
+	} 
+
 }
