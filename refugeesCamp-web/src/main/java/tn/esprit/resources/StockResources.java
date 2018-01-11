@@ -59,7 +59,7 @@ public class StockResources {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response AddStock(Stock stock) {
 		
 		if (stockService.add(stock)) return Response.status(Status.CREATED).build();
@@ -69,7 +69,7 @@ public class StockResources {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response GetAllStock() {
 		
 		List<Stock> stock = new ArrayList<Stock>();
@@ -83,7 +83,7 @@ public class StockResources {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response GetStockById(@PathParam(value = "id") int id) {
 		Stock stock = stockService.findById(id);
 		if(stock!=null)
@@ -94,7 +94,7 @@ public class StockResources {
 	@DELETE
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response DeleteStock(@PathParam(value = "id") int id) {
 		
 		Stock stock = stockService.findById(id);
@@ -107,7 +107,7 @@ public class StockResources {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response UpdateStock(Stock stock) {
 		Stock exStock=stockService.findById(stock.getId());
 		//Change Tests:
@@ -125,7 +125,7 @@ public class StockResources {
 	@GET
 	@Path("/manageneeds")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response listRequestedNeeds() {
 		
 		List<Need> need = new ArrayList<Need>();
@@ -139,7 +139,7 @@ public class StockResources {
 	@GET
 	@Path("/manageneeds/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response GetNeedRequestById(@PathParam(value = "id") int id) {
 		Need need = stockService.findNeedById(id);
 		if(need!=null)
@@ -151,7 +151,7 @@ public class StockResources {
 	@Path("/manageneeds/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response acceptOrdeclineNeedDemand(@PathParam(value = "id") int id,Need need) {
 		Need needwithid = stockService.findNeedById(id);
 		
@@ -184,7 +184,7 @@ public class StockResources {
 	@GET
 	@Path("/manageneeds/acceptedneeds")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response listAcceptedNeeds() {
 		List<Need> need = new ArrayList<Need>();
 		need = stockService.ListNeedsByStatus(1);
@@ -194,7 +194,7 @@ public class StockResources {
 	@GET
 	@Path("/manageneeds/refusedneeds")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response listRefusedNeeds() {
 		List<Need> need = new ArrayList<Need>();
 		need = stockService.ListNeedsByStatus(-1);
@@ -204,7 +204,7 @@ public class StockResources {
 	@GET
 	@Path("/manageneeds/pendingneeds")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response listpendingNeeds() {
 		List<Need> need = new ArrayList<Need>();
 		need = stockService.ListNeedsByStatus(0);
@@ -215,7 +215,7 @@ public class StockResources {
 	@GET
 	@Path("/stockbreak")
 	@Produces(MediaType.APPLICATION_JSON)
-	@AllowTo(roles = { "Admin" })
+	//@AllowTo(roles = { "Admin" })
 	public Response listStockBreak() {
 		List<Stock> stock = new ArrayList<Stock>();
 		stock = stockService.ListStockBreak();
