@@ -1,14 +1,14 @@
-# Refugees Camp
+# 🏕️ Refugees Camp
 
-Java EE backend for managing refugee camps, built as a Maven multi-module project for the ESPRIT pi dev course.
+Java EE backend for managing refugee camps, built as a Maven multi-module project for the ESPRIT PIDEV course.
 
 **Team:** Tech No Logic
 
-## Overview
+## 📋 Overview
 
-Refugees Camp is a camp-management platform that exposes a JAX-RS REST API. It covers refugee records, camp operations, stock and donations, volunteer events, job offers, training courses, and news. Authentication uses JWT with role-based access control on protected endpoints.
+Refugees Camp is a refugee camp management platform that exposes a JAX-RS REST API. It covers refugee records, camp operations, stock and donations, volunteer events, job offers, training courses, and news. Authentication uses JWT with role-based access control on protected endpoints.
 
-## Tech stack
+## 🛠️ Tech Stack
 
 | Layer       | Technology                        |
 | ----------- | --------------------------------- |
@@ -22,7 +22,7 @@ Refugees Camp is a camp-management platform that exposes a JAX-RS REST API. It c
 | Payments    | PayPal REST SDK                   |
 | Build       | Maven                             |
 
-## Project structure
+## 📁 Project Structure
 
 ```
 refugeesCamp/
@@ -32,27 +32,27 @@ refugeesCamp/
 └── refugeesCamp-client/  # Remote EJB client tests
 ```
 
-### Modules
+### 📦 Modules
 
 - **refugeesCamp-ejb** — Stateless session beans (`@Stateless`), domain entities, and remote/local service interfaces.
 - **refugeesCamp-web** — REST endpoints under `/api`, authorization filters, and servlet utilities.
-- **refugeesCamp-ear** — Bundles the EJB and WAR modules, deploys to WildFly on `mvn install`.
+- **refugeesCamp-ear** — Bundles the EJB and WAR modules and deploys to WildFly on `mvn install`.
 - **refugeesCamp-client** — Standalone tests that call EJB services over JNDI.
 
-## Domain features
+## ✨ Domain Features
 
-- **Refugees** — Profiles, statistics, age categories, medical folders
+- **Refugees** — Profiles, statistics, age categories, and medical folders
 - **Camps** — Camp management and assignment
-- **Stock & needs** — Inventory, need requests (accept/decline), low-stock notifications
-- **Donations** — PayPal integration, camp-level donation tracking
+- **Stock & needs** — Inventory, need requests (accept/decline), and low-stock notifications
+- **Donations** — PayPal integration and camp-level donation tracking
 - **Events** — Volunteer events with ratings
-- **Job offers** — Matching refugees to offers, PDF cover-letter generation
+- **Job offers** — Matching refugees to offers and PDF cover-letter generation
 - **Courses** — Training course management
 - **News** — News articles filtered by country
 - **Media** — File upload and retrieval
 - **Users** — Admin, DistrictChef, CampChef, and Volunteer roles
 
-## Prerequisites
+## ✅ Prerequisites
 
 - JDK 8
 - Maven 3.x
@@ -60,7 +60,7 @@ refugeesCamp/
 - MySQL 5.x
 - MySQL JDBC driver installed in WildFly
 
-## Database setup
+## 🗄️ Database Setup
 
 1. Create a MySQL database named `refugeescamp`.
 2. Open the WildFly admin console at `http://127.0.0.1:19990` (default credentials: `admin` / `wildflyadmin`).
@@ -73,7 +73,7 @@ refugeesCamp/
 
 The persistence unit is configured in `refugeesCamp-ejb/src/main/resources/META-INF/persistence.xml` with `hibernate.hbm2ddl.auto=create-drop`, so the schema is recreated on each deployment.
 
-## Build and deploy
+## 🚀 Build and Deploy
 
 From the project root:
 
@@ -87,7 +87,7 @@ The `refugeesCamp-ear` module uses the WildFly Maven plugin to deploy automatica
 http://localhost:8080/refugeesCamp-web/api/
 ```
 
-## REST API
+## 🔌 REST API
 
 All resources are mounted under `/api` (see `RestActivator`).
 
@@ -108,7 +108,7 @@ All resources are mounted under `/api` (see `RestActivator`).
 | Media               | `/media`              | File upload/download          |
 | Needs               | `/need`               | Camp need requests            |
 
-## Security
+## 🔒 Security
 
 Protected endpoints use the `@AllowTo` annotation to restrict access by role. A JAX-RS dynamic feature (`AccesDynamicFeature`) registers a filter when `@AllowTo` is present on a resource method.
 
@@ -133,11 +133,11 @@ Authentication supports:
 
 Send authenticated requests with an `Authorization: Bearer <token>` header.
 
-## Client tests
+## 🧪 Client Tests
 
 The `refugeesCamp-client` module contains remote EJB tests. Configure JNDI in `refugeesCamp-client/src/main/resources/jndi.properties` before running tests against a deployed server.
 
-## Original repository
+## 🔗 Original Repository
 
 ```
 git@gitlab.com:technologic-esprit/Refugees-camp-JEE.git
